@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="it" data-root="../../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pattern — WGT-01</title>
+<meta name="description" content="Un elemento ripetuto, con dimensione e posizione decise dal tono.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Pattern — WGT-01">
+<meta property="og:description" content="Un elemento ripetuto, con dimensione e posizione decise dal tono.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thawalife.github.io/WGT-01/documentazione/pattern/">
+<meta property="og:image" content="https://thawalife.github.io/WGT-01/assets/img/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="../../assets/css/site.css?v=202610220133">
+<script type="module" src="../../assets/js/main.js?v=202610220133"></script>
+</head>
+<body>
+<a class="skip" href="#contenuto">Vai al contenuto</a>
+<header class="site-header">
+  <a class="wordmark" href="../../" aria-label="WGT-01, pagina iniziale">WGT-01</a>
+  <nav class="site-nav" aria-label="Principale">
+    <a class="nav-optional" href="../../#stili">Stili</a>
+    <a href="../../prova/">Prova</a>
+    <a href="../../documentazione/" aria-current="page">Documentazione</a>
+    <a href="../../download/">Scarica</a>
+  </nav>
+</header>
+<main id="contenuto">
+<section class="tone doc-hero" data-k="0">
+  <div class="wrap">
+    <h1>Pattern</h1>
+<p>Un elemento ripetuto, con dimensione e posizione decise dal tono.</p>  </div>
+</section>
+<div class="band" data-from="#000000" data-to="#ffffff"></div>
+<div class="tone on-light" data-k="100">
+  <div class="wrap docs">
+    <nav class="doc-nav" aria-label="Documentazione">
+      <p>Inizia</p>
+      <ul>
+<li><a href="../../documentazione/">Panoramica</a></li>
+<li><a href="../../documentazione/installazione/">Installazione</a></li>
+<li><a href="../../documentazione/il-pannello/">Il pannello</a></li>
+      </ul>
+      <p>Sezioni</p>
+      <ul>
+<li><a href="../../documentazione/pattern/" aria-current="page">Pattern</a></li>
+<li><a href="../../documentazione/type/">Type</a></li>
+      </ul>
+      <p>Stili</p>
+      <ul>
+<li><a href="../../documentazione/stili/">Come funzionano</a></li>
+<li><a href="../../documentazione/stili/dither/">Dither</a></li>
+<li><a href="../../documentazione/stili/halftone/">Halftone</a></li>
+<li><a href="../../documentazione/stili/ascii/">ASCII</a></li>
+<li><a href="../../documentazione/stili/mosaico/">Mosaico</a></li>
+<li><a href="../../documentazione/stili/incisione/">Incisione</a></li>
+<li><a href="../../documentazione/stili/linee-di-flusso/">Linee di flusso</a></li>
+<li><a href="../../documentazione/stili/curve-di-livello/">Curve di livello</a></li>
+<li><a href="../../documentazione/stili/mappa-sfumatura/">Mappa sfumatura</a></li>
+<li><a href="../../documentazione/stili/glitch/">Glitch</a></li>
+<li><a href="../../documentazione/stili/pixel-sorting/">Pixel sorting</a></li>
+      </ul>
+      <p>Funzioni</p>
+      <ul>
+<li><a href="../../documentazione/esporta-svg/">Esporta SVG</a></li>
+<li><a href="../../documentazione/modifica-e-livelli/">Modifica e più livelli</a></li>
+<li><a href="../../documentazione/dev-option/">Dev option e LM Studio</a></li>
+      </ul>
+      <p>Aiuto</p>
+      <ul>
+<li><a href="../../documentazione/licenza/">Donazione e codice</a></li>
+<li><a href="../../documentazione/faq/">Domande frequenti</a></li>
+<li><a href="../../documentazione/novita/">Novità</a></li>
+<li><a href="../../documentazione/crediti/">Crediti</a></li>
+      </ul>
+    </nav>
+    <article class="doc-body">
+      <figure class="doc-figure"><canvas data-fx="still" data-style="halftone" data-photo="hopper" data-opts='{"cell":7,"angle":0,"staggered":true}'></canvas><figcaption>Il principio di Pattern: l’elemento cresce dove l’immagine è scura.</figcaption></figure>
+
+<h2>Come funziona</h2>
+<p>Pattern guarda la scala di grigi dell’immagine e posa un <strong>elemento</strong> su una griglia: dove il tono è scuro l’elemento è grande, dove è chiaro è piccolo o sparisce.</p>
+<h2>Elemento</h2>
+<p>Scegli una forma pronta oppure un tuo file. I file <strong>SVG</strong> restano vettoriali; <strong>PNG</strong>, <strong>JPG</strong> e i livelli sono raster.</p>
+<h2>Zone</h2>
+<table>
+<thead>
+<tr>
+<th>Controllo</th>
+<th>Cosa fa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Soglia luminosità</td>
+<td>Sopra questa luminosità non viene posato nessun elemento.</td>
+</tr>
+<tr>
+<td>Dimensione minima elemento</td>
+<td>Gli elementi più piccoli di così non vengono disegnati.</td>
+</tr>
+<tr>
+<td>Inverti forma</td>
+<td>Scambia pieno e vuoto dell’elemento.</td>
+</tr>
+<tr>
+<td>Elementi diversi per tono</td>
+<td>Un elemento per le zone scure, uno per le medie e uno per le chiare.</td>
+</tr>
+<tr>
+<td>Inverti zone</td>
+<td>Ombre e luci si scambiano.</td>
+</tr>
+</tbody>
+</table>
+<h2>Distribuzione</h2>
+<table>
+<thead>
+<tr>
+<th>Controllo</th>
+<th>Cosa fa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scala elemento</td>
+<td>Dimensione massima dell’elemento.</td>
+</tr>
+<tr>
+<td>Distanza tra elementi</td>
+<td>Passo della griglia.</td>
+</tr>
+<tr>
+<td>Griglia sfalsata</td>
+<td>Sposta di mezzo passo una riga sì e una no.</td>
+</tr>
+</tbody>
+</table>
+<h2>Variazioni</h2>
+<table>
+<thead>
+<tr>
+<th>Controllo</th>
+<th>Cosa fa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rotazione massima</td>
+<td>Ogni elemento ruota a caso fino a questo angolo.</td>
+</tr>
+<tr>
+<td>Variazione casuale della scala</td>
+<td>Rende le dimensioni meno regolari.</td>
+</tr>
+<tr>
+<td>Variante</td>
+<td>Cambia solo la parte casuale (rotazione, scala, colori, distribuzione organica) e lascia uguale il resto.</td>
+</tr>
+</tbody>
+</table>
+<h2>Output</h2>
+<p>Con <strong>Colori nel vettoriale</strong> decidi come vengono colorati gli elementi quando l’elemento è un SVG.</p>
+      <nav class="doc-pager" aria-label="Pagine vicine">
+<a href="../../documentazione/il-pannello/"><small>Precedente</small>Il pannello</a><a href="../../documentazione/type/" style="text-align:right"><small>Successiva</small>Type</a>      </nav>
+    </article>
+  </div>
+</div>
+</main>
+<footer class="site-footer tone on-light" data-k="100">
+  <div class="wrap">
+    <div>
+      <p class="big">WGT-01</p>
+      <p class="small">Walife Generative Tools. Un progetto di Walife. Sito e plugin in sviluppo.<br>Versione 0.16.5, per Photoshop 27.9.1 o successivo.</p>
+    </div>
+    <ul class="small">
+      <li><a href="../../prova/">Prova</a></li>
+      <li><a href="../../documentazione/">Documentazione</a></li>
+      <li><a href="../../download/">Scarica</a></li>
+    </ul>
+    <ul class="small">
+      <li><a href="../../documentazione/novita/">Novità delle versioni</a></li>
+      <li><a href="../../documentazione/crediti/">Crediti delle immagini</a></li>
+      <li><a href="https://github.com/ThaWalife/WGT-01">Codice del sito su GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

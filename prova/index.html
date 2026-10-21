@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="it" data-root="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prova — WGT-01</title>
+<meta name="description" content="Prova gli stili di WGT-01 sulla tua foto, direttamente nel browser.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Prova — WGT-01">
+<meta property="og:description" content="Prova gli stili di WGT-01 sulla tua foto, direttamente nel browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thawalife.github.io/WGT-01/prova/">
+<meta property="og:image" content="https://thawalife.github.io/WGT-01/assets/img/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css?v=202610220133">
+<script type="module" src="../assets/js/main.js?v=202610220133"></script>
+</head>
+<body>
+<a class="skip" href="#contenuto">Vai al contenuto</a>
+<header class="site-header">
+  <a class="wordmark" href="../" aria-label="WGT-01, pagina iniziale">WGT-01</a>
+  <nav class="site-nav" aria-label="Principale">
+    <a class="nav-optional" href="../#stili">Stili</a>
+    <a href="../prova/" aria-current="page">Prova</a>
+    <a href="../documentazione/">Documentazione</a>
+    <a href="../download/">Scarica</a>
+  </nav>
+</header>
+<main id="contenuto">
+<section class="tone doc-hero" data-k="0">
+  <div class="wrap">
+    <h1>Prova WGT-01</h1>
+    <p>Tre dei dieci stili, sulla tua foto. Il calcolo avviene nel browser: l’immagine non viene caricata da nessuna parte.</p>
+  </div>
+</section>
+<div class="band" data-from="#000000" data-to="#1a1a1a"></div>
+<section class="tone" data-k="10" data-fx="demo" style="padding:40px 0 96px">
+  <div class="wrap tool">
+    <div class="panel">
+      <div class="field">
+        <div class="drop">
+          <input type="file" accept="image/*" aria-label="Scegli una foto dal computer">
+          <div>
+            <strong>Trascina qui una foto</strong><br>
+            <span class="small muted">oppure fai clic per sceglierla. Puoi anche incollarla con Ctrl+V.</span>
+          </div>
+        </div>
+        <p class="small" data-status aria-live="polite">Carico la foto di esempio…</p>
+      </div>
+      <div class="field">
+        <span class="small muted">Oppure usa una foto di esempio</span>
+        <div class="seg">
+<button class="chip" type="button" data-sample="hopper">Ritratto</button><button class="chip" type="button" data-sample="astronauta">Astronauta</button><button class="chip" type="button" data-sample="fotografo">Fotografo</button><button class="chip" type="button" data-sample="caffe">Caffè</button><button class="chip" type="button" data-sample="gatto">Gatto</button><button class="chip" type="button" data-sample="razzo">Razzo</button>        </div>
+      </div>
+      <fieldset class="field">
+        <legend>Stile</legend>
+        <div class="seg" data-group="style">
+          <button class="chip" type="button" data-v="dither" aria-pressed="true">Dither</button>
+          <button class="chip" type="button" data-v="halftone" aria-pressed="false">Halftone</button>
+          <button class="chip" type="button" data-v="ascii" aria-pressed="false">ASCII</button>
+        </div>
+      </fieldset>
+      <fieldset class="field" data-method-field>
+        <legend>Metodo del dither</legend>
+        <div class="seg" data-group="method">
+          <button class="chip" type="button" data-v="atkinson" aria-pressed="true">Atkinson</button>
+          <button class="chip" type="button" data-v="fs" aria-pressed="false">Floyd–Steinberg</button>
+          <button class="chip" type="button" data-v="bayer" aria-pressed="false">Ordinato</button>
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="d-density">Dettaglio</label>
+        <div class="range-row"><input id="d-density" type="range" min="1" max="10" step="1" value="6"><output data-value="density">6</output></div>
+      </div>
+      <div class="field">
+        <label for="d-contrast">Contrasto</label>
+        <div class="range-row"><input id="d-contrast" type="range" min="-50" max="50" step="1" value="10"><output data-value="contrast">10</output></div>
+      </div>
+      <div class="field">
+        <label for="d-brightness">Luminosità</label>
+        <div class="range-row"><input id="d-brightness" type="range" min="-50" max="50" step="1" value="0"><output data-value="brightness">0</output></div>
+      </div>
+      <fieldset class="field">
+        <legend>Colori</legend>
+        <div class="seg" data-group="colors">
+          <button class="chip" type="button" data-v="carta" aria-pressed="true">Nero su bianco</button>
+          <button class="chip" type="button" data-v="notte" aria-pressed="false">Bianco su nero</button>
+          <button class="chip" type="button" data-v="verde" aria-pressed="false">Verde su carta</button>
+        </div>
+      </fieldset>
+      <div class="actions"><button class="btn btn--primary" type="button" data-download disabled><span>Scarica in PNG</span></button></div>
+      <p class="privacy small">Nel plugin hai dieci stili, l’export in SVG, i preset e risultati che restano modificabili. <a href="../download/">Scarica WGT-01</a></p>
+    </div>
+    <div class="result">
+      <canvas data-out aria-label="Risultato dello stile applicato alla foto"></canvas>
+    </div>
+  </div>
+</section>
+<div class="band" data-from="#1a1a1a" data-to="#ffffff"></div>
+</main>
+<footer class="site-footer tone on-light" data-k="100">
+  <div class="wrap">
+    <div>
+      <p class="big">WGT-01</p>
+      <p class="small">Walife Generative Tools. Un progetto di Walife. Sito e plugin in sviluppo.<br>Versione 0.16.5, per Photoshop 27.9.1 o successivo.</p>
+    </div>
+    <ul class="small">
+      <li><a href="../prova/">Prova</a></li>
+      <li><a href="../documentazione/">Documentazione</a></li>
+      <li><a href="../download/">Scarica</a></li>
+    </ul>
+    <ul class="small">
+      <li><a href="../documentazione/novita/">Novità delle versioni</a></li>
+      <li><a href="../documentazione/crediti/">Crediti delle immagini</a></li>
+      <li><a href="https://github.com/ThaWalife/WGT-01">Codice del sito su GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

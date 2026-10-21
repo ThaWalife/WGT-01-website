@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block main %}
+<section class="tone doc-hero" data-k="0">
+  <div class="wrap">
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}<p>{{ page.description }}</p>{% endif %}
+  </div>
+</section>
+<div class="band" data-from="#000000" data-to="#ffffff"></div>
+<div class="tone on-light" data-k="100">
+  <div class="wrap docs">
+    <nav class="doc-nav" aria-label="Documentazione">
+      {% for group in nav %}
+      <p>{{ group.name }}</p>
+      <ul>
+        {% for d in group.pages %}<li><a href="{{ root }}{{ d.url }}"{% if d.url == page.url %} aria-current="page"{% endif %}>{{ d.nav }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endfor %}
+    </nav>
+    <article class="doc-body">
+      {{ page.html | safe }}
+      <nav class="doc-pager" aria-label="Pagine vicine">
+        {% if prev %}<a href="{{ root }}{{ prev.url }}"><small>Precedente</small>{{ prev.nav }}</a>{% else %}<span></span>{% endif %}
+        {% if next %}<a href="{{ root }}{{ next.url }}" style="text-align:right"><small>Successiva</small>{{ next.nav }}</a>{% endif %}
+      </nav>
+    </article>
+  </div>
+</div>
+{% endblock %}
