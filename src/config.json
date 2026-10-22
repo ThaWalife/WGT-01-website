@@ -4,7 +4,7 @@
   "author": "Walife",
   "version": "0.16.5",
   "photoshop_min": "27.9.1",
-  "site_url": "https://thawalife.github.io/WGT-01-website/",
+  "site_url": "https://wgt01.thawalife.com/",
   "repo": "https://github.com/ThaWalife/WGT-01-website",
   "payhip": {
     "product_url": null,
@@ -20,5 +20,5 @@
     "provider": "MailerLite",
     "action": "https://assets.mailerlite.com/jsonp/2734112/forms/202045807612921633/subscribe"
   },
-  "custom_domain": null
+  "custom_domain": "wgt01.thawalife.com"
 }
