@@ -580,13 +580,15 @@ fieldset.panel__row legend { padding: 0; margin-bottom: 6px; font-size: var(--t-
 .logo-sym { display: block; aspect-ratio: 12 / 14; }
 .lockup { display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto; column-gap: .22em; align-items: end; justify-content: start; margin: 0; }
 .lockup__sym { grid-row: 1 / span 2; height: 1.18em; width: auto; color: var(--green); align-self: start; margin-top: .02em; }
+.lockup__num { color: var(--green); }
 .lockup__word { font-family: var(--f-dot); font-weight: 900; line-height: .78; letter-spacing: -.02em; }
 .lockup__sub { align-self: start; font-family: var(--f-mono); font-weight: 600; font-size: .1em; letter-spacing: .42em; text-transform: uppercase; line-height: 1; margin-top: .9em; white-space: nowrap; }
 .hero h1.lockup { margin: 0 0 .22em -0.02em; }
 .lockup--footer { font-size: clamp(3rem, 6vw, 5.5rem); margin-bottom: 18px; color: var(--paper); }
 .lockup--footer .lockup__sub { font-size: .13em; }
 @media (max-width: 600px) { .lockup__sub { letter-spacing: .25em; font-size: .12em; } }
-@media (max-width: 860px) { .hero h1.lockup { background: var(--ink); padding: .1em .14em .12em; width: fit-content; } }
+/* lockup della hero sempre su un piano nero: il "-01" verde non si perde nell'immagine verde */
+.hero h1.lockup { background: var(--ink); padding: .12em .16em .14em .12em; width: fit-content; }
 
 /* finestre su sfondo nero: bordo chiaro e ombra verde, altrimenti la cornice sparisce */
 [data-c="black"] .win { border-color: rgba(255,255,255,.7); box-shadow: 6px 6px 0 var(--green); }

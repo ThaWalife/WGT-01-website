@@ -53,7 +53,7 @@
 <footer class="site-footer tone" data-c="black">
   <div class="wrap">
     <div>
-      <p class="lockup lockup--footer">{{ symbol("logo-sym lockup__sym") }}<span class="lockup__word">{{ cfg.name }}</span><span class="lockup__sub">{{ cfg.brand }}</span></p>
+      <p class="lockup lockup--footer">{{ symbol("logo-sym lockup__sym") }}<span class="lockup__word">{{ cfg.name.split('-')[0] }}<span class="lockup__num">-{{ cfg.name.split('-')[1] }}</span></span><span class="lockup__sub">{{ cfg.brand }}</span></p>
       <p class="small">{{ ui.footer_made }}<br>Versione {{ cfg.version }}, per Photoshop {{ cfg.photoshop_min }} o successivo.</p>
     </div>
     <ul class="small">
