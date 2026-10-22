@@ -1,7 +1,7 @@
 # WGT-01 — sito
 
 Sito di presentazione, documentazione e download di **WGT-01**, plugin per Adobe Photoshop
-(Walife Generative Tools). Pubblicato con GitHub Pages: https://thawalife.github.io/WGT-01/
+(Walife Generative Tools). Pubblicato con GitHub Pages: https://thawalife.github.io/WGT-01-website/
 
 Il sito è statico e senza dipendenze nel browser: gli effetti (ASCII, halftone, curve di livello…)
 sono versioni leggere degli algoritmi del plugin, scritte in JavaScript e disegnate su canvas.

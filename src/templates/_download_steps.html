@@ -1,6 +1,6 @@
 {% if cfg.payhip.product_url %}
-<div class="actions" style="margin-bottom:40px">
-  <a class="btn btn--primary payhip-buy-button" href="{{ cfg.payhip.product_url }}" data-product="{{ cfg.payhip.product_id }}" data-theme="none"><span>Dona da {{ cfg.payhip.min_price }} e scarica</span></a>
+<div class="actions" style="margin-bottom:32px">
+  <a class="btn btn--go payhip-buy-button" href="{{ cfg.payhip.product_url }}" data-product="{{ cfg.payhip.product_id }}" data-theme="none">Dona da {{ cfg.payhip.min_price }} e scarica</a>
 </div>
 <script src="https://payhip.com/payhip.js" defer></script>
 {% else %}
@@ -8,14 +8,17 @@
 {% endif %}
 <ol class="steps">
   <li>
+    <span class="lbl">[01]</span>
     <h3>Dona da {{ cfg.payhip.min_price }}</h3>
     <p>Scegli tu quanto: il minimo è {{ cfg.payhip.min_price }}. Il pagamento passa da Payhip.</p>
   </li>
   <li>
+    <span class="lbl">[02]</span>
     <h3>Ricevi file e codice</h3>
     <p>Un’email ti porta il file del plugin e il tuo codice seriale personale.</p>
   </li>
   <li>
+    <span class="lbl">[03]</span>
     <h3>Installa in Photoshop</h3>
     <p>Doppio clic sul file .ccx: Creative Cloud installa {{ cfg.name }} e lo trovi nel menu Plugin.</p>
   </li>

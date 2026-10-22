@@ -1,180 +1,182 @@
-/* Hero: la foto convertita in ASCII. La lente sotto il cursore mostra un altro stile. */
-import { loadImage, getPixels, gray, rng, BAYER8 } from '../engines.js';
-import { fitCanvas, photo, reduceMotion } from '../main.js';
+/* Hero: il logo di WGT-01 ridisegnato in tempo reale da un algoritmo.
+   Il pannello accanto funziona come quello del plugin: stile, densità, pausa.
+   Il cursore illumina il campo dove passa. */
+import { loadImage, boxBlur, contourSegments, BAYER8, MONO } from '../engines.js';
+import { fitCanvas, loop, reduceMotion } from '../main.js';
 
 const RAMP = ' .·:-=+*o#%@';
-const LENSES = [
-  { id: 'halftone', name: 'Halftone' },
-  { id: 'dither', name: 'Dither' },
-  { id: 'incisione', name: 'Incisione' },
-];
+const WHITE = '#ffffff';
+const GREEN = '#35b978';
 
 export default async function hero(section) {
   const canvas = section.querySelector('canvas');
-  const label = section.querySelector('[data-lens-name]');
-  const img = await loadImage(photo(section.dataset.photo || 'fotografo'));
-  const rnd = rng(42);
-  let s = null; // stato del layout
-  let lens = { x: 0, y: 0, on: false, mode: 0 };
-  const GREEN = '#35b978';
+  const root = document.documentElement.dataset.root || './';
+  const logo = await loadImage(root + 'assets/img/logo-white.png');
+  try { await document.fonts.load(`16px "Martian Mono"`); } catch {}
 
+  const styleBtns = [...section.querySelectorAll('[data-hero-style]')];
+  const density = section.querySelector('[data-hero-density]');
+  const pauseBtn = section.querySelector('[data-hero-pause]');
+  const st = { style: 'ascii', dens: 0.55, playing: !reduceMotion, t: 0 };
+  const ptr = { x: -9999, y: -9999, k: 0 };
+  let L = null;
+
+  /* Campo di base: il logo (nitido) + un alone che serve da "distanza" per le onde. */
   function layout() {
-    const { ctx, W, H, dpr } = fitCanvas(canvas);
-    const size = Math.round((W / dpr < 700 ? 8 : 10.5) * dpr);
-    const cw = size * 0.6;
-    const cols = Math.floor(W / cw), rows = Math.ceil(H / size);
-    const g = gray(getPixels(img, cols, rows), { contrast: 0.35, brightness: 0.02 });
-    // sfuma verso il nero a sinistra, dove sta il titolo
-    for (let y = 0; y < rows; y++)
-      for (let x = 0; x < cols; x++) {
-        const t = Math.min(1, x / (cols * 0.28));
-        const v = Math.min(1, y / (rows * 0.2));
-        g[y * cols + x] *= t * t * (3 - 2 * t) * (0.1 + 0.9 * v * v * (3 - 2 * v));
+    const { ctx, W, H, dpr } = fitCanvas(canvas, 1.75);
+    const g = Math.max(3, Math.round(5 * dpr));
+    const gw = Math.ceil(W / g), gh = Math.ceil(H / g);
+    const off = document.createElement('canvas');
+    off.width = gw; off.height = gh;
+    const ox = off.getContext('2d', { willReadFrequently: true });
+    const narrow = W / dpr < 860;
+    const lh = gh * (narrow ? 0.5 : 0.9);
+    const lw = lh * (logo.naturalWidth / logo.naturalHeight);
+    const cx = gw * (narrow ? 0.62 : 0.64), cy = gh * (narrow ? 0.3 : 0.5);
+    ox.drawImage(logo, cx - lw / 2, cy - lh / 2, lw, lh);
+    const d = ox.getImageData(0, 0, gw, gh).data;
+    const a = new Float32Array(gw * gh);
+    for (let i = 0; i < a.length; i++) a[i] = d[i * 4 + 3] / 255;
+    const A = boxBlur(a, gw, gh, 1);
+    const G = boxBlur(boxBlur(boxBlur(a, gw, gh, 7), gw, gh, 7), gw, gh, 5);
+    L = { ctx, W, H, dpr, g, gw, gh, A, G };
+  }
+
+  /* Valore del campo (0..1) in un punto del canvas al tempo t. */
+  function field(x, y, t) {
+    const i = Math.min(L.gh - 1, Math.max(0, (y / L.g) | 0)) * L.gw + Math.min(L.gw - 1, Math.max(0, (x / L.g) | 0));
+    const a = L.A[i], gl = L.G[i];
+    let v = a * 0.92 + gl * 0.5;
+    if (gl > 0.015) v += 0.13 * Math.sin(gl * 26 - t * 1.7) * (1 - a);
+    if (ptr.k > 0) {
+      const dx = x - ptr.x, dy = y - ptr.y, s = 90 * L.dpr;
+      v += 0.55 * ptr.k * Math.exp(-(dx * dx + dy * dy) / (2 * s * s));
+    }
+    return v < 0 ? 0 : v > 1 ? 1 : v;
+  }
+  const inLogo = (x, y) => L.A[Math.min(L.gh - 1, (y / L.g) | 0) * L.gw + Math.min(L.gw - 1, (x / L.g) | 0)] > 0.5;
+
+  function drawAscii(t) {
+    const { ctx, W, H, dpr } = L;
+    const size = Math.round((16 - st.dens * 9) * dpr);
+    ctx.font = `${size}px ${MONO}`;
+    ctx.textBaseline = 'top';
+    const cw = ctx.measureText('M').width;
+    const cols = Math.ceil(W / cw), rows = Math.ceil(H / size);
+    const n = RAMP.length - 1;
+    for (let r = 0; r < rows; r++) {
+      let w = '', gch = '';
+      const y = r * size + size / 2;
+      for (let c = 0; c < cols; c++) {
+        const x = c * cw + cw / 2;
+        const ch = RAMP[Math.round(field(x, y, t) * n)];
+        if (ch !== ' ' && inLogo(x, y)) { w += ch; gch += ' '; } else { w += ' '; gch += ch; }
       }
-    const reveal = new Float32Array(cols * rows);
-    for (let y = 0; y < rows; y++)
-      for (let x = 0; x < cols; x++) reveal[y * cols + x] = 0.15 + 0.55 * (1 - x / cols) * 0.5 + rnd() * 0.55;
-    const base = document.createElement('canvas');
-    base.width = W; base.height = H;
-    s = { ctx, W, H, dpr, size, cw, cols, rows, g, reveal, base };
-    const L = RAMP.length - 1;
-    s.lines = [];
-    for (let y = 0; y < rows; y++) {
-      let line = '';
-      for (let x = 0; x < cols; x++) line += RAMP[Math.round(g[y * cols + x] * L)];
-      s.lines.push(line);
+      ctx.fillStyle = WHITE; ctx.fillText(w, 0, r * size);
+      ctx.fillStyle = GREEN; ctx.fillText(gch, 0, r * size);
     }
-    drawAscii(base.getContext('2d'), 1);
   }
 
-  function font(c) {
-    c.font = `${s.size}px ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace`;
-    c.textBaseline = 'top';
-  }
-
-  function drawAscii(c, p) {
-    c.fillStyle = '#000';
-    c.fillRect(0, 0, s.W, s.H);
-    font(c);
-    const { cols, rows, reveal, cw, size } = s;
-    if (p >= 1) {
-      c.fillStyle = '#fff';
-      for (let y = 0; y < rows; y++) c.fillText(s.lines[y], 0, y * size, cols * cw);
-      return;
-    }
-    for (let y = 0; y < rows; y++) {
-      let shown = '', noise = '';
-      const line = s.lines[y];
-      for (let x = 0; x < cols; x++) {
-        const r = reveal[y * cols + x];
-        if (p >= r) { shown += line[x]; noise += ' '; }
-        else { shown += ' '; noise += p > r - 0.35 && line[x] !== ' ' ? RAMP[(Math.random() * RAMP.length) | 0] : ' '; }
+  function drawHalftone(t) {
+    const { ctx, W, H, dpr } = L;
+    const step = (18 - st.dens * 11) * dpr;
+    const pw = new Path2D(), pg = new Path2D();
+    for (let j = 0, y = step / 2; y < H + step; y += step * 0.866, j++)
+      for (let x = (j & 1 ? step / 2 : 0); x < W + step; x += step) {
+        const r = step * 0.58 * Math.sqrt(field(x, y, t));
+        if (r < 0.6) continue;
+        const p = inLogo(x, y) ? pw : pg;
+        p.moveTo(x + r, y); p.arc(x, y, r, 0, Math.PI * 2);
       }
-      c.fillStyle = '#fff';
-      c.fillText(shown, 0, y * size, cols * cw);
-      c.fillStyle = 'rgba(255,255,255,.35)';
-      c.fillText(noise, 0, y * size, cols * cw);
-    }
+    ctx.fillStyle = WHITE; ctx.fill(pw);
+    ctx.fillStyle = GREEN; ctx.fill(pg);
   }
 
-  function drawLens() {
-    const { ctx, W, H } = s;
-    ctx.drawImage(s.base, 0, 0);
-    if (!lens.on) return;
-    const R = Math.min(W, H) * 0.17;
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(lens.x, lens.y, R, 0, Math.PI * 2);
-    ctx.clip();
-    ctx.fillStyle = '#000';
-    ctx.fillRect(lens.x - R, lens.y - R, R * 2, R * 2);
-    const { cols, rows, cw, size, g } = s;
-    const x0 = Math.max(0, Math.floor((lens.x - R) / cw)), x1 = Math.min(cols - 1, Math.ceil((lens.x + R) / cw));
-    const y0 = Math.max(0, Math.floor((lens.y - R) / size)), y1 = Math.min(rows - 1, Math.ceil((lens.y + R) / size));
-    const mode = LENSES[lens.mode].id;
-    ctx.fillStyle = GREEN;
-    if (mode === 'halftone') {
-      ctx.beginPath();
-      const step = size * 0.75;
-      for (let y = lens.y - R; y <= lens.y + R; y += step)
-        for (let x = lens.x - R + ((Math.round(y / step) & 1) * step) / 2; x <= lens.x + R; x += step) {
-          const gx = Math.min(cols - 1, Math.max(0, (x / cw) | 0)), gy = Math.min(rows - 1, Math.max(0, (y / size) | 0));
-          const r = step * 0.62 * Math.sqrt(g[gy * cols + gx]);
-          if (r < 0.4) continue;
-          ctx.moveTo(x + r, y);
-          ctx.arc(x, y, r, 0, Math.PI * 2);
-        }
-      ctx.fill();
-    } else if (mode === 'dither') {
-      const p = Math.max(2, Math.round(s.dpr * 3));
-      for (let y = lens.y - R; y <= lens.y + R; y += p)
-        for (let x = lens.x - R; x <= lens.x + R; x += p) {
-          const gx = Math.min(cols - 1, Math.max(0, (x / cw) | 0)), gy = Math.min(rows - 1, Math.max(0, (y / size) | 0));
-          const th = BAYER8[((y / p) & 7) * 8 + ((x / p) & 7)] / 64;
-          if (g[gy * cols + gx] > th) ctx.fillRect(x, y, p, p);
-        }
-    } else {
-      const step = size * 0.7;
-      for (let y = lens.y - R; y <= lens.y + R; y += step) {
-        ctx.beginPath();
-        const top = [], bot = [];
-        for (let x = lens.x - R; x <= lens.x + R; x += 3) {
-          const yy = y + Math.sin(x * 0.03) * step * 0.25;
-          const gx = Math.min(cols - 1, Math.max(0, (x / cw) | 0)), gy = Math.min(rows - 1, Math.max(0, (yy / size) | 0));
-          const t = step * 0.9 * g[gy * cols + gx];
-          top.push([x, yy - t / 2]); bot.push([x, yy + t / 2]);
-        }
-        top.forEach(([x, y2], i) => (i ? ctx.lineTo(x, y2) : ctx.moveTo(x, y2)));
-        for (let i = bot.length - 1; i >= 0; i--) ctx.lineTo(bot[i][0], bot[i][1]);
-        ctx.fill();
+  let dBuf = null;
+  function drawDither(t) {
+    const { ctx, W, H, dpr } = L;
+    const p = Math.max(2, Math.round((6 - st.dens * 4) * dpr));
+    const w = Math.ceil(W / p), h = Math.ceil(H / p);
+    if (!dBuf || dBuf.width !== w || dBuf.height !== h) { dBuf = document.createElement('canvas'); dBuf.width = w; dBuf.height = h; }
+    const bx = dBuf.getContext('2d');
+    const im = bx.createImageData(w, h);
+    for (let y = 0; y < h; y++)
+      for (let x = 0; x < w; x++) {
+        const X = x * p + p / 2, Y = y * p + p / 2;
+        if (field(X, Y, t) <= (BAYER8[(y & 7) * 8 + (x & 7)] + 0.5) / 64) continue;
+        const j = (y * w + x) * 4;
+        if (inLogo(X, Y)) { im.data[j] = 255; im.data[j + 1] = 255; im.data[j + 2] = 255; }
+        else { im.data[j] = 0x35; im.data[j + 1] = 0xb9; im.data[j + 2] = 0x78; }
+        im.data[j + 3] = 255;
       }
-    }
-    ctx.restore();
-    ctx.strokeStyle = 'rgba(53,185,120,.9)';
-    ctx.lineWidth = s.dpr;
-    ctx.beginPath();
-    ctx.arc(lens.x, lens.y, R, 0, Math.PI * 2);
-    ctx.stroke();
+    bx.putImageData(im, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(dBuf, 0, 0, w * p, h * p);
   }
 
-  function intro() {
-    if (reduceMotion) { drawLens(); return; }
-    const t0 = performance.now();
-    const dur = 1500;
-    const step = (t) => {
-      const p = Math.min(1.05, (t - t0) / dur);
-      drawAscii(s.ctx, p * 1.25);
-      if (p < 1.05) requestAnimationFrame(step);
-      else drawLens();
-    };
-    requestAnimationFrame(step);
+  function drawContour(t) {
+    const { ctx, W, H, dpr } = L;
+    const r = (10 - st.dens * 6) * dpr;
+    const w = Math.ceil(W / r) + 1, h = Math.ceil(H / r) + 1;
+    const f = new Float32Array(w * h);
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) f[y * w + x] = field(x * r, y * r, t);
+    const N = 14;
+    const levels = Array.from({ length: N }, (_, i) => (i + 0.5) / N);
+    ctx.lineCap = 'round';
+    contourSegments(f, w, h, levels).forEach(({ t: lv, seg }, i) => {
+      const p = new Path2D();
+      for (let k = 0; k < seg.length; k += 4) { p.moveTo(seg[k] * r, seg[k + 1] * r); p.lineTo(seg[k + 2] * r, seg[k + 3] * r); }
+      ctx.strokeStyle = lv > 0.6 ? WHITE : GREEN;
+      ctx.lineWidth = (i % 4 === 0 ? 2.2 : 1) * dpr;
+      ctx.stroke(p);
+    });
+  }
+
+  const DRAW = { ascii: drawAscii, halftone: drawHalftone, dither: drawDither, curve: drawContour };
+  function draw() {
+    if (!L) return;
+    L.ctx.fillStyle = '#000';
+    L.ctx.fillRect(0, 0, L.W, L.H);
+    DRAW[st.style](st.t);
   }
 
   layout();
-  intro();
+  draw();
+  const anim = loop(canvas, (dt) => {
+    if (st.playing) st.t += dt;
+    if (ptr.k > 0 && !ptr.on) ptr.k = Math.max(0, ptr.k - dt * 1.5);
+    draw();
+  });
+  anim.kick();
 
-  let pending = false;
+  /* controlli del pannello */
+  styleBtns.forEach((b) => b.addEventListener('click', () => {
+    st.style = b.dataset.heroStyle;
+    styleBtns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    draw();
+  }));
+  density?.addEventListener('input', () => { st.dens = density.value / 100; draw(); });
+  pauseBtn?.addEventListener('click', () => {
+    st.playing = !st.playing;
+    pauseBtn.setAttribute('aria-pressed', String(!st.playing));
+    pauseBtn.querySelector('span').textContent = st.playing ? 'Pausa' : 'Riprendi';
+  });
+  if (!st.playing && pauseBtn) { pauseBtn.setAttribute('aria-pressed', 'true'); pauseBtn.querySelector('span').textContent = 'Riprendi'; }
+
   const move = (e) => {
     const r = canvas.getBoundingClientRect();
-    lens.x = (e.clientX - r.left) * s.dpr;
-    lens.y = (e.clientY - r.top) * s.dpr;
-    lens.on = true;
-    if (!pending) { pending = true; requestAnimationFrame(() => { pending = false; drawLens(); }); }
+    ptr.x = (e.clientX - r.left) * L.dpr; ptr.y = (e.clientY - r.top) * L.dpr;
+    ptr.k = 1; ptr.on = true;
+    if (reduceMotion) draw();
   };
-  canvas.addEventListener('pointermove', move);
-  canvas.addEventListener('pointerdown', move);
-  canvas.addEventListener('pointerleave', () => { lens.on = false; drawLens(); });
-  canvas.addEventListener('click', () => {
-    lens.mode = (lens.mode + 1) % LENSES.length;
-    if (label) label.textContent = LENSES[lens.mode].name;
-    drawLens();
-  });
-  let rt = 0;
-  let lastW = canvas.clientWidth, lastH = canvas.clientHeight;
+  section.addEventListener('pointermove', move);
+  section.addEventListener('pointerleave', () => { ptr.on = false; if (reduceMotion) { ptr.k = 0; draw(); } });
+
+  let rt = 0, lastW = canvas.clientWidth, lastH = canvas.clientHeight;
   new ResizeObserver(() => {
     if (canvas.clientWidth === lastW && Math.abs(canvas.clientHeight - lastH) < 120) return;
     lastW = canvas.clientWidth; lastH = canvas.clientHeight;
     clearTimeout(rt);
-    rt = setTimeout(() => { layout(); drawLens(); }, 150);
+    rt = setTimeout(() => { layout(); draw(); }, 150);
   }).observe(canvas);
 }

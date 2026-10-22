@@ -8,7 +8,7 @@ export const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').match
 function makeBands() {
   for (const el of document.querySelectorAll('.band[data-from][data-to]')) {
     const a = hexToRgb(el.dataset.from), b = hexToRgb(el.dataset.to);
-    const rows = 18, cols = 8;
+    const rows = 16, cols = 8;
     const c = document.createElement('canvas');
     c.width = cols; c.height = rows;
     const x = c.getContext('2d');
@@ -65,6 +65,8 @@ const modules = {
   poster: () => import('./fx/poster.js'),
   still: () => import('./fx/still.js'),
   demo: () => import('./fx/demo.js'),
+  wordfx: () => import('./fx/wordfx.js'),
+  fontcycle: () => import('./fx/fontcycle.js'),
 };
 
 function lazyInit() {

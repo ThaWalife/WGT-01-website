@@ -31,12 +31,15 @@ export function loadImage(src) {
 const pxCache = new Map();
 let cacheId = 0;
 
-/* Pixel dell'immagine ridimensionata a w×h con taglio "cover" (centrato). */
-export function getPixels(img, w, h) {
+/* Pixel dell'immagine ridimensionata a w×h con taglio "cover" (centrato).
+   aspect = proporzione reale dell'area di destinazione (larghezza/altezza): serve quando
+   le celle non sono quadrate (es. ASCII, dove un carattere è più alto che largo). */
+export function getPixels(img, w, h, aspect) {
   w = Math.max(1, Math.round(w));
   h = Math.max(1, Math.round(h));
+  aspect = aspect || w / h;
   if (!img.__wgtId) img.__wgtId = ++cacheId;
-  const key = img.__wgtId + '|' + w + 'x' + h;
+  const key = img.__wgtId + '|' + w + 'x' + h + '|' + aspect.toFixed(4);
   if (pxCache.has(key)) return pxCache.get(key);
   const c = document.createElement('canvas');
   c.width = w;
@@ -44,11 +47,11 @@ export function getPixels(img, w, h) {
   const x = c.getContext('2d', { willReadFrequently: true });
   const iw = img.naturalWidth || img.width;
   const ih = img.naturalHeight || img.height;
-  const s = Math.max(w / iw, h / ih);
-  const dw = iw * s;
-  const dh = ih * s;
+  // ritaglio della sorgente con la proporzione dell'area di destinazione
+  let sw = iw, sh = iw / aspect;
+  if (sh > ih) { sh = ih; sw = ih * aspect; }
   x.imageSmoothingQuality = 'high';
-  x.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+  x.drawImage(img, (iw - sw) / 2, (ih - sh) / 2, sw, sh, 0, 0, w, h);
   const out = { w, h, data: x.getImageData(0, 0, w, h).data };
   if (pxCache.size > 60) pxCache.delete(pxCache.keys().next().value);
   pxCache.set(key, out);
@@ -212,21 +215,23 @@ function halftone(ctx, img, W, H, o) {
 
 /* ---------- 3. ASCII ---------- */
 export const ASCII_RAMP = ' .·:-=+*o#%@';
+export const MONO = '"Martian Mono", ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace';
 function ascii(ctx, img, W, H, o) {
   const size = o.cell || 11;
-  const cw = size * 0.6;
+  ctx.font = `${size}px ${MONO}`;
+  const cw = ctx.measureText('M').width || size * 0.6;
   const cols = Math.floor(W / cw), rows = Math.floor(H / size);
-  const g = gray(getPixels(img, cols, rows), o);
+  const g = gray(getPixels(img, cols, rows, (cols * cw) / (rows * size)), o);
   fill(ctx, W, H, o.paper);
   ctx.fillStyle = o.ink;
-  ctx.font = `${size}px ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace`;
+  ctx.font = `${size}px ${MONO}`;
   ctx.textBaseline = 'top';
   const ramp = o.ramp || ASCII_RAMP;
   const L = ramp.length - 1;
   for (let y = 0; y < rows; y++) {
     let line = '';
     for (let x = 0; x < cols; x++) line += ramp[Math.round((1 - g[y * cols + x]) * L)];
-    ctx.fillText(line, 0, y * size, cols * cw);
+    ctx.fillText(line, 0, y * size);
   }
 }
 

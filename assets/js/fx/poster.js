@@ -4,8 +4,10 @@ export default function poster(el) {
   const btns = [...el.querySelectorAll('[data-archetype]')];
   const desc = el.querySelector('[data-archetype-desc]');
   const grid = el.querySelector('[data-grid]');
+  const head = el.querySelector('.type-head');
   const set = (b) => {
     p.dataset.a = b.dataset.archetype;
+    if (head) head.dataset.a = b.dataset.archetype;
     btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     if (desc) desc.textContent = b.dataset.desc || '';
   };

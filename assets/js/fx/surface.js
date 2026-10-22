@@ -14,6 +14,8 @@ export default async function surface(el) {
   const canvas = el.querySelector('canvas');
   const chips = [...el.querySelectorAll('[data-shape]')];
   const byTone = el.querySelector('[data-bytone]');
+  const title = el.querySelector('[data-elsh-target]');
+  const setElsh = (b) => { if (title && b?.dataset.elsh) title.style.setProperty('--elsh', b.dataset.elsh); };
   const img = await loadImage(photo(el.dataset.photo || 'caffe'));
   const NX = 70, NZ = 46;
   const g = gray(getPixels(img, NX, NZ), { contrast: 0.55 });
@@ -54,6 +56,7 @@ export default async function surface(el) {
       shape = b.dataset.shape;
       tone = false;
       chips.forEach((c) => c.setAttribute('aria-pressed', String(c === b)));
+      setElsh(b);
       if (byTone) byTone.setAttribute('aria-pressed', 'false');
       frame();
     })
@@ -61,6 +64,7 @@ export default async function surface(el) {
   byTone?.addEventListener('click', () => {
     tone = byTone.getAttribute('aria-pressed') !== 'true';
     byTone.setAttribute('aria-pressed', String(tone));
+    setElsh(tone ? byTone : chips.find((c) => c.dataset.shape === shape));
     chips.forEach((c) => c.setAttribute('aria-pressed', String(!tone && c.dataset.shape === shape)));
     frame();
   });

@@ -10,18 +10,18 @@
 <meta property="og:title" content="WGT-01">
 <meta property="og:description" content="WGT-01: pattern, stili generativi e impaginazione per Photoshop, dalla scala di grigi della tua immagine.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://thawalife.github.io/WGT-01/">
-<meta property="og:image" content="https://thawalife.github.io/WGT-01/assets/img/og.png">
+<meta property="og:url" content="https://thawalife.github.io/WGT-01-website/">
+<meta property="og:image" content="https://thawalife.github.io/WGT-01-website/assets/img/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
-<link rel="stylesheet" href="./assets/css/site.css?v=202610220133">
-<script type="module" src="./assets/js/main.js?v=202610220133"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:ROND,wght@0..100,100..900&family=Handjet:ELGR,ELSH,wght@1..2,0..16,100..900&family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap">
+<link rel="stylesheet" href="./assets/css/site.css?v=202610220206">
+<script type="module" src="./assets/js/main.js?v=202610220206"></script>
 </head>
 <body>
 <a class="skip" href="#contenuto">Vai al contenuto</a>
 <header class="site-header">
-  <a class="wordmark" href="./" aria-label="WGT-01, pagina iniziale">WGT-01</a>
+  <a class="wordmark" href="./" aria-label="WGT-01, pagina iniziale"><img src="./assets/img/logo-white.png" alt="" width="18" height="28">WGT-01</a>
   <nav class="site-nav" aria-label="Principale">
     <a class="nav-optional" href="./#stili">Stili</a>
     <a href="./prova/">Prova</a>
@@ -31,107 +31,142 @@
 </header>
 <main id="contenuto">
 
-<section class="tone hero" data-k="0" data-fx="hero" data-photo="astronauta" aria-labelledby="titolo">
+<section class="tone hero" data-c="black" data-fx="hero" aria-labelledby="titolo">
   <canvas class="hero__canvas" aria-hidden="true"></canvas>
-  <div class="hero__inner wrap">
-    <h1 id="titolo">WGT-01</h1>
-    <p class="hero__lead">Pattern, stili generativi e impaginazione per Photoshop. Tutto parte dalla scala di grigi della tua immagine.</p>
-    <div class="actions">
-      <a class="btn btn--primary" href="./download/"><span>Scarica WGT-01</span></a>
-      <a class="btn" href="./prova/"><span>Provalo nel browser</span></a>
-    </div>
-    <p class="hero__meta">Plugin per Photoshop 27.9.1 o successivo. Versione 0.16.5, ancora in sviluppo.</p>
-  </div>
-  <p class="hero__lens">Passa sulla foto: la lente mostra <strong data-lens-name>Halftone</strong>.<br>Fai clic per cambiare stile.</p>
-</section>
-
-<div class="band" data-from="#000000" data-to="#1a1a1a"></div>
-
-<section class="tone section" data-k="10" aria-labelledby="tre">
-  <span class="tone-value">Grigio 10%</span>
-  <div class="wrap three">
-    <div class="three__intro">
-      <h2 class="h-section" id="tre">Tre strumenti, un pannello</h2>
-      <p class="lead">WGT-01 legge i toni di un livello e li trasforma: in un motivo di elementi, in uno dei dieci stili generativi o in un’impaginazione tipografica. Ogni risultato resta modificabile.</p>
-    </div>
-    <div class="three__list">
-      <article class="feature">
-        <canvas data-fx="still" data-style="halftone" data-photo="hopper" data-ink="#ffffff" data-paper="#000000" data-opts='{"cell":6,"angle":0,"staggered":true}' aria-hidden="true"></canvas>
-        <h3 class="h-sub">Pattern</h3>
-        <p>Ripete un elemento scelto da te, una forma o un tuo file, e ne decide dimensione e posizione in base al tono.</p>
-        <a href="./documentazione/pattern/">Come funziona Pattern</a>
-      </article>
-      <article class="feature">
-        <canvas data-fx="still" data-style="curve" data-photo="fotografo" data-ink="#ffffff" data-paper="#000000" data-opts='{"levels":14}' aria-hidden="true"></canvas>
-        <h3 class="h-sub">Stili</h3>
-        <p>Dieci stili, dal dither alle curve di livello. Lavorano su tutti i livelli visibili e quattro si esportano in SVG.</p>
-        <a href="./documentazione/stili/">I dieci stili</a>
-      </article>
-      <article class="feature">
-        <figure class="mini-poster" aria-hidden="true">
-          <canvas data-fx="still" data-style="dither" data-photo="razzo" data-ink="#ffffff" data-paper="#000000" data-opts='{"cell":2,"method":"bayer"}'></canvas>
-          <figcaption><b>Notte<br>dei razzi</b><span>Sabato 14 novembre, ore 21</span></figcaption>
-        </figure>
-        <h3 class="h-sub">Type</h3>
-        <p>Impagina manifesti, post e storie: formato, colori leggibili, caratteri tra quelli installati, sei composizioni.</p>
-        <a href="./documentazione/type/">Come funziona Type</a>
-      </article>
-    </div>
-  </div>
-</section>
-
-<div class="band" data-from="#1a1a1a" data-to="#333333"></div>
-
-<section class="tone section" data-k="20" id="stili" aria-labelledby="dieci" data-fx="gallery">
-  <span class="tone-value">Grigio 20%</span>
-  <div class="wrap gallery">
-    <div class="gallery__head">
-      <h2 class="h-section" id="dieci">Dieci stili, una foto</h2>
-      <p class="prose muted">Scegli uno stile e trascina il cursore per confrontarlo con l’originale. Qui vedi una versione leggera calcolata nel browser; nel plugin ogni stile ha i suoi controlli e preset.</p>
-    </div>
-    <ul class="style-list" role="tablist" aria-label="Stili" aria-orientation="vertical">
-<li><button role="tab" type="button" data-style="dither" aria-selected="true" tabindex="0" aria-controls="palco"><span class="style-name">Dither</span></button></li>
-<li><button role="tab" type="button" data-style="halftone" aria-selected="false" tabindex="-1" aria-controls="palco"><span class="style-name">Halftone</span><span class="svg-tag" title="Esportabile in SVG">SVG</span></button></li>
-<li><button role="tab" type="button" data-style="ascii" aria-selected="false" tabindex="-1" aria-controls="palco"><span class="style-name">ASCII</span></button></li>
-<li><button role="tab" type="button" data-style="mosaico" aria-selected="false" tabindex="-1" aria-controls="palco"><span class="style-name">Mosaico</span></button></li>
-<li><button role="tab" type="button" data-style="incisione" aria-selected="false" tabindex="-1" aria-controls="palco"><span class="style-name">Incisione</span><span class="svg-tag" title="Esportabile in SVG">SVG</span></button></li>
-<li><button role="tab" type="button" data-style="flusso" aria-selected="false" tabindex="-1" aria-controls="palco"><span class="style-name">Linee di flusso</span><span class="svg-tag" title="Esportabile in SVG">SVG</span></button></li>
-<li><button role="tab" type="button" data-style="curve" aria-selected="false" tabindex="-1" aria-controls="palco"><span class="style-name">Curve di livello</span><span class="svg-tag" title="Esportabile in SVG">SVG</span></button></li>
-<li><button role="tab" type="button" data-style="sfumatura" aria-selected="false" tabindex="-1" aria-controls="palco"><span class="style-name">Mappa sfumatura</span></button></li>
-<li><button role="tab" type="button" data-style="glitch" aria-selected="false" tabindex="-1" aria-controls="palco"><span class="style-name">Glitch</span></button></li>
-<li><button role="tab" type="button" data-style="pixelsort" aria-selected="false" tabindex="-1" aria-controls="palco"><span class="style-name">Pixel sorting</span></button></li>
-    </ul>
-    <div class="stage" id="palco" role="tabpanel" aria-label="Anteprima dello stile">
-      <div class="stage__frame">
-        <canvas class="stage__after" aria-hidden="true"></canvas>
-        <canvas class="stage__before" aria-hidden="true"></canvas>
-        <button class="stage__handle" type="button" role="slider" aria-label="Confronto tra originale e stile" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></button>
-        <div class="stage__labels"><span>Originale</span><span data-style-name>Dither</span></div>
-      </div>
-      <div class="stage__foot">
-        <p class="stage__note" data-note aria-live="polite"></p>
-        <div class="photos" role="group" aria-label="Foto di prova">
-<button type="button" data-photo="hopper" aria-pressed="true" aria-label="Ritratto di Grace Hopper"><img src="./assets/img/demo/hopper.jpg" alt="" loading="lazy" width="52" height="52"></button><button type="button" data-photo="astronauta" aria-pressed="false" aria-label="Ritratto di Eileen Collins, astronauta"><img src="./assets/img/demo/astronauta.jpg" alt="" loading="lazy" width="52" height="52"></button><button type="button" data-photo="fotografo" aria-pressed="false" aria-label="Fotografo con la macchina"><img src="./assets/img/demo/fotografo.jpg" alt="" loading="lazy" width="52" height="52"></button><button type="button" data-photo="caffe" aria-pressed="false" aria-label="Tazza di caffè"><img src="./assets/img/demo/caffe.jpg" alt="" loading="lazy" width="52" height="52"></button><button type="button" data-photo="gatto" aria-pressed="false" aria-label="Gatto"><img src="./assets/img/demo/gatto.jpg" alt="" loading="lazy" width="52" height="52"></button><button type="button" data-photo="razzo" aria-pressed="false" aria-label="Lancio di un razzo"><img src="./assets/img/demo/razzo.jpg" alt="" loading="lazy" width="52" height="52"></button>        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="band" data-from="#333333" data-to="#4d4d4d"></div>
-
-<section class="tone section" data-k="30" aria-labelledby="pattern" data-fx="surface" data-photo="astronauta">
-  <span class="tone-value">Grigio 30%</span>
-  <div class="wrap split">
+  <div class="hero__inner">
     <div>
-      <h2 class="h-section" id="pattern">Un elemento, migliaia di posizioni</h2>
-      <p class="lead">Pattern ripete un elemento e ne decide la dimensione in base al tono: cresce nelle ombre, sparisce nelle luci.</p>
-      <div class="chips" role="group" aria-label="Elemento">
-        <button class="chip" type="button" data-shape="punto" aria-pressed="true">Punto</button>
-        <button class="chip" type="button" data-shape="quadrato" aria-pressed="false">Quadrato</button>
-        <button class="chip" type="button" data-shape="croce" aria-pressed="false">Croce</button>
-        <button class="chip" type="button" data-shape="triangolo" aria-pressed="false">Triangolo</button>
-        <button class="chip" type="button" data-shape="anello" aria-pressed="false">Anello</button>
-        <button class="chip" type="button" data-bytone aria-pressed="false">Un elemento per tono</button>
+      <p class="lbl lbl--muted" style="margin-bottom:14px">[plugin per photoshop · v0.16.5]</p>
+      <h1 id="titolo">WGT-01</h1>
+      <p class="hero__lead"><span>Pattern, stili generativi e impaginazione. Tutto parte dalla scala di grigi della tua immagine.</span></p>
+      <div class="actions">
+        <a class="btn btn--go" href="./download/">Scarica WGT-01</a>
+        <a class="btn" href="./prova/" style="background:#000">Provalo nel browser</a>
+      </div>
+    </div>
+    <div class="panel hero__panel" role="group" aria-label="Controlli dello sfondo">
+      <div class="panel__bar"><span>WGT-01 — Stili</span><span>logo.png</span></div>
+      <div class="panel__body">
+        <div class="panel__row">
+          <span>Stile</span>
+          <div class="seg">
+            <button class="chip" type="button" data-hero-style="ascii" aria-pressed="true">ASCII</button>
+            <button class="chip" type="button" data-hero-style="halftone" aria-pressed="false">Halftone</button>
+            <button class="chip" type="button" data-hero-style="dither" aria-pressed="false">Dither</button>
+            <button class="chip" type="button" data-hero-style="curve" aria-pressed="false">Curve</button>
+          </div>
+        </div>
+        <div class="panel__row">
+          <label for="hero-dens">Densità</label>
+          <input id="hero-dens" type="range" min="0" max="100" value="55" data-hero-density>
+        </div>
+        <div class="actions"><button class="chip" type="button" data-hero-pause aria-pressed="false"><span>Pausa</span></button></div>
+      </div>
+    </div>
+    <p class="hero__meta lbl lbl--muted"><span>[Photoshop 27.9.1+]</span><span>[Windows / macOS]</span><span>[donazione da 1 €]</span></p>
+  </div>
+</section>
+
+<div class="band" data-from="#000000" data-to="#0d9e5a"></div>
+
+<section class="tone" data-c="green" aria-labelledby="tre" style="padding:40px 0 0">
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:28px">
+    <h2 class="lbl" id="tre">[tre strumenti, un pannello]</h2>
+    <p class="lbl" style="max-width:52ch">WGT-01 legge i toni di un livello e li trasforma. Ogni risultato resta modificabile.</p>
+  </div>
+  <div class="kin">
+    <article class="kin__row">
+      <span class="lbl">[01]</span>
+      <h3 class="kin__word kin__word--el" aria-label="Pattern">Pattern</h3>
+      <div class="kin__note">
+        <p>Ripete un elemento, una forma o un tuo file, e ne decide dimensione e posizione in base al tono. Come queste lettere, fatte di elementi che cambiano forma.</p>
+        <a href="./documentazione/pattern/">Come funziona Pattern</a>
+      </div>
+    </article>
+    <article class="kin__row kin__row--right" data-fx="wordfx" data-word="Stili">
+      <span class="lbl">[02]</span>
+      <h3 class="sr-only">Stili</h3>
+      <canvas class="kin__canvas" aria-hidden="true"></canvas>
+      <div class="kin__note">
+        <p>Dieci stili, dal dither alle curve di livello, su tutti i livelli visibili. Questa parola passa da uno all’altro: ora è <strong data-wordfx-name>Dither</strong>.</p>
+        <a href="./documentazione/stili/">I dieci stili</a>
+      </div>
+    </article>
+    <article class="kin__row kin__row--font" data-fx="fontcycle">
+      <span class="lbl">[03]</span>
+      <h3 class="kin__word kin__word--font" aria-label="Type"><span data-fontcycle>Type</span></h3>
+      <div class="kin__note">
+        <p>Impagina manifesti, post e storie. Analizza i font installati e sceglie quelli adatti al tono.</p>
+        <a href="./documentazione/type/">Come funziona Type</a>
+      </div>
+      <p class="kin__caption lbl" aria-live="off">[font <span data-fontcycle-n>1</span>/9 — <span data-fontcycle-name>Doto</span>]</p>
+    </article>
+  </div>
+</section>
+
+<div class="band" data-from="#0d9e5a" data-to="#000000"></div>
+
+<section class="tone section" data-c="black" id="stili" aria-labelledby="dieci" data-fx="gallery">
+  <div class="wrap">
+    <div class="g-head">
+      <span class="num" aria-hidden="true">10</span>
+      <h2 class="h-dot" id="dieci"><span class="sr-only">10 </span>stili,<br>una foto</h2>
+      <p class="prose small muted">Scegli uno stile e trascina il cursore per confrontarlo con l’originale. È una versione leggera, calcolata nel browser: nel plugin ogni stile ha i suoi controlli e preset.</p>
+    </div>
+    <div class="panel gallery">
+      <div class="panel__bar"><span>WGT-01 — Anteprima: <span data-style-name>Dither</span></span><span>[SVG = esportabile]</span></div>
+      <div class="gallery__body">
+        <ul class="style-list" role="tablist" aria-label="Stili" aria-orientation="vertical">
+<li><button role="tab" type="button" data-style="dither" aria-selected="true" tabindex="0" aria-controls="palco"><span>Dither</span></button></li>
+<li><button role="tab" type="button" data-style="halftone" aria-selected="false" tabindex="-1" aria-controls="palco"><span>Halftone</span><span class="svg-tag">SVG</span></button></li>
+<li><button role="tab" type="button" data-style="ascii" aria-selected="false" tabindex="-1" aria-controls="palco"><span>ASCII</span></button></li>
+<li><button role="tab" type="button" data-style="mosaico" aria-selected="false" tabindex="-1" aria-controls="palco"><span>Mosaico</span></button></li>
+<li><button role="tab" type="button" data-style="incisione" aria-selected="false" tabindex="-1" aria-controls="palco"><span>Incisione</span><span class="svg-tag">SVG</span></button></li>
+<li><button role="tab" type="button" data-style="flusso" aria-selected="false" tabindex="-1" aria-controls="palco"><span>Linee di flusso</span><span class="svg-tag">SVG</span></button></li>
+<li><button role="tab" type="button" data-style="curve" aria-selected="false" tabindex="-1" aria-controls="palco"><span>Curve di livello</span><span class="svg-tag">SVG</span></button></li>
+<li><button role="tab" type="button" data-style="sfumatura" aria-selected="false" tabindex="-1" aria-controls="palco"><span>Mappa sfumatura</span></button></li>
+<li><button role="tab" type="button" data-style="glitch" aria-selected="false" tabindex="-1" aria-controls="palco"><span>Glitch</span></button></li>
+<li><button role="tab" type="button" data-style="pixelsort" aria-selected="false" tabindex="-1" aria-controls="palco"><span>Pixel sorting</span></button></li>
+        </ul>
+        <div class="stage" id="palco" role="tabpanel" aria-label="Anteprima dello stile">
+          <div class="stage__frame">
+            <canvas class="stage__after" aria-hidden="true"></canvas>
+            <canvas class="stage__before" aria-hidden="true"></canvas>
+            <button class="stage__handle" type="button" role="slider" aria-label="Confronto tra originale e stile" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></button>
+            <div class="stage__labels"><span>Originale</span><span data-style-name>Dither</span></div>
+          </div>
+          <div class="stage__foot">
+            <p class="stage__note" data-note aria-live="polite"></p>
+            <div class="photos" role="group" aria-label="Foto di prova">
+<button type="button" data-photo="hopper" aria-pressed="true" aria-label="Ritratto di Grace Hopper"><img src="./assets/img/demo/hopper.jpg" alt="" loading="lazy" width="46" height="46"></button><button type="button" data-photo="astronauta" aria-pressed="false" aria-label="Ritratto di Eileen Collins, astronauta"><img src="./assets/img/demo/astronauta.jpg" alt="" loading="lazy" width="46" height="46"></button><button type="button" data-photo="fotografo" aria-pressed="false" aria-label="Fotografo con la macchina"><img src="./assets/img/demo/fotografo.jpg" alt="" loading="lazy" width="46" height="46"></button><button type="button" data-photo="caffe" aria-pressed="false" aria-label="Tazza di caffè"><img src="./assets/img/demo/caffe.jpg" alt="" loading="lazy" width="46" height="46"></button><button type="button" data-photo="gatto" aria-pressed="false" aria-label="Gatto"><img src="./assets/img/demo/gatto.jpg" alt="" loading="lazy" width="46" height="46"></button><button type="button" data-photo="razzo" aria-pressed="false" aria-label="Lancio di un razzo"><img src="./assets/img/demo/razzo.jpg" alt="" loading="lazy" width="46" height="46"></button>            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="band" data-from="#000000" data-to="#ffffff"></div>
+
+<section class="tone section" data-c="white" aria-labelledby="pattern" data-fx="surface" data-photo="astronauta">
+  <div class="wrap pattern">
+    <h2 class="h-el" id="pattern" data-elsh-target><span>Un elemento,</span><span>migliaia</span><span>di posizioni</span></h2>
+    <div class="pattern__side">
+      <p class="prose">Pattern ripete un elemento e ne decide la dimensione in base al tono: cresce nelle ombre, sparisce nelle luci. Cambia elemento: cambia anche il titolo.</p>
+      <div class="panel">
+        <div class="panel__bar"><span>WGT-01 — Pattern</span><span>astronauta.jpg</span></div>
+        <div class="panel__body">
+          <div class="panel__row">
+            <span>Elemento</span>
+            <div class="seg">
+              <button class="chip" type="button" data-shape="punto" data-elsh="2" aria-pressed="true">Punto</button>
+              <button class="chip" type="button" data-shape="quadrato" data-elsh="0" aria-pressed="false">Quadrato</button>
+              <button class="chip" type="button" data-shape="croce" data-elsh="9" aria-pressed="false">Croce</button>
+              <button class="chip" type="button" data-shape="triangolo" data-elsh="12" aria-pressed="false">Triangolo</button>
+              <button class="chip" type="button" data-shape="anello" data-elsh="5" aria-pressed="false">Anello</button>
+            </div>
+          </div>
+          <div class="actions"><button class="chip" type="button" data-bytone data-elsh="14" aria-pressed="false">Un elemento per tono</button></div>
+        </div>
       </div>
       <ul class="facts">
         <li>Elementi da forme pronte o da un tuo file SVG, PNG o JPG.</li>
@@ -143,43 +178,50 @@
   </div>
 </section>
 
-<div class="band" data-from="#4d4d4d" data-to="#666666"></div>
+<div class="band" data-from="#ffffff" data-to="#0d9e5a"></div>
 
-<section class="tone section" data-k="40" aria-labelledby="svg" data-fx="globe">
-  <span class="tone-value">Grigio 40%</span>
-  <div class="wrap split split--rev">
-    <div>
-      <h2 class="h-section" id="svg">Dal raster al vettoriale</h2>
-      <p class="lead">Halftone, Incisione, Linee di flusso e Curve di livello si esportano in SVG: tracciati veri, semplificati e leggeri.</p>
-      <p class="prose">Li apri in Illustrator o li mandi in stampa. L’Halftone esce anche in CMYK, con una lastra per ogni inchiostro. Questo pianeta è fatto di curve di livello: giralo e scaricalo.</p>
-      <div class="actions"><button class="btn" type="button" data-export><span>Scarica il pianeta in SVG</span></button></div>
+<section class="tone section" data-c="green" aria-labelledby="svg" data-fx="globe">
+  <div class="wrap svg-sec">
+    <h2 class="svg-sec__title" id="svg"><span class="a">Raster</span><span class="arrow" aria-hidden="true">→</span><span class="b">vettoriale</span></h2>
+    <div class="svg-sec__text">
+      <p class="prose">Halftone, Incisione, Linee di flusso e Curve di livello si esportano in SVG: tracciati veri, semplificati e leggeri, da aprire in Illustrator o mandare in stampa. L’Halftone esce anche in CMYK, con una lastra per ogni inchiostro.</p>
+      <p class="prose">Questo pianeta è fatto di curve di livello. Trascinalo per girarlo, poi scaricalo: il file contiene le curve che vedi.</p>
+      <div class="actions"><button class="btn" type="button" data-export>Scarica il pianeta in SVG</button></div>
     </div>
     <canvas class="globe" tabindex="0" aria-label="Pianeta disegnato con curve di livello. Trascina o usa le frecce per ruotarlo."></canvas>
   </div>
 </section>
 
-<div class="band" data-from="#666666" data-to="#999999"></div>
+<div class="band" data-from="#0d9e5a" data-to="#000000"></div>
 
-<section class="tone section on-light" data-k="60" aria-labelledby="type" data-fx="poster">
-  <span class="tone-value">Grigio 60%</span>
-  <div class="wrap poster-wrap">
-    <div>
-      <h2 class="h-section" id="type">Il testo trova il suo posto</h2>
-      <p class="lead">Scrivi titolo, informazioni e invito all’azione. Type fa il resto.</p>
-      <p class="prose">Riconosce il formato, prende i colori dal brand o dalla foto con un contrasto sempre leggibile, sceglie i caratteri tra quelli installati e prova sei composizioni evitando il soggetto. Prova gli archetipi:</p>
-      <div class="archetypes" role="group" aria-label="Archetipi di impaginazione">
-        <button class="chip" type="button" data-archetype="asse" aria-pressed="true" data-desc="Tutto sull’asse centrale, il testo in basso sotto il soggetto.">Asse centrale</button>
-        <button class="chip" type="button" data-archetype="bandiera" aria-pressed="false" data-desc="Testo allineato a sinistra, titolo in alto e informazioni in fondo.">Bandiera a sinistra</button>
-        <button class="chip" type="button" data-archetype="gigante" aria-pressed="false" data-desc="Il titolo occupa la pagina; la foto diventa sfondo.">Titolo gigante</button>
-        <button class="chip" type="button" data-archetype="colonna" aria-pressed="false" data-desc="Una colonna laterale piena per il testo, la foto libera accanto.">Colonna laterale</button>
-        <button class="chip" type="button" data-archetype="calma" aria-pressed="false" data-desc="Il testo va nella zona più tranquilla della foto.">Zona calma</button>
-        <button class="chip" type="button" data-archetype="striscia" aria-pressed="false" data-desc="Una fascia piena attraversa la foto e porta il testo.">Striscia</button>
+<section class="tone section" data-c="black" aria-labelledby="type" data-fx="poster">
+  <div class="wrap type-sec">
+    <div class="type-head" data-a="asse">
+      <h2 class="h-dot" id="type"><span>Il testo</span><span>trova il suo</span><span>posto</span></h2>
+    </div>
+    <div class="prose">
+      <p>Scrivi titolo, informazioni e invito all’azione. Type riconosce il formato, prende i colori dal brand o dalla foto con un contrasto sempre leggibile, sceglie i caratteri tra quelli installati e prova sei composizioni evitando il soggetto.</p>
+      <div class="panel" style="margin:22px 0 14px">
+        <div class="panel__bar"><span>WGT-01 — Type</span><span>manifesto 4:5</span></div>
+        <div class="panel__body">
+          <div class="panel__row">
+            <span>Impaginazione — cambia anche questo titolo</span>
+            <div class="archetypes">
+              <button class="chip" type="button" data-archetype="asse" aria-pressed="true" data-desc="Tutto sull’asse centrale, il testo in basso sotto il soggetto.">Asse centrale</button>
+              <button class="chip" type="button" data-archetype="bandiera" aria-pressed="false" data-desc="Testo allineato a sinistra, titolo in alto e informazioni in fondo.">Bandiera a sinistra</button>
+              <button class="chip" type="button" data-archetype="gigante" aria-pressed="false" data-desc="Il titolo occupa la pagina; la foto diventa sfondo.">Titolo gigante</button>
+              <button class="chip" type="button" data-archetype="colonna" aria-pressed="false" data-desc="Una colonna laterale piena per il testo, la foto libera accanto.">Colonna laterale</button>
+              <button class="chip" type="button" data-archetype="calma" aria-pressed="false" data-desc="Il testo va nella zona più tranquilla della foto.">Zona calma</button>
+              <button class="chip" type="button" data-archetype="striscia" aria-pressed="false" data-desc="Una fascia piena attraversa la foto e porta il testo.">Striscia</button>
+            </div>
+          </div>
+          <p class="small" data-archetype-desc aria-live="polite" style="margin:0">Tutto sull’asse centrale, il testo in basso sotto il soggetto.</p>
+          <div class="actions"><button class="chip" type="button" data-grid aria-pressed="false">Mostra la griglia</button></div>
+        </div>
       </div>
-      <p class="small" data-archetype-desc aria-live="polite">Tutto sull’asse centrale, il testo in basso sotto il soggetto.</p>
-      <div class="actions"><button class="chip" type="button" data-grid aria-pressed="false">Mostra la griglia</button></div>
       <p class="small muted">Anteprima illustrativa. Nel plugin le misure si calcolano sul tuo documento e i testi restano livelli modificabili.</p>
     </div>
-    <figure class="poster" data-a="asse" style="margin:0">
+    <figure class="poster" data-a="asse">
       <img src="./assets/img/demo/razzo.jpg" alt="Lancio di un razzo nel cielo notturno" width="640" height="427">
       <div class="poster__veil"></div>
       <div class="poster__grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
@@ -193,50 +235,52 @@
   </div>
 </section>
 
-<div class="band" data-from="#999999" data-to="#cccccc"></div>
+<div class="band" data-from="#000000" data-to="#ffffff"></div>
 
-<section class="tone section on-light" data-k="80" aria-labelledby="prova">
-  <span class="tone-value">Grigio 80%</span>
-  <div class="wrap split">
-    <div>
-      <h2 class="h-section" id="prova">Provalo sulla tua foto</h2>
-      <p class="lead">Trascina un’immagine nella pagina di prova e guardala in Dither, Halftone o ASCII. Poi scarica il risultato.</p>
-      <p class="prose">La foto non lascia il tuo computer: il calcolo avviene nel browser.</p>
-      <div class="actions"><a class="btn" href="./prova/"><span>Apri la prova</span></a></div>
+<section class="tone section" data-c="white" aria-labelledby="prova">
+  <div class="wrap try">
+    <h2 class="h-dot" id="prova">Provalo</h2>
+    <div class="try__text">
+      <p class="prose">Trascina una tua foto nella pagina di prova e guardala in Dither, Halftone o ASCII. Il calcolo avviene nel browser: la foto non lascia il tuo computer.</p>
+      <div class="actions"><a class="btn" href="./prova/">Apri la prova</a></div>
     </div>
     <div class="try-strip" aria-hidden="true">
-      <canvas data-fx="still" data-style="dither" data-photo="gatto" data-opts='{"cell":2}'></canvas>
-      <canvas data-fx="still" data-style="halftone" data-photo="gatto" data-opts='{"cell":6}'></canvas>
-      <canvas data-fx="still" data-style="ascii" data-photo="gatto" data-opts='{"cell":7}'></canvas>
+      <figure><canvas data-fx="still" data-style="dither" data-photo="gatto" data-opts='{"cell":2}'></canvas><figcaption class="lbl">[dither]</figcaption></figure>
+      <figure><canvas data-fx="still" data-style="halftone" data-photo="gatto" data-opts='{"cell":6}'></canvas><figcaption class="lbl">[halftone]</figcaption></figure>
+      <figure><canvas data-fx="still" data-style="ascii" data-photo="gatto" data-opts='{"cell":7}'></canvas><figcaption class="lbl">[ascii]</figcaption></figure>
     </div>
   </div>
 </section>
 
-<div class="band" data-from="#cccccc" data-to="#ffffff"></div>
+<div class="band" data-from="#ffffff" data-to="#0d9e5a"></div>
 
-<section class="tone section on-light" data-k="100" aria-labelledby="scarica">
-  <span class="tone-value">Bianco carta</span>
+<section class="tone section dl" data-c="green" aria-labelledby="scarica">
   <div class="wrap">
-    <h2 class="h-display" id="scarica" style="margin-bottom:.5em">Scarica WGT-01</h2>
+    <h2 class="h-dot" id="scarica">Scarica<br>WGT-01</h2>
 <p class="status">In arrivo: il download apre con la prima versione pubblica.</p>
 <ol class="steps">
   <li>
+    <span class="lbl">[01]</span>
     <h3>Dona da 1 €</h3>
     <p>Scegli tu quanto: il minimo è 1 €. Il pagamento passa da Payhip.</p>
   </li>
   <li>
+    <span class="lbl">[02]</span>
     <h3>Ricevi file e codice</h3>
     <p>Un’email ti porta il file del plugin e il tuo codice seriale personale.</p>
   </li>
   <li>
+    <span class="lbl">[03]</span>
     <h3>Installa in Photoshop</h3>
     <p>Doppio clic sul file .ccx: Creative Cloud installa WGT-01 e lo trovi nel menu Plugin.</p>
   </li>
-</ol>    <div class="actions" style="margin-top:40px"><a class="btn" href="./download/"><span>Requisiti e installazione</span></a></div>
+</ol>    <div class="actions" style="margin-top:36px"><a class="btn" href="./download/">Requisiti e installazione</a></div>
   </div>
 </section>
+
+<div class="band" data-from="#0d9e5a" data-to="#000000"></div>
 </main>
-<footer class="site-footer tone on-light" data-k="100">
+<footer class="site-footer tone" data-c="black">
   <div class="wrap">
     <div>
       <p class="big">WGT-01</p>
@@ -250,7 +294,7 @@
     <ul class="small">
       <li><a href="./documentazione/novita/">Novità delle versioni</a></li>
       <li><a href="./documentazione/crediti/">Crediti delle immagini</a></li>
-      <li><a href="https://github.com/ThaWalife/WGT-01">Codice del sito su GitHub</a></li>
+      <li><a href="https://github.com/ThaWalife/WGT-01-website">Codice del sito su GitHub</a></li>
     </ul>
   </div>
 </footer>

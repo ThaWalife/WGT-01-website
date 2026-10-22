@@ -14,14 +14,14 @@
 <meta property="og:image" content="{{ cfg.site_url }}assets/img/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:ROND,wght@0..100,100..900&family=Handjet:ELGR,ELSH,wght@1..2,0..16,100..900&family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap">
 <link rel="stylesheet" href="{{ root }}assets/css/site.css?v={{ build }}">
 <script type="module" src="{{ root }}assets/js/main.js?v={{ build }}"></script>
 </head>
 <body>
 <a class="skip" href="#contenuto">{{ ui.skip }}</a>
 <header class="site-header">
-  <a class="wordmark" href="{{ root }}" aria-label="{{ cfg.name }}, pagina iniziale">{{ cfg.name }}</a>
+  <a class="wordmark" href="{{ root }}" aria-label="{{ cfg.name }}, pagina iniziale"><img src="{{ root }}assets/img/logo-white.png" alt="" width="18" height="28">{{ cfg.name }}</a>
   <nav class="site-nav" aria-label="Principale">
     <a class="nav-optional" href="{{ root }}#stili">{{ ui.nav_styles }}</a>
     <a href="{{ root }}prova/"{% if section == 'prova' %} aria-current="page"{% endif %}>{{ ui.nav_try }}</a>
@@ -32,7 +32,7 @@
 <main id="contenuto">
 {% block main %}{% endblock %}
 </main>
-<footer class="site-footer tone on-light" data-k="100">
+<footer class="site-footer tone" data-c="black">
   <div class="wrap">
     <div>
       <p class="big">{{ cfg.name }}</p>

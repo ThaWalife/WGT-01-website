@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% block main %}
-<section class="tone doc-hero" data-k="0">
+<section class="tone page-hero" data-c="black">
   <div class="wrap">
+    <p class="lbl lbl--muted" style="margin-bottom:14px">[documentazione · {{ page.group|lower }}]</p>
     <h1>{{ page.title }}</h1>
     {% if page.description %}<p>{{ page.description }}</p>{% endif %}
   </div>
 </section>
 <div class="band" data-from="#000000" data-to="#ffffff"></div>
-<div class="tone on-light" data-k="100">
+<div class="tone" data-c="white">
   <div class="wrap docs">
     <nav class="doc-nav" aria-label="Documentazione">
       {% for group in nav %}
@@ -27,4 +28,5 @@
     </article>
   </div>
 </div>
+<div class="band" data-from="#ffffff" data-to="#000000"></div>
 {% endblock %}

@@ -1,74 +1,74 @@
 {% extends "base.html" %}
 {% block main %}
-<section class="tone doc-hero" data-k="0">
+<section class="tone page-hero" data-c="black">
   <div class="wrap">
+    <p class="lbl lbl--muted" style="margin-bottom:14px">[prova · 3 stili su 10]</p>
     <h1>Prova {{ cfg.name }}</h1>
-    <p>Tre dei dieci stili, sulla tua foto. Il calcolo avviene nel browser: l’immagine non viene caricata da nessuna parte.</p>
+    <p>Dither, Halftone e ASCII sulla tua foto. Il calcolo avviene nel browser: l’immagine non viene caricata da nessuna parte.</p>
   </div>
 </section>
-<div class="band" data-from="#000000" data-to="#1a1a1a"></div>
-<section class="tone" data-k="10" data-fx="demo" style="padding:40px 0 96px">
+<div class="band" data-from="#000000" data-to="#0d9e5a"></div>
+<section class="tone" data-c="green" style="padding:10px 0 0"><div class="wrap"><p class="lbl" style="padding:6px 0 14px">[l’anteprima ha una filigrana: la versione pulita, gli altri 7 stili e l’export SVG sono nel plugin]</p></div></section>
+<div class="band" data-from="#0d9e5a" data-to="#000000"></div>
+<section class="tone" data-c="black" data-fx="demo" style="padding:24px 0 96px">
   <div class="wrap tool">
     <div class="panel">
-      <div class="field">
+      <div class="panel__bar"><span>{{ cfg.name }} — Prova</span><span>v{{ cfg.version }}</span></div>
+      <div class="panel__body">
         <div class="drop">
           <input type="file" accept="image/*" aria-label="Scegli una foto dal computer">
-          <div>
-            <strong>Trascina qui una foto</strong><br>
-            <span class="small muted">oppure fai clic per sceglierla. Puoi anche incollarla con Ctrl+V.</span>
+          <div><strong>Trascina qui una foto</strong><br><span class="muted">oppure fai clic per sceglierla, o incollala con Ctrl+V.</span></div>
+        </div>
+        <p class="small" data-status aria-live="polite" style="margin:0">Carico la foto di esempio…</p>
+        <div class="panel__row">
+          <span>Foto di esempio</span>
+          <div class="seg">
+            {% for p in photos %}<button class="chip" type="button" data-sample="{{ p.id }}">{{ p.short }}</button>{% endfor %}
           </div>
         </div>
-        <p class="small" data-status aria-live="polite">Carico la foto di esempio…</p>
-      </div>
-      <div class="field">
-        <span class="small muted">Oppure usa una foto di esempio</span>
-        <div class="seg">
-          {% for p in photos %}<button class="chip" type="button" data-sample="{{ p.id }}">{{ p.short }}</button>{% endfor %}
+        <fieldset class="panel__row">
+          <legend>Stile</legend>
+          <div class="seg" data-group="style">
+            <button class="chip" type="button" data-v="dither" aria-pressed="true">Dither</button>
+            <button class="chip" type="button" data-v="halftone" aria-pressed="false">Halftone</button>
+            <button class="chip" type="button" data-v="ascii" aria-pressed="false">ASCII</button>
+          </div>
+        </fieldset>
+        <fieldset class="panel__row" data-method-field>
+          <legend>Metodo del dither</legend>
+          <div class="seg" data-group="method">
+            <button class="chip" type="button" data-v="atkinson" aria-pressed="true">Atkinson</button>
+            <button class="chip" type="button" data-v="fs" aria-pressed="false">Floyd–Steinberg</button>
+            <button class="chip" type="button" data-v="bayer" aria-pressed="false">Ordinato</button>
+          </div>
+        </fieldset>
+        <div class="panel__row">
+          <label for="d-density">Dettaglio</label>
+          <div class="range-row"><input id="d-density" type="range" min="1" max="10" step="1" value="6"><output data-value="density">6</output></div>
         </div>
-      </div>
-      <fieldset class="field">
-        <legend>Stile</legend>
-        <div class="seg" data-group="style">
-          <button class="chip" type="button" data-v="dither" aria-pressed="true">Dither</button>
-          <button class="chip" type="button" data-v="halftone" aria-pressed="false">Halftone</button>
-          <button class="chip" type="button" data-v="ascii" aria-pressed="false">ASCII</button>
+        <div class="panel__row">
+          <label for="d-contrast">Contrasto</label>
+          <div class="range-row"><input id="d-contrast" type="range" min="-50" max="50" step="1" value="10"><output data-value="contrast">10</output></div>
         </div>
-      </fieldset>
-      <fieldset class="field" data-method-field>
-        <legend>Metodo del dither</legend>
-        <div class="seg" data-group="method">
-          <button class="chip" type="button" data-v="atkinson" aria-pressed="true">Atkinson</button>
-          <button class="chip" type="button" data-v="fs" aria-pressed="false">Floyd–Steinberg</button>
-          <button class="chip" type="button" data-v="bayer" aria-pressed="false">Ordinato</button>
+        <div class="panel__row">
+          <label for="d-brightness">Luminosità</label>
+          <div class="range-row"><input id="d-brightness" type="range" min="-50" max="50" step="1" value="0"><output data-value="brightness">0</output></div>
         </div>
-      </fieldset>
-      <div class="field">
-        <label for="d-density">Dettaglio</label>
-        <div class="range-row"><input id="d-density" type="range" min="1" max="10" step="1" value="6"><output data-value="density">6</output></div>
+        <fieldset class="panel__row">
+          <legend>Colori</legend>
+          <div class="seg" data-group="colors">
+            <button class="chip" type="button" data-v="carta" aria-pressed="true">Nero su bianco</button>
+            <button class="chip" type="button" data-v="notte" aria-pressed="false">Bianco su nero</button>
+            <button class="chip" type="button" data-v="verde" aria-pressed="false">Verde su carta</button>
+          </div>
+        </fieldset>
+        <div class="actions"><button class="btn btn--go" type="button" data-download disabled>Scarica l’anteprima PNG</button></div>
+        <p class="privacy small">La versione senza filigrana, gli altri sette stili e l’export SVG sono nel plugin. <a href="{{ root }}download/">Scarica {{ cfg.name }}</a></p>
       </div>
-      <div class="field">
-        <label for="d-contrast">Contrasto</label>
-        <div class="range-row"><input id="d-contrast" type="range" min="-50" max="50" step="1" value="10"><output data-value="contrast">10</output></div>
-      </div>
-      <div class="field">
-        <label for="d-brightness">Luminosità</label>
-        <div class="range-row"><input id="d-brightness" type="range" min="-50" max="50" step="1" value="0"><output data-value="brightness">0</output></div>
-      </div>
-      <fieldset class="field">
-        <legend>Colori</legend>
-        <div class="seg" data-group="colors">
-          <button class="chip" type="button" data-v="carta" aria-pressed="true">Nero su bianco</button>
-          <button class="chip" type="button" data-v="notte" aria-pressed="false">Bianco su nero</button>
-          <button class="chip" type="button" data-v="verde" aria-pressed="false">Verde su carta</button>
-        </div>
-      </fieldset>
-      <div class="actions"><button class="btn btn--primary" type="button" data-download disabled><span>Scarica in PNG</span></button></div>
-      <p class="privacy small">Nel plugin hai dieci stili, l’export in SVG, i preset e risultati che restano modificabili. <a href="{{ root }}download/">Scarica {{ cfg.name }}</a></p>
     </div>
     <div class="result">
-      <canvas data-out aria-label="Risultato dello stile applicato alla foto"></canvas>
+      <canvas data-out aria-label="Risultato dello stile applicato alla foto, con filigrana"></canvas>
     </div>
   </div>
 </section>
-<div class="band" data-from="#1a1a1a" data-to="#ffffff"></div>
 {% endblock %}

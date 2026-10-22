@@ -62,7 +62,38 @@ export default async function demo(el) {
       ...COLORS[st.colors], cell, method: st.method, angle: 45,
       contrast: st.contrast / 100, brightness: st.brightness / 200,
     });
+    watermark(ctx, W, H);
     dl.disabled = false;
+  }
+
+  /* Filigrana: resta anche nel PNG scaricato. La versione pulita è nel plugin. */
+  function watermark(ctx, W, H) {
+    const u = Math.max(W, H) / 1200;
+    ctx.save();
+    ctx.globalCompositeOperation = 'difference';
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.font = `800 ${Math.round(46 * u)}px "Handjet", "Martian Mono", sans-serif`;
+    ctx.textBaseline = 'middle';
+    ctx.translate(W / 2, H / 2);
+    ctx.rotate(-Math.PI / 7);
+    const text = 'WGT-01 · ANTEPRIMA · ';
+    const tw = ctx.measureText(text).width;
+    const R = Math.hypot(W, H);
+    for (let y = -R / 2, k = 0; y < R / 2; y += 120 * u, k++)
+      for (let x = -R / 2 - (k % 2) * tw / 2; x < R / 2; x += tw) ctx.fillText(text, x, y);
+    ctx.restore();
+    // targhetta piena in basso, sempre leggibile
+    const pad = 14 * u, fs = Math.round(17 * u);
+    ctx.save();
+    ctx.font = `600 ${fs}px "Martian Mono", monospace`;
+    const label = 'Anteprima di WGT-01 — la versione pulita è nel plugin';
+    const lw = ctx.measureText(label).width;
+    ctx.fillStyle = '#0d9e5a';
+    ctx.fillRect(0, H - fs - pad * 2, lw + pad * 2, fs + pad * 2);
+    ctx.fillStyle = '#000';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, pad, H - pad - fs / 2);
+    ctx.restore();
   }
 
   async function use(src, name, isUpload) {
@@ -110,5 +141,6 @@ export default async function demo(el) {
     }, 'image/png');
   });
 
+  try { await Promise.all([document.fonts.load('800 40px "Handjet"'), document.fonts.load('600 16px "Martian Mono"')]); } catch {}
   use(photo('astronauta'), 'astronauta', false);
 }

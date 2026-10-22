@@ -1,19 +1,20 @@
 {% extends "base.html" %}
 {% block main %}
-<section class="tone doc-hero" data-k="0">
+<section class="tone page-hero" data-c="black">
   <div class="wrap">
+    <p class="lbl lbl--muted" style="margin-bottom:14px">[download]</p>
     <h1>Scarica {{ cfg.name }}</h1>
     <p>Per tutti, con una donazione da {{ cfg.payhip.min_price }} in su.</p>
   </div>
 </section>
-<div class="band" data-from="#000000" data-to="#ffffff"></div>
-<section class="tone section on-light" data-k="100" style="padding-top:48px">
+<div class="band" data-from="#000000" data-to="#0d9e5a"></div>
+<section class="tone section dl" data-c="green" style="padding-top:48px">
   <div class="wrap">
     {% include "_download_steps.html" %}
 
     <div class="split" style="margin-top:96px;align-items:start">
       <div>
-        <h2 class="h-section">Requisiti</h2>
+        <h2 class="h-el" style="font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:.3em">Requisiti</h2>
         <dl class="req">
           <dt>Photoshop</dt><dd>{{ cfg.photoshop_min }} o successivo</dd>
           <dt>Sistema</dt><dd>Windows o macOS</dd>
@@ -23,7 +24,7 @@
         </dl>
       </div>
       <div class="prose">
-        <h2 class="h-section">Il codice seriale</h2>
+        <h2 class="h-el" style="font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:.3em">Il codice seriale</h2>
         <p>Con la donazione ricevi un codice personale. Le prossime versioni di {{ cfg.name }} lo chiederanno al primo avvio per sbloccare tutte le funzioni.</p>
         <p>Il codice vale per te: se chiedi il rimborso viene disattivato.</p>
         <p><a href="{{ root }}documentazione/licenza/">Donazione e codice seriale</a></p>
@@ -31,10 +32,11 @@
     </div>
 
     <div class="prose" style="margin-top:96px">
-      <h2 class="h-section">Installazione</h2>
+      <h2 class="h-el" style="font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:.3em">Installazione</h2>
       <p>Il file del plugin ha l’estensione <strong>.ccx</strong>. Fai doppio clic: si apre Creative Cloud, che lo installa in Photoshop. Riavvia Photoshop e apri il pannello da <strong>Plugin → {{ cfg.name }}</strong>.</p>
       <p>Se il doppio clic non funziona, la guida spiega l’installazione con UXP Developer Tool. <a href="{{ root }}documentazione/installazione/">Guida all’installazione</a></p>
     </div>
   </div>
 </section>
+<div class="band" data-from="#0d9e5a" data-to="#000000"></div>
 {% endblock %}
