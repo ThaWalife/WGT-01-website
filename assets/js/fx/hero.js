@@ -1,12 +1,15 @@
-/* Hero: il logo di WGT-01 ridisegnato in tempo reale da un algoritmo.
-   Il pannello accanto funziona come quello del plugin: stile, densità, pausa.
-   Il cursore illumina il campo dove passa. */
-import { loadImage, boxBlur, contourSegments, BAYER8, MONO } from '../engines.js';
+/* Hero: il logo di WGT-01 su un piano inclinato, ripreso come da una cinepresa,
+   ridisegnato in tempo reale da un algoritmo. Intorno, artefatti grigi:
+   polvere di caratteri, grana, strappi di glitch, mirino e timecode.
+   Il pannello funziona come quello del plugin: stile, densità, pausa. */
+import { loadImage, boxBlur, contourSegments, BAYER8, MONO, rng } from '../engines.js';
 import { fitCanvas, loop, reduceMotion } from '../main.js';
 
 const RAMP = ' .·:-=+*o#%@';
 const WHITE = '#ffffff';
 const GREEN = '#35b978';
+const GRAY = '#8a8a8a';
+const GRAY_D = '#454545';
 
 export default async function hero(section) {
   const canvas = section.querySelector('canvas');
@@ -18,44 +21,161 @@ export default async function hero(section) {
   const density = section.querySelector('[data-hero-density]');
   const pauseBtn = section.querySelector('[data-hero-pause]');
   const st = { style: 'ascii', dens: 0.55, playing: !reduceMotion, t: 0 };
-  const ptr = { x: -9999, y: -9999, k: 0 };
-  let L = null;
+  const ptr = { x: -9999, y: -9999, k: 0, on: false };
+  const rnd = rng(7);
 
-  /* Campo di base: il logo (nitido) + un alone che serve da "distanza" per le onde. */
+  /* ---- il logo nel suo spazio (pixel del logo + margine per l'alone) ---- */
+  const PAD = 90;
+  const LW = logo.naturalWidth + PAD * 2, LH = logo.naturalHeight + PAD * 2;
+  const lc = document.createElement('canvas');
+  lc.width = LW; lc.height = LH;
+  const lx = lc.getContext('2d', { willReadFrequently: true });
+  lx.drawImage(logo, PAD, PAD);
+  const ld = lx.getImageData(0, 0, LW, LH).data;
+  const a0 = new Float32Array(LW * LH);
+  for (let i = 0; i < a0.length; i++) a0[i] = ld[i * 4 + 3] / 255;
+  const LA = boxBlur(a0, LW, LH, 1);
+  const LG = boxBlur(boxBlur(boxBlur(a0, LW, LH, 16), LW, LH, 16), LW, LH, 12);
+
+  /* ---- polvere: caratteri grigi sospesi nello spazio ---- */
+  const dust = Array.from({ length: 260 }, () => ({
+    x: (rnd() - 0.5) * 3.2, y: (rnd() - 0.5) * 2.2, z: 0.6 + rnd() * 2.6,
+    c: '·.:+*#=░'[(rnd() * 8) | 0], s: 0.6 + rnd() * 0.8,
+  }));
+
+  let L = null;
   function layout() {
     const { ctx, W, H, dpr } = fitCanvas(canvas, 1.75);
     const g = Math.max(3, Math.round(5 * dpr));
-    const gw = Math.ceil(W / g), gh = Math.ceil(H / g);
-    const off = document.createElement('canvas');
-    off.width = gw; off.height = gh;
-    const ox = off.getContext('2d', { willReadFrequently: true });
+    const gw = Math.ceil(W / g) + 1, gh = Math.ceil(H / g) + 1;
     const narrow = W / dpr < 860;
-    const lh = gh * (narrow ? 0.5 : 0.9);
-    const lw = lh * (logo.naturalWidth / logo.naturalHeight);
-    const cx = gw * (narrow ? 0.62 : 0.64), cy = gh * (narrow ? 0.3 : 0.5);
-    ox.drawImage(logo, cx - lw / 2, cy - lh / 2, lw, lh);
-    const d = ox.getImageData(0, 0, gw, gh).data;
-    const a = new Float32Array(gw * gh);
-    for (let i = 0; i < a.length; i++) a[i] = d[i * 4 + 3] / 255;
-    const A = boxBlur(a, gw, gh, 1);
-    const G = boxBlur(boxBlur(boxBlur(a, gw, gh, 7), gw, gh, 7), gw, gh, 5);
-    L = { ctx, W, H, dpr, g, gw, gh, A, G };
+    L = {
+      ctx, W, H, dpr, g, gw, gh, narrow,
+      A: new Float32Array(gw * gh), G: new Float32Array(gw * gh), F: new Float32Array(gw * gh),
+      f: H * 1.25, cx: W * (narrow ? 0.6 : 0.66), cy: H * (narrow ? 0.32 : 0.5),
+      scale: (H * (narrow ? 0.55 : 0.8)) / logo.naturalHeight,
+    };
   }
 
-  /* Valore del campo (0..1) in un punto del canvas al tempo t. */
+  /* Proietta il piano del logo sullo schermo: per ogni cella, il raggio della
+     cinepresa incontra il piano → coordinate nel logo → alone, forma, nebbia. */
+  function project(t) {
+    const { gw, gh, g, A, G, F, f, W, H } = L;
+    const yaw = -0.78 + 0.08 * Math.sin(t * 0.13);
+    const pitch = 0.2 + 0.03 * Math.sin(t * 0.09 + 1);
+    const roll = -0.16;
+    const cyw = Math.cos(yaw), syw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch), cr = Math.cos(roll), sr = Math.sin(roll);
+    // assi del piano (rotazione roll → pitch → yaw)
+    const rot = (x, y, z) => {
+      let x1 = x * cr - y * sr, y1 = x * sr + y * cr, z1 = z;
+      let y2 = y1 * cp - z1 * sp, z2 = y1 * sp + z1 * cp;
+      return [x1 * cyw + z2 * syw, y2, -x1 * syw + z2 * cyw];
+    };
+    const ux = rot(1, 0, 0), uy = rot(0, 1, 0), n = rot(0, 0, 1);
+    const D = f * 1.0;
+    const P0 = [(L.cx - W / 2) / f * D, (L.cy - H / 2) / f * D, D];
+    const nd0 = n[0] * P0[0] + n[1] * P0[1] + n[2] * P0[2];
+    const inv = 1 / L.scale;
+    for (let j = 0; j < gh; j++) {
+      const dy = (j * g - H / 2) / f;
+      for (let i = 0; i < gw; i++) {
+        const k = j * gw + i;
+        const dx = (i * g - W / 2) / f;
+        const den = n[0] * dx + n[1] * dy + n[2];
+        if (Math.abs(den) < 1e-4) { A[k] = 0; G[k] = 0; F[k] = 0; continue; }
+        const tt = nd0 / den;
+        const px = dx * tt - P0[0], py = dy * tt - P0[1], pz = tt - P0[2];
+        const u = (px * ux[0] + py * ux[1] + pz * ux[2]) * inv + LW / 2;
+        const v = (px * uy[0] + py * uy[1] + pz * uy[2]) * inv + LH / 2;
+        if (u < 0 || v < 0 || u >= LW - 1 || v >= LH - 1 || tt <= 0) { A[k] = 0; G[k] = 0; F[k] = 0; continue; }
+        const li = (v | 0) * LW + (u | 0);
+        A[k] = LA[li]; G[k] = LG[li];
+        // nebbia: la parte lontana del piano è più spenta
+        F[k] = Math.min(1, Math.max(0.35, 1.55 - tt / D * 0.75));
+      }
+    }
+  }
+
   function field(x, y, t) {
-    const i = Math.min(L.gh - 1, Math.max(0, (y / L.g) | 0)) * L.gw + Math.min(L.gw - 1, Math.max(0, (x / L.g) | 0));
-    const a = L.A[i], gl = L.G[i];
-    let v = a * 0.92 + gl * 0.5;
-    if (gl > 0.015) v += 0.13 * Math.sin(gl * 26 - t * 1.7) * (1 - a);
+    const k = Math.min(L.gh - 1, Math.max(0, (y / L.g) | 0)) * L.gw + Math.min(L.gw - 1, Math.max(0, (x / L.g) | 0));
+    const a = L.A[k], gl = L.G[k];
+    let v = a * 0.95 + gl * 0.55;
+    if (gl > 0.012) v += 0.13 * Math.sin(gl * 26 - t * 1.7) * (1 - a);
+    v *= L.F[k] || 0;
     if (ptr.k > 0) {
       const dx = x - ptr.x, dy = y - ptr.y, s = 90 * L.dpr;
-      v += 0.55 * ptr.k * Math.exp(-(dx * dx + dy * dy) / (2 * s * s));
+      v += 0.5 * ptr.k * Math.exp(-(dx * dx + dy * dy) / (2 * s * s));
     }
     return v < 0 ? 0 : v > 1 ? 1 : v;
   }
   const inLogo = (x, y) => L.A[Math.min(L.gh - 1, (y / L.g) | 0) * L.gw + Math.min(L.gw - 1, (x / L.g) | 0)] > 0.5;
 
+  /* ---- artefatti ---- */
+  function drawDust(t, front) {
+    const { ctx, W, H, dpr } = L;
+    ctx.font = `${Math.round(11 * dpr)}px ${MONO}`;
+    ctx.textBaseline = 'middle';
+    for (const p of dust) {
+      if (front !== p.z < 1.2) continue;
+      let z = p.z - ((t * 0.05 * p.s) % 3.2);
+      if (z < 0.4) z += 3.2;
+      const sx = W / 2 + (p.x / z) * W * 0.45, sy = H / 2 + (p.y / z) * W * 0.45;
+      if (sx < -20 || sy < -20 || sx > W + 20 || sy > H + 20) continue;
+      ctx.globalAlpha = Math.min(0.9, 0.9 / z);
+      ctx.fillStyle = z < 1 ? GRAY : GRAY_D;
+      const sc = Math.min(3, 1.2 / z);
+      ctx.font = `${Math.round(11 * dpr * sc)}px ${MONO}`;
+      ctx.fillText(p.c, sx, sy);
+    }
+    ctx.globalAlpha = 1;
+  }
+  function drawGrain() {
+    const { ctx, W, H, dpr } = L;
+    ctx.fillStyle = GRAY_D;
+    const s = Math.max(1, dpr);
+    for (let i = 0; i < 700; i++) ctx.fillRect(Math.random() * W, Math.random() * H, s, s);
+  }
+  let glitchUntil = 0, nextGlitch = 2;
+  function drawGlitch(t) {
+    const { ctx, W, H, dpr } = L;
+    if (t > nextGlitch) { glitchUntil = t + 0.16; nextGlitch = t + 1.6 + Math.random() * 2.4; }
+    if (t > glitchUntil) return;
+    for (let i = 0; i < 4; i++) {
+      const y = Math.random() * H, h = (4 + Math.random() * 26) * dpr, dx = (Math.random() - 0.5) * 80 * dpr;
+      ctx.drawImage(canvas, 0, y, W, h, dx, y, W, h);
+      ctx.fillStyle = 'rgba(110,110,110,.35)';
+      ctx.fillRect(0, y + h - dpr, W, dpr);
+    }
+    ctx.strokeStyle = GRAY;
+    ctx.lineWidth = dpr;
+    ctx.strokeRect(Math.random() * W * 0.8, Math.random() * H * 0.8, (40 + Math.random() * 160) * dpr, (10 + Math.random() * 40) * dpr);
+  }
+  function drawViewfinder(t) {
+    const { ctx, W, H, dpr } = L;
+    const m = 26 * dpr, top = 76 * dpr, len = 22 * dpr;
+    ctx.strokeStyle = GRAY;
+    ctx.lineWidth = 1.5 * dpr;
+    ctx.beginPath();
+    for (const [x, y, sx, sy] of [[m, top, 1, 1], [W - m, top, -1, 1], [m, H - m, 1, -1], [W - m, H - m, -1, -1]]) {
+      ctx.moveTo(x, y + sy * len); ctx.lineTo(x, y); ctx.lineTo(x + sx * len, y);
+    }
+    const c = [L.cx, L.cy];
+    ctx.moveTo(c[0] - 9 * dpr, c[1]); ctx.lineTo(c[0] + 9 * dpr, c[1]);
+    ctx.moveTo(c[0], c[1] - 9 * dpr); ctx.lineTo(c[0], c[1] + 9 * dpr);
+    ctx.stroke();
+    const fr = Math.floor(t * 24);
+    const tc = [Math.floor(fr / 86400), Math.floor(fr / 1440) % 60, Math.floor(fr / 24) % 60, fr % 24].map((n) => String(n).padStart(2, '0')).join(':');
+    ctx.fillStyle = GRAY;
+    ctx.font = `${Math.round(11 * dpr)}px ${MONO}`;
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'right';
+    ctx.fillText(`TC ${tc}`, W - m - 6 * dpr, top + 8 * dpr);
+    ctx.fillText(`CAM A · 24 FPS · ${STYLE_NAME[st.style]}`, W - m - 6 * dpr, top + 24 * dpr);
+    ctx.textAlign = 'left';
+  }
+  const STYLE_NAME = { ascii: 'ASCII', halftone: 'HALFTONE', dither: 'DITHER', curve: 'CURVE' };
+
+  /* ---- i quattro stili ---- */
   function drawAscii(t) {
     const { ctx, W, H, dpr } = L;
     const size = Math.round((16 - st.dens * 9) * dpr);
@@ -76,7 +196,6 @@ export default async function hero(section) {
       ctx.fillStyle = GREEN; ctx.fillText(gch, 0, r * size);
     }
   }
-
   function drawHalftone(t) {
     const { ctx, W, H, dpr } = L;
     const step = (18 - st.dens * 11) * dpr;
@@ -91,7 +210,6 @@ export default async function hero(section) {
     ctx.fillStyle = WHITE; ctx.fill(pw);
     ctx.fillStyle = GREEN; ctx.fill(pg);
   }
-
   let dBuf = null;
   function drawDither(t) {
     const { ctx, W, H, dpr } = L;
@@ -113,7 +231,6 @@ export default async function hero(section) {
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(dBuf, 0, 0, w * p, h * p);
   }
-
   function drawContour(t) {
     const { ctx, W, H, dpr } = L;
     const r = (10 - st.dens * 6) * dpr;
@@ -135,9 +252,16 @@ export default async function hero(section) {
   const DRAW = { ascii: drawAscii, halftone: drawHalftone, dither: drawDither, curve: drawContour };
   function draw() {
     if (!L) return;
-    L.ctx.fillStyle = '#000';
-    L.ctx.fillRect(0, 0, L.W, L.H);
+    const { ctx, W, H } = L;
+    project(st.t);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+    drawGrain();
+    drawDust(st.t, false);
     DRAW[st.style](st.t);
+    drawDust(st.t, true);
+    if (st.playing) drawGlitch(st.t);
+    drawViewfinder(st.t);
   }
 
   layout();
@@ -149,27 +273,26 @@ export default async function hero(section) {
   });
   anim.kick();
 
-  /* controlli del pannello */
   styleBtns.forEach((b) => b.addEventListener('click', () => {
     st.style = b.dataset.heroStyle;
     styleBtns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     draw();
   }));
   density?.addEventListener('input', () => { st.dens = density.value / 100; draw(); });
+  const label = () => (pauseBtn.querySelector('span').textContent = st.playing ? 'Pausa' : 'Riprendi');
   pauseBtn?.addEventListener('click', () => {
     st.playing = !st.playing;
     pauseBtn.setAttribute('aria-pressed', String(!st.playing));
-    pauseBtn.querySelector('span').textContent = st.playing ? 'Pausa' : 'Riprendi';
+    label();
   });
-  if (!st.playing && pauseBtn) { pauseBtn.setAttribute('aria-pressed', 'true'); pauseBtn.querySelector('span').textContent = 'Riprendi'; }
+  if (pauseBtn) { pauseBtn.setAttribute('aria-pressed', String(!st.playing)); label(); }
 
-  const move = (e) => {
+  section.addEventListener('pointermove', (e) => {
     const r = canvas.getBoundingClientRect();
     ptr.x = (e.clientX - r.left) * L.dpr; ptr.y = (e.clientY - r.top) * L.dpr;
     ptr.k = 1; ptr.on = true;
     if (reduceMotion) draw();
-  };
-  section.addEventListener('pointermove', move);
+  });
   section.addEventListener('pointerleave', () => { ptr.on = false; if (reduceMotion) { ptr.k = 0; draw(); } });
 
   let rt = 0, lastW = canvas.clientWidth, lastH = canvas.clientHeight;

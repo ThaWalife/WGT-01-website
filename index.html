@@ -15,8 +15,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:ROND,wght@0..100,100..900&family=Handjet:ELGR,ELSH,wght@1..2,0..16,100..900&family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap">
-<link rel="stylesheet" href="./assets/css/site.css?v=202610220206">
-<script type="module" src="./assets/js/main.js?v=202610220206"></script>
+<link rel="stylesheet" href="./assets/css/site.css?v=202610220241">
+<script type="module" src="./assets/js/main.js?v=202610220241"></script>
 </head>
 <body>
 <a class="skip" href="#contenuto">Vai al contenuto</a>
@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="panel hero__panel" role="group" aria-label="Controlli dello sfondo">
-      <div class="panel__bar"><span>WGT-01 — Stili</span><span>logo.png</span></div>
+      <div class="panel__bar"><span>WGT-01 — Sfondo</span></div>
       <div class="panel__body">
         <div class="panel__row">
           <span>Stile</span>
@@ -68,38 +68,69 @@
 
 <div class="band" data-from="#000000" data-to="#0d9e5a"></div>
 
-<section class="tone" data-c="green" aria-labelledby="tre" style="padding:40px 0 0">
-  <div class="wrap" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:28px">
-    <h2 class="lbl" id="tre">[tre strumenti, un pannello]</h2>
-    <p class="lbl" style="max-width:52ch">WGT-01 legge i toni di un livello e li trasforma. Ogni risultato resta modificabile.</p>
-  </div>
-  <div class="kin">
-    <article class="kin__row">
-      <span class="lbl">[01]</span>
-      <h3 class="kin__word kin__word--el" aria-label="Pattern">Pattern</h3>
-      <div class="kin__note">
-        <p>Ripete un elemento, una forma o un tuo file, e ne decide dimensione e posizione in base al tono. Come queste lettere, fatte di elementi che cambiano forma.</p>
-        <a href="./documentazione/pattern/">Come funziona Pattern</a>
-      </div>
-    </article>
-    <article class="kin__row kin__row--right" data-fx="wordfx" data-word="Stili">
-      <span class="lbl">[02]</span>
-      <h3 class="sr-only">Stili</h3>
-      <canvas class="kin__canvas" aria-hidden="true"></canvas>
-      <div class="kin__note">
-        <p>Dieci stili, dal dither alle curve di livello, su tutti i livelli visibili. Questa parola passa da uno all’altro: ora è <strong data-wordfx-name>Dither</strong>.</p>
-        <a href="./documentazione/stili/">I dieci stili</a>
-      </div>
-    </article>
-    <article class="kin__row kin__row--font" data-fx="fontcycle">
-      <span class="lbl">[03]</span>
-      <h3 class="kin__word kin__word--font" aria-label="Type"><span data-fontcycle>Type</span></h3>
-      <div class="kin__note">
-        <p>Impagina manifesti, post e storie. Analizza i font installati e sceglie quelli adatti al tono.</p>
-        <a href="./documentazione/type/">Come funziona Type</a>
-      </div>
-      <p class="kin__caption lbl" aria-live="off">[font <span data-fontcycle-n>1</span>/9 — <span data-fontcycle-name>Doto</span>]</p>
-    </article>
+<section class="tone section" data-c="green" aria-labelledby="tre" data-fx="tools">
+  <div class="wrap">
+    <div class="desk-head">
+      <h2 class="h-dot" id="tre">Un pannello,<br>tre strumenti</h2>
+      <p class="prose">WGT-01 legge i toni di un livello e li trasforma. I tre strumenti lavorano sullo stesso livello e ogni risultato resta modificabile. Le finestre si trascinano dalla barra.</p>
+    </div>
+    <div class="desk desk--tools">
+      <article class="win" data-tool="pattern" style="--x:0%;--y:70px;--w:31%">
+        <div class="win__bar"><span>[01] ritratto.psd — Pattern</span></div>
+        <div class="win__tools">
+          <span class="lbl">Elemento</span>
+          <div class="seg" role="group" aria-label="Elemento">
+            <button class="chip" type="button" data-el="croce" aria-pressed="true">Croce</button>
+            <button class="chip" type="button" data-el="punto" aria-pressed="false">Punto</button>
+            <button class="chip" type="button" data-el="quadrato" aria-pressed="false">Quadrato</button>
+            <button class="chip" type="button" data-el="foglia" aria-pressed="false">Foglia</button>
+          </div>
+        </div>
+        <canvas class="win__canvas" aria-label="Ritratto ricostruito con elementi che crescono nelle zone scure"></canvas>
+        <div class="win__text">
+          <p>Ripete un elemento, una forma o un tuo file, e ne decide dimensione e posizione in base al tono: cresce nelle ombre, sparisce nelle luci.</p>
+          <a href="./documentazione/pattern/">Come funziona Pattern</a>
+        </div>
+        <div class="win__status"><span data-count>—</span><span>griglia sfalsata</span></div>
+      </article>
+      <article class="win" data-tool="stili" style="--x:33%;--y:0px;--w:37%">
+        <div class="win__bar"><span>[02] fotografo.psd — Stili</span></div>
+        <div class="win__tools">
+          <span class="lbl">Stile</span>
+          <div class="seg" role="group" aria-label="Stile">
+            <button class="chip" type="button" data-st="curve" data-svg="1" aria-pressed="true">Curve di livello</button>
+            <button class="chip" type="button" data-st="flusso" data-svg="1" aria-pressed="false">Linee di flusso</button>
+            <button class="chip" type="button" data-st="halftone" data-svg="1" aria-pressed="false">Halftone</button>
+            <button class="chip" type="button" data-st="pixelsort" data-svg="0" aria-pressed="false">Pixel sorting</button>
+          </div>
+        </div>
+        <canvas class="win__canvas" aria-label="La stessa foto ridisegnata dallo stile scelto"></canvas>
+        <div class="win__text">
+          <p>Dieci stili generativi, dal dither alle curve di livello. Lavorano su tutti i livelli visibili e ogni risultato è uno Smart Object che puoi riaprire.</p>
+          <a href="./documentazione/stili/">I dieci stili</a>
+        </div>
+        <div class="win__status"><span>4 di 10 stili</span><span data-svgstate>esportabile in SVG</span></div>
+      </article>
+      <article class="win" data-tool="type" style="--x:72.5%;--y:120px;--w:27.5%">
+        <div class="win__bar"><span>[03] manifesto.psd — Type</span></div>
+        <figure class="poster win__poster" data-a="asse" title="Clic per la composizione successiva">
+          <img src="./assets/img/demo/caffe.jpg" alt="Tazza di caffè vista dall’alto" width="600" height="400">
+          <div class="poster__veil"></div>
+          <div class="poster__grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <figcaption class="poster__text">
+            <p class="p-kicker">La libreria del centro presenta</p>
+            <p class="p-title">Caffè e caratteri</p>
+            <p class="p-info">Giovedì 12 novembre, ore 18<br>Lodi, via Garibaldi</p>
+            <p class="p-cta">Ingresso libero</p>
+          </figcaption>
+        </figure>
+        <div class="win__text">
+          <p>Lo stesso testo, sei impaginazioni: Type riconosce il formato, mette il testo su una griglia, evita il soggetto e tiene il contrasto leggibile.</p>
+          <a href="./documentazione/type/">Come funziona Type</a>
+        </div>
+        <div class="win__status"><span data-arch>1/6 · Asse centrale</span><button class="chip chip--xs" type="button" data-play aria-pressed="false">Pausa</button></div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -113,7 +144,7 @@
       <p class="prose small muted">Scegli uno stile e trascina il cursore per confrontarlo con l’originale. È una versione leggera, calcolata nel browser: nel plugin ogni stile ha i suoi controlli e preset.</p>
     </div>
     <div class="panel gallery">
-      <div class="panel__bar"><span>WGT-01 — Anteprima: <span data-style-name>Dither</span></span><span>[SVG = esportabile]</span></div>
+      <div class="panel__bar"><span>WGT-01 — Anteprima: <span data-style-name>Dither</span></span></div>
       <div class="gallery__body">
         <ul class="style-list" role="tablist" aria-label="Stili" aria-orientation="vertical">
 <li><button role="tab" type="button" data-style="dither" aria-selected="true" tabindex="0" aria-controls="palco"><span>Dither</span></button></li>
@@ -147,48 +178,85 @@
 
 <div class="band" data-from="#000000" data-to="#ffffff"></div>
 
-<section class="tone section" data-c="white" aria-labelledby="pattern" data-fx="surface" data-photo="astronauta">
-  <div class="wrap pattern">
-    <h2 class="h-el" id="pattern" data-elsh-target><span>Un elemento,</span><span>migliaia</span><span>di posizioni</span></h2>
-    <div class="pattern__side">
-      <p class="prose">Pattern ripete un elemento e ne decide la dimensione in base al tono: cresce nelle ombre, sparisce nelle luci. Cambia elemento: cambia anche il titolo.</p>
-      <div class="panel">
-        <div class="panel__bar"><span>WGT-01 — Pattern</span><span>astronauta.jpg</span></div>
-        <div class="panel__body">
-          <div class="panel__row">
-            <span>Elemento</span>
-            <div class="seg">
-              <button class="chip" type="button" data-shape="punto" data-elsh="2" aria-pressed="true">Punto</button>
-              <button class="chip" type="button" data-shape="quadrato" data-elsh="0" aria-pressed="false">Quadrato</button>
-              <button class="chip" type="button" data-shape="croce" data-elsh="9" aria-pressed="false">Croce</button>
-              <button class="chip" type="button" data-shape="triangolo" data-elsh="12" aria-pressed="false">Triangolo</button>
-              <button class="chip" type="button" data-shape="anello" data-elsh="5" aria-pressed="false">Anello</button>
-            </div>
+<section class="tone pattern-sec" data-c="white" aria-labelledby="pattern" data-fx="surface" data-photo="astronauta">
+  <canvas class="surface" aria-label="Superficie di elementi che ondeggia su tutto lo sfondo: la dimensione di ogni elemento segue il tono di una foto"></canvas>
+  <div class="wrap pattern-sec__inner">
+    <h2 class="h-el pattern-title" id="pattern" data-elsh-target style="--elsh:3"><span>Un elemento,</span><span>migliaia</span><span>di posizioni</span></h2>
+    <div class="win pattern-win">
+      <div class="win__bar"><span>WGT-01 — Pattern</span></div>
+      <div class="win__body">
+        <p>Pattern ripete un elemento e ne decide la dimensione in base al tono: cresce nelle ombre, sparisce nelle luci. Cambia elemento o carica il tuo.</p>
+        <div class="panel__row">
+          <span class="lbl">Elemento</span>
+          <div class="seg">
+            <button class="chip" type="button" data-shape="punto" data-elsh="3" aria-pressed="true">Punto</button>
+            <button class="chip" type="button" data-shape="quadrato" data-elsh="2" aria-pressed="false">Quadrato</button>
+            <button class="chip" type="button" data-shape="croce" data-elsh="11" aria-pressed="false">Croce</button>
+            <button class="chip" type="button" data-shape="triangolo" data-elsh="7" aria-pressed="false">Triangolo</button>
+            <button class="chip" type="button" data-shape="anello" data-elsh="13" aria-pressed="false">Anello</button>
           </div>
-          <div class="actions"><button class="chip" type="button" data-bytone data-elsh="14" aria-pressed="false">Un elemento per tono</button></div>
+          <div class="seg">
+            <button class="chip" type="button" data-custom data-elsh="16" aria-pressed="false">PNG/SVG personalizzato</button>
+            <input type="file" accept="image/png,image/svg+xml,image/jpeg,image/webp" data-custom-file hidden>
+          </div>
+          <span class="small muted" data-custom-name aria-live="polite">Il file resta nel tuo browser.</span>
         </div>
+        <ul class="facts">
+          <li>Elementi da forme pronte o da un tuo file SVG, PNG o JPG.</li>
+          <li>Elementi diversi per le zone scure, medie e chiare.</li>
+          <li>Rotazione e scala casuali; “Variante” rimescola solo la parte casuale.</li>
+        </ul>
       </div>
-      <ul class="facts">
-        <li>Elementi da forme pronte o da un tuo file SVG, PNG o JPG.</li>
-        <li>Elementi diversi per le zone scure, medie e chiare.</li>
-        <li>Rotazione e scala casuali; “Variante” rimescola solo la parte casuale.</li>
-      </ul>
     </div>
-    <canvas class="surface" aria-label="Superficie di elementi che ondeggia: la dimensione di ogni elemento segue il tono di una foto"></canvas>
   </div>
 </section>
 
 <div class="band" data-from="#ffffff" data-to="#0d9e5a"></div>
 
-<section class="tone section" data-c="green" aria-labelledby="svg" data-fx="globe">
-  <div class="wrap svg-sec">
-    <h2 class="svg-sec__title" id="svg"><span class="a">Raster</span><span class="arrow" aria-hidden="true">→</span><span class="b">vettoriale</span></h2>
-    <div class="svg-sec__text">
-      <p class="prose">Halftone, Incisione, Linee di flusso e Curve di livello si esportano in SVG: tracciati veri, semplificati e leggeri, da aprire in Illustrator o mandare in stampa. L’Halftone esce anche in CMYK, con una lastra per ogni inchiostro.</p>
-      <p class="prose">Questo pianeta è fatto di curve di livello. Trascinalo per girarlo, poi scaricalo: il file contiene le curve che vedi.</p>
-      <div class="actions"><button class="btn" type="button" data-export>Scarica il pianeta in SVG</button></div>
+<section class="tone section" data-c="green" aria-labelledby="svg" data-fx="vector">
+  <div class="wrap">
+    <div class="desk-head">
+      <h2 class="svg-sec__title" id="svg"><span class="a">Raster</span><span class="arrow" aria-hidden="true">→</span><span class="b">vettoriale</span></h2>
+      <p class="prose">Halftone, Incisione, Linee di flusso e Curve di livello si esportano in SVG: tracciati veri, semplificati e leggeri. Ingrandisci lo stesso halftone: nel PNG compaiono i pixel, nell’SVG i punti restano perfetti a qualsiasi misura.</p>
     </div>
-    <canvas class="globe" tabindex="0" aria-label="Pianeta disegnato con curve di livello. Trascina o usa le frecce per ruotarlo."></canvas>
+    <div class="desk desk--vec">
+      <article class="win" data-view="png" style="--x:0%;--y:80px;--w:30%">
+        <div class="win__bar"><span>halftone.png — <span data-zoom-out>800%</span></span></div>
+        <canvas class="win__canvas win__canvas--sq" aria-label="Halftone raster ingrandito: si vedono i pixel. Trascina per spostarti."></canvas>
+        <div class="win__status"><span>480 × 480 px</span><span>raster</span></div>
+      </article>
+      <article class="win" data-view="svg" style="--x:32%;--y:30px;--w:30%">
+        <div class="win__bar"><span>halftone.svg — <span data-zoom-out>800%</span></span></div>
+        <canvas class="win__canvas win__canvas--sq" aria-label="Lo stesso halftone in vettoriale: i punti restano nitidi. Trascina per spostarti."></canvas>
+        <div class="win__status"><span>vettoriale</span><button class="chip chip--xs" type="button" data-dl="mono">Scarica SVG</button></div>
+      </article>
+      <article class="win win--dark" style="--x:3%;--y:600px;--w:44%">
+        <div class="win__bar"><span>halftone.svg — codice</span></div>
+        <pre class="win__code" data-code aria-live="off"></pre>
+      </article>
+      <article class="win" style="--x:50%;--y:560px;--w:18%">
+        <div class="win__bar"><span>Zoom</span></div>
+        <div class="win__body">
+          <label class="lbl" for="vec-zoom">Ingrandimento</label>
+          <input id="vec-zoom" type="range" min="0" max="50" value="30" data-zoom>
+          <p class="small" style="margin:0">Trascina dentro le finestre per spostarti nell’immagine.</p>
+        </div>
+      </article>
+      <article class="win" data-cmyk style="--x:68%;--y:0px;--w:32%">
+        <div class="win__bar"><span>halftone-cmyk.svg — 4 lastre</span></div>
+        <div class="win__tools">
+          <span class="lbl">Lastre</span>
+          <div class="seg" role="group" aria-label="Lastre di stampa">
+            <button class="chip" type="button" data-plate="C" aria-pressed="true">C 15°</button>
+            <button class="chip" type="button" data-plate="M" aria-pressed="true">M 75°</button>
+            <button class="chip" type="button" data-plate="Y" aria-pressed="true">Y 0°</button>
+            <button class="chip" type="button" data-plate="K" aria-pressed="true">K 45°</button>
+          </div>
+        </div>
+        <canvas class="win__canvas win__canvas--sq" aria-label="Halftone a colori composto da quattro lastre CMYK"></canvas>
+        <div class="win__status"><span>una lastra per inchiostro</span><button class="chip chip--xs" type="button" data-dl="cmyk">Scarica SVG</button></div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -202,7 +270,7 @@
     <div class="prose">
       <p>Scrivi titolo, informazioni e invito all’azione. Type riconosce il formato, prende i colori dal brand o dalla foto con un contrasto sempre leggibile, sceglie i caratteri tra quelli installati e prova sei composizioni evitando il soggetto.</p>
       <div class="panel" style="margin:22px 0 14px">
-        <div class="panel__bar"><span>WGT-01 — Type</span><span>manifesto 4:5</span></div>
+        <div class="panel__bar"><span>WGT-01 — Type · manifesto 4:5</span></div>
         <div class="panel__body">
           <div class="panel__row">
             <span>Impaginazione — cambia anche questo titolo</span>

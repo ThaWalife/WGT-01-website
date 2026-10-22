@@ -1,4 +1,6 @@
-/* Pattern: una superficie di elementi che ondeggia. La dimensione segue il tono della foto. */
+/* Pattern: una superficie di elementi che ondeggia su tutto lo sfondo della sezione.
+   La dimensione di ogni elemento segue il tono della foto.
+   L'elemento si sceglie dal pannello, oppure si carica un PNG/SVG proprio. */
 import { loadImage, getPixels, gray } from '../engines.js';
 import { fitCanvas, photo, loop, reduceMotion } from '../main.js';
 
@@ -11,62 +13,77 @@ const SHAPES = {
 };
 
 export default async function surface(el) {
-  const canvas = el.querySelector('canvas');
+  const canvas = el.querySelector('canvas.surface');
   const chips = [...el.querySelectorAll('[data-shape]')];
-  const byTone = el.querySelector('[data-bytone]');
+  const fileBtn = el.querySelector('[data-custom]');
+  const fileIn = el.querySelector('[data-custom-file]');
+  const fileName = el.querySelector('[data-custom-name]');
   const title = el.querySelector('[data-elsh-target]');
-  const setElsh = (b) => { if (title && b?.dataset.elsh) title.style.setProperty('--elsh', b.dataset.elsh); };
-  const img = await loadImage(photo(el.dataset.photo || 'caffe'));
-  const NX = 70, NZ = 46;
+  const img = await loadImage(photo(el.dataset.photo || 'astronauta'));
+  const NX = 96, NZ = 64;
   const g = gray(getPixels(img, NX, NZ), { contrast: 0.55 });
-  let shape = 'punto', tone = false, time = 0;
+  let shape = 'punto', custom = null, time = 0;
 
   function frame() {
-    const { ctx, W, H } = fitCanvas(canvas, 1.75);
+    const { ctx, W, H } = fitCanvas(canvas, 1.5);
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = getComputedStyle(el).color;
-    const f = W * 1.25, zc = 4, cam = 1.25;
-    const paths = { punto: new Path2D(), quadrato: new Path2D(), croce: new Path2D() };
-    const single = new Path2D();
+    ctx.fillStyle = '#000';
+    const f = W, zc = 2.2, Z = 4.2, cam = 1;
+    const pn = f / zc, pf = f / (zc + Z);
+    const k = (1.06 * H) / ((pn - pf) * cam), a = 1.03 * H - k * cam * pn;
+    const path = new Path2D();
     for (let j = NZ - 1; j >= 0; j--) {
-      const z = (j / (NZ - 1)) * 3.4;
+      const z = (j / (NZ - 1)) * Z;
+      const p = f / (z + zc);
       for (let i = 0; i < NX; i++) {
-        const x = (i / (NX - 1) - 0.5) * 4.4;
-        const y = 0.09 * Math.sin(x * 1.7 + time * 0.9) * Math.cos(z * 1.2 - time * 0.6) + 0.04 * Math.sin((x + z) * 3.1 - time * 1.3);
-        const p = f / (z + zc);
-        const sx = W / 2 + x * p, sy = -H * 0.8 + (cam - y) * p * 3.1;
+        const x = (i / (NX - 1) - 0.5) * 7;
+        const sx = W / 2 + x * p;
+        if (sx < -40 || sx > W + 40) continue;
+        const y = 0.08 * Math.sin(x * 1.5 + time * 0.8) * Math.cos(z * 1.1 - time * 0.55) + 0.035 * Math.sin((x + z) * 3 - time * 1.2);
+        const sy = a + (cam - y) * p * k;
         const l = g[(NZ - 1 - j) * NX + i];
-        const r = (1 - l) * 0.017 * p + 0.0015 * p;
-        if (r < 0.5) continue;
-        if (tone) {
-          const k = l < 0.33 ? 'quadrato' : l < 0.66 ? 'punto' : 'croce';
-          SHAPES[k](paths[k], sx, sy, r);
-        } else SHAPES[shape](single, sx, sy, r);
+        const r = (1 - l) * 0.016 * p + 0.0012 * p;
+        if (r < 0.6) continue;
+        if (custom) ctx.drawImage(custom, sx - r, sy - r, r * 2, r * 2);
+        else SHAPES[shape](path, sx, sy, r);
       }
     }
-    if (tone) Object.values(paths).forEach((p) => ctx.fill(p, 'evenodd'));
-    else ctx.fill(single, 'evenodd');
+    if (!custom) ctx.fill(path, 'evenodd');
   }
 
   const anim = loop(canvas, (dt) => { time += dt; frame(); });
   frame();
   anim.kick();
-  chips.forEach((b) =>
-    b.addEventListener('click', () => {
-      shape = b.dataset.shape;
-      tone = false;
-      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === b)));
-      setElsh(b);
-      if (byTone) byTone.setAttribute('aria-pressed', 'false');
+
+  const press = (b) => {
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c === b)));
+    fileBtn?.setAttribute('aria-pressed', String(fileBtn === b));
+    if (title && b?.dataset.elsh) title.style.setProperty('--elsh', b.dataset.elsh);
+  };
+  chips.forEach((b) => b.addEventListener('click', () => { shape = b.dataset.shape; custom = null; press(b); frame(); }));
+
+  fileBtn?.addEventListener('click', () => fileIn.click());
+  fileIn?.addEventListener('change', async () => {
+    const file = fileIn.files[0];
+    if (!file) return;
+    if (!/^image\/(png|svg\+xml|jpeg|webp)$/.test(file.type)) { fileName.textContent = 'Serve un PNG o un SVG.'; return; }
+    try {
+      const url = URL.createObjectURL(file);
+      const im = await loadImage(url);
+      // l'elemento viene preparato una volta a 128 px, così il disegno resta veloce
+      const c = document.createElement('canvas');
+      c.width = c.height = 128;
+      const x = c.getContext('2d');
+      const iw = im.naturalWidth || 128, ih = im.naturalHeight || 128, s = 128 / Math.max(iw, ih);
+      x.drawImage(im, (128 - iw * s) / 2, (128 - ih * s) / 2, iw * s, ih * s);
+      URL.revokeObjectURL(url);
+      custom = c;
+      fileName.textContent = file.name;
+      press(fileBtn);
       frame();
-    })
-  );
-  byTone?.addEventListener('click', () => {
-    tone = byTone.getAttribute('aria-pressed') !== 'true';
-    byTone.setAttribute('aria-pressed', String(tone));
-    setElsh(tone ? byTone : chips.find((c) => c.dataset.shape === shape));
-    chips.forEach((c) => c.setAttribute('aria-pressed', String(!tone && c.dataset.shape === shape)));
-    frame();
+    } catch {
+      fileName.textContent = 'Questo file non si apre: prova con un altro PNG o SVG.';
+    }
   });
   if (reduceMotion) new ResizeObserver(() => frame()).observe(canvas);
 }
