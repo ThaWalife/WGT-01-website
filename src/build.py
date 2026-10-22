@@ -129,7 +129,7 @@ def docs():
 
 
 def main():
-    for d in ["documentazione", "prova", "download"]:
+    for d in ["documentazione", "prova", "download", "cookie"]:
         shutil.rmtree(OUT / d, ignore_errors=True)
     app = {"@type": "SoftwareApplication", "name": cfg["name"], "alternateName": cfg["brand"],
            "applicationCategory": "DesignApplication", "applicationSubCategory": "Plugin per Adobe Photoshop",
@@ -149,6 +149,11 @@ def main():
            description=f"Scarica {cfg['name']} per Photoshop {cfg['photoshop_min']} o successivo, su Windows e macOS, "
                        f"con una donazione libera da {cfg['payhip']['min_price']} e un codice seriale personale.",
            jsonld={"@context": "https://schema.org", "@graph": [breadcrumb([(cfg["name"], ""), ("Scarica", "download/")]), app]})
+    raw = (SRC / "content" / LANG / "cookie.md").read_text(encoding="utf-8").replace("{{name}}", cfg["name"])
+    render("cookie.html", "cookie/index.html", title="Cookie e privacy", section="cookie",
+           body=markdown.markdown(raw, extensions=["tables", "attr_list", "sane_lists"]),
+           description=f"Cookie e privacy del sito di {cfg['name']}: nessun cookie di profilazione o statistico, font ospitati sul sito, "
+                       "servizi di terze parti solo con il tuo consenso.")
     t = env.get_template("404.html")
     write("404.html", t.render(cfg=cfg, ui=ui, build=BUILD, path="404.html", root=cfg["site_url"],
                                title="Pagina non trovata", seo_title=seo_title("Pagina non trovata"), robots="noindex, follow",

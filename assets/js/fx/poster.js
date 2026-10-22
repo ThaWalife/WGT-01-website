@@ -1,6 +1,9 @@
-/* Type: lo stesso manifesto nei 6 archetipi di impaginazione. */
+/* Type: lo stesso manifesto nei 6 archetipi di impaginazione, con i colori presi dalla foto. */
+import { applyPalette } from './palette.js';
+
 export default function poster(el) {
   const p = el.querySelector('.poster');
+  applyPalette(p);
   const btns = [...el.querySelectorAll('[data-archetype]')];
   const desc = el.querySelector('[data-archetype-desc]');
   const grid = el.querySelector('[data-grid]');

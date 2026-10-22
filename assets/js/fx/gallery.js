@@ -2,7 +2,9 @@
 import { STYLES, loadImage, renderStyle } from '../engines.js';
 import { fitCanvas, photo } from '../core.js';
 
-/* Parametri per una resa leggibile alla dimensione della galleria (in pixel CSS). */
+/* Parametri per una resa leggibile alla dimensione della galleria (in pixel CSS).
+   In home si usano ingranditi di HOME_SCALE: celle e tratti più grandi, l'algoritmo si legge meglio. */
+export const HOME_SCALE = 1.8;
 export const PRESET = {
   dither: { cell: 2.5, method: 'atkinson' },
   halftone: { cell: 8, angle: 45 },
@@ -52,7 +54,7 @@ export default async function gallery(el) {
     await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
     if (my !== token) return;
     const a = fitCanvas(after, 1.5);
-    renderStyle(style, a.ctx, img, a.W, a.H, { ink: '#000000', paper: '#ffffff', autoLevels: true, ...presetFor(style, a.dpr) });
+    renderStyle(style, a.ctx, img, a.W, a.H, { ink: '#000000', paper: '#ffffff', autoLevels: true, ...presetFor(style, a.dpr * HOME_SCALE) });
     frameEl.removeAttribute('aria-busy');
   }
 

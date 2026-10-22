@@ -20,13 +20,13 @@ export default async function surface(el) {
   const fileName = el.querySelector('[data-custom-name]');
   const title = el.querySelector('[data-elsh-target]');
   const img = await loadImage(photo(el.dataset.photo || 'example-1'));
-  const NX = 84, NZ = 56;
+  const NX = 58, NZ = 38; // griglia più rada: elementi più grandi e leggibili
   const g = gray(getPixels(img, NX, NZ), { contrast: 0.55, autoLevels: true });
   let shape = 'punto', custom = null, time = 0;
 
   /* Gli elementi vengono preparati una volta come piccole immagini (una per misura)
      e poi solo "timbrati": molto più leggero che ridisegnare ogni forma a ogni fotogramma. */
-  const BUCKETS = 28, RMAX = 26;
+  const BUCKETS = 28, RMAX = 38;
   let sprites = [];
   const rOf = (b) => 0.6 + (RMAX - 0.6) * Math.pow(b / (BUCKETS - 1), 1.6);
   function buildSprites() {
@@ -60,7 +60,7 @@ export default async function surface(el) {
         const y = 0.08 * Math.sin(x * 1.5 + time * 0.8) * Math.cos(z * 1.1 - time * 0.55) + 0.035 * Math.sin((x + z) * 3 - time * 1.2);
         const sy = a + (cam - y) * p * k;
         const l = g[(NZ - 1 - j) * NX + i];
-        const r = Math.min(rMaxPx, (1 - l) * 0.016 * p + 0.0012 * p);
+        const r = Math.min(rMaxPx, ((1 - l) * 0.016 * p + 0.0012 * p) * 1.45);
         if (r < 0.6) continue;
         // misura più vicina tra quelle preparate
         let b = Math.round(Math.pow(Math.max(0, (r / dpr - 0.6) / (RMAX - 0.6)), 1 / 1.6) * (BUCKETS - 1));

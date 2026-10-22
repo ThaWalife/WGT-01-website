@@ -18,7 +18,7 @@ Tutte le immagini del sito sono lavori originali di **Walife** (render 3D e graf
 
 ## Caratteri
 
-I caratteri del sito sono Doto, Handjet e Martian Mono, tutti con licenza SIL Open Font License, caricati da Google Fonts.
+I caratteri del sito sono Doto, Handjet e Martian Mono, tutti con licenza SIL Open Font License, ospitati direttamente su questo sito (nessuna richiesta a Google).
 
 ## Le tue immagini
 

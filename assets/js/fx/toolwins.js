@@ -2,7 +2,8 @@
    Non si provano qui: le immagini cambiano da sole per mostrare cosa fa ognuno. */
 import { loadImage, getPixels, gray, renderStyle } from '../engines.js';
 import { fitCanvas, photo, loop, reduceMotion } from '../core.js';
-import { presetFor } from './gallery.js';
+import { presetFor, HOME_SCALE } from './gallery.js';
+import { applyPalette } from './palette.js';
 
 const STILI = [['curve', 'Curve di livello'], ['flusso', 'Linee di flusso'], ['halftone', 'Halftone'], ['incisione', 'Incisione'], ['dither', 'Dither']];
 const ARCH = [['asse', 'Asse centrale'], ['bandiera', 'Bandiera a sinistra'], ['gigante', 'Titolo gigante'], ['colonna', 'Colonna laterale'], ['calma', 'Zona calma'], ['striscia', 'Striscia']];
@@ -16,7 +17,7 @@ export default async function tools(section) {
   function drawPattern() {
     const canvas = pat.querySelector('canvas');
     const { ctx, W, H, dpr } = fitCanvas(canvas, 1.5);
-    const step = 10 * dpr;
+    const step = 17 * dpr;
     const cols = Math.ceil(W / step), rows = Math.ceil(H / step);
     const g = gray(getPixels(clock, cols, rows, W / H), { contrast: 0.35, autoLevels: true });
     ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
@@ -36,7 +37,7 @@ export default async function tools(section) {
     const canvas = sti.querySelector('canvas');
     const { ctx, W, H, dpr } = fitCanvas(canvas, 1.5);
     const [id, name] = STILI[si];
-    renderStyle(id, ctx, figure, W, H, { ink: '#000000', paper: '#ffffff', autoLevels: true, ...presetFor(id, dpr) });
+    renderStyle(id, ctx, figure, W, H, { ink: '#000000', paper: '#ffffff', autoLevels: true, ...presetFor(id, dpr * HOME_SCALE) });
     sti.querySelector('[data-now]').textContent = name;
   }
   function setArch() {
@@ -44,6 +45,7 @@ export default async function tools(section) {
     typ.querySelector('[data-now]').textContent = ARCH[ai][1];
   }
 
+  applyPalette(typ.querySelector('.poster'));
   drawPattern(); drawStili(); setArch();
   if (!reduceMotion) {
     let acc = 0;

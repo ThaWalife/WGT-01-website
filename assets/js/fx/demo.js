@@ -71,7 +71,7 @@ export default async function demo(el) {
     const u = Math.max(W, H) / 1200;
     ctx.save();
     ctx.globalCompositeOperation = 'difference';
-    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.fillStyle = 'rgba(255,255,255,0.25)'; // metà della visibilità di prima (richiesta di Wally)
     ctx.font = `800 ${Math.round(46 * u)}px "Handjet", "Martian Mono", sans-serif`;
     ctx.textBaseline = 'middle';
     ctx.translate(W / 2, H / 2);

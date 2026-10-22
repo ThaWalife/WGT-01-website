@@ -60,7 +60,7 @@ export default async function hero(section) {
     L = { ctx, W, H, dpr, narrow, over, fade: makeFade(W, H, dpr) };
   }
 
-  /* Uscita verso la sezione sotto (bianca): l'immagine si scioglie nel bianco con lo stesso
+  /* Uscita verso la sezione sotto (verde): l'immagine si scioglie nel verde con lo stesso
      dither ordinato 8×8 e la stessa misura di pixel delle bande tra le sezioni. */
   const FADE_CELL = 4, FADE_ROWS = 30;
   function makeFade(W, H, dpr) {
@@ -68,7 +68,7 @@ export default async function hero(section) {
     const c = document.createElement('canvas');
     c.width = W; c.height = Math.round(rows * cell);
     const x = c.getContext('2d');
-    x.fillStyle = '#ffffff';
+    x.fillStyle = '#0d9e5a';
     for (let r = 0; r < rows; r++) {
       const t = Math.pow((r + 1) / rows, 1.35);
       for (let i = 0; i < cols; i++)

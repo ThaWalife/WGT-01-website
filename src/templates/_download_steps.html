@@ -2,7 +2,8 @@
 <div class="actions" style="margin-bottom:32px">
   <a class="btn btn--go payhip-buy-button" href="{{ cfg.payhip.product_url }}" data-product="{{ cfg.payhip.product_id }}" data-theme="none">Dona da {{ cfg.payhip.min_price }} e scarica</a>
 </div>
-<script src="https://payhip.com/payhip.js" defer></script>
+{# il pulsante di Payhip nella pagina parte solo con il consenso ai servizi di terze parti; senza, il link apre Payhip #}
+<script type="text/plain" data-consent="terzi" data-src="https://payhip.com/payhip.js"></script>
 {% else %}
 <p class="status">In arrivo: il download apre con la prima versione pubblica.</p>
 {% endif %}
