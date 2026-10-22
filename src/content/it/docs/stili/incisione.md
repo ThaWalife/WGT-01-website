@@ -6,7 +6,7 @@ order: 5
 ---
 <figure class="doc-figure"><canvas data-fx="still" data-style="incisione" data-photo="example-4" data-opts='{"cell":5}'></canvas><figcaption>Incisione, anteprima leggera calcolata nel browser.</figcaption></figure>
 
-> Esportabile in **SVG**. Vedi [Esporta SVG](/documentazione/esporta-svg/).
+> Esportabile in **SVG**. Vedi [Esporta SVG](/doc/esporta-svg/).
 
 ## Controlli
 

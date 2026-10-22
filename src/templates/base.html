@@ -1,6 +1,6 @@
 {% from "_logo.html" import symbol %}
 <!doctype html>
-<html lang="{{ cfg.lang }}" data-root="{{ root }}">
+<html lang="{{ lang }}" data-root="{{ root }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,12 +11,14 @@
 {% endif %}
 <meta name="robots" content="{{ robots|default('index, follow') }}">
 <link rel="canonical" href="{{ cfg.site_url }}{{ path }}">
+{% for l, a in alts.items() %}<link rel="alternate" hreflang="{{ l }}" href="{{ cfg.site_url }}{{ a }}">
+{% endfor %}<link rel="alternate" hreflang="x-default" href="{{ cfg.site_url }}{{ alts.en }}">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="{{ root }}assets/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="{{ root }}assets/img/icon-512.png" type="image/png" sizes="512x512">
 <link rel="apple-touch-icon" href="{{ root }}assets/img/apple-touch-icon.png">
 <meta property="og:site_name" content="{{ cfg.name }} · {{ cfg.brand }}">
-<meta property="og:locale" content="it_IT">
+<meta property="og:locale" content="{{ locale }}">
 <meta property="og:title" content="{{ seo_title }}">
 <meta property="og:description" content="{{ description }}">
 <meta property="og:type" content="{{ og_type|default('website') }}">
@@ -24,7 +26,7 @@
 <meta property="og:image" content="{{ cfg.site_url }}assets/img/og.png?v={{ build }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Logo di {{ cfg.name }}: simbolo a pixel verde e scritta WGT-01, Walife Generative Tools">
+<meta property="og:image:alt" content="{{ _('Logo di {name}: simbolo a pixel verde e scritta WGT-01, Walife Generative Tools', name=cfg.name) }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ seo_title }}">
 <meta name="twitter:description" content="{{ description }}">
@@ -37,16 +39,19 @@
 <link rel="stylesheet" href="{{ root }}assets/css/site.css?v={{ build }}">
 <script src="{{ root }}assets/js/consent.js?v={{ build }}" defer></script>
 <script type="module" src="{{ root }}assets/js/main.js?v={{ build }}"></script>
+{% if cfg.cloudflare_analytics_token %}<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ cfg.cloudflare_analytics_token }}"}'></script>
+{% endif %}
 </head>
 <body>
 <a class="skip" href="#contenuto">{{ ui.skip }}</a>
 <header class="site-header">
-  <a class="wordmark" href="{{ root }}" aria-label="{{ cfg.name }}, pagina iniziale">{{ symbol("logo-sym wordmark__sym") }}{{ cfg.name }}</a>
-  <nav class="site-nav" aria-label="Principale">
-    <a class="nav-optional" href="{{ root }}#stili">{{ ui.nav_styles }}</a>
-    <a href="{{ root }}prova/"{% if section == 'prova' %} aria-current="page"{% endif %}>{{ ui.nav_try }}</a>
-    <a href="{{ root }}documentazione/"{% if section == 'docs' %} aria-current="page"{% endif %}>{{ ui.nav_docs }}</a>
-    <a href="{{ root }}download/"{% if section == 'download' %} aria-current="page"{% endif %}>{{ ui.nav_download }}</a>
+  <a class="wordmark" href="{{ root }}{{ u.home }}" aria-label="{{ _('{name}, pagina iniziale', name=cfg.name) }}">{{ symbol("logo-sym wordmark__sym") }}{{ cfg.name }}</a>
+  <nav class="site-nav" aria-label="{{ _('Principale') }}">
+    <a class="nav-optional" href="{{ root }}{{ u.home }}#stili">{{ ui.nav_styles }}</a>
+    <a href="{{ root }}{{ u.try }}"{% if section == 'try' %} aria-current="page"{% endif %}>{{ ui.nav_try }}</a>
+    <a href="{{ root }}{{ u.docs }}"{% if section == 'docs' %} aria-current="page"{% endif %}>{{ ui.nav_docs }}</a>
+    <a href="{{ root }}{{ u.download }}"{% if section == 'download' %} aria-current="page"{% endif %}>{{ ui.nav_download }}</a>
+    <a class="lang-switch" href="{{ root }}{{ other_path }}" hreflang="{{ other }}" lang="{{ other }}" data-lang-switch="{{ other }}" aria-label="{{ ui.lang_switch_label }}"><span aria-hidden="true">{{ 'EN' if lang == 'en' else 'IT' }}</span><span aria-hidden="true" class="lang-switch__to">/{{ other|upper }}</span></a>
   </nav>
 </header>
 <main id="contenuto">
@@ -56,30 +61,31 @@
   <div class="wrap">
     <div>
       <p class="lockup lockup--footer">{{ symbol("logo-sym lockup__sym") }}<span class="lockup__word">{{ cfg.name.split('-')[0] }}<span class="lockup__num">-{{ cfg.name.split('-')[1] }}</span></span><span class="lockup__sub">{{ cfg.brand }}</span></p>
-      <p class="small">{{ ui.footer_made }}<br>Versione {{ cfg.version }}, per Photoshop {{ cfg.photoshop_min }} o successivo.</p>
+      <p class="small">{{ ui.footer_made }}<br>{{ _('Versione {v}, per Photoshop {ps} o successivo.', v=cfg.version, ps=cfg.photoshop_min) }}</p>
     </div>
     <ul class="small">
-      <li><a href="{{ root }}prova/">{{ ui.nav_try }}</a></li>
-      <li><a href="{{ root }}documentazione/">{{ ui.nav_docs }}</a></li>
-      <li><a href="{{ root }}download/">{{ ui.nav_download }}</a></li>
+      <li><a href="{{ root }}{{ u.try }}">{{ ui.nav_try }}</a></li>
+      <li><a href="{{ root }}{{ u.docs }}">{{ ui.nav_docs }}</a></li>
+      <li><a href="{{ root }}{{ u.download }}">{{ ui.nav_download }}</a></li>
+      <li><a href="{{ root }}{{ other_path }}" hreflang="{{ other }}" lang="{{ other }}" data-lang-switch="{{ other }}">{{ ui.lang_switch_text }}</a></li>
     </ul>
     <ul class="small">
-      <li><a href="{{ root }}documentazione/novita/">Novità delle versioni</a></li>
-      <li><a href="{{ root }}documentazione/crediti/">{{ ui.footer_images }}</a></li>
-      <li><a href="{{ root }}cookie/">Cookie e privacy</a></li>
-      <li><button class="linkish" type="button" data-consent="apri">Preferenze cookie</button></li>
+      <li><a href="{{ root }}{{ doc('novita') }}">{{ _('Novità delle versioni') }}</a></li>
+      <li><a href="{{ root }}{{ doc('crediti') }}">{{ ui.footer_images }}</a></li>
+      <li><a href="{{ root }}{{ u.cookies }}">{{ _('Cookie e privacy') }}</a></li>
+      <li><button class="linkish" type="button" data-consent="apri">{{ _('Preferenze cookie') }}</button></li>
     </ul>
-    <a class="site-footer__home" href="{{ cfg.home_url }}"><span class="lbl">[sito principale]</span><span class="site-footer__url">thawalife.com</span><span class="site-footer__arrow" aria-hidden="true">↗</span></a>
+    <a class="site-footer__home" href="{{ cfg.home_url }}"><span class="lbl">{{ _('[sito principale]') }}</span><span class="site-footer__url">thawalife.com</span><span class="site-footer__arrow" aria-hidden="true">↗</span></a>
   </div>
 </footer>
 <div class="consent" data-consent-banner role="dialog" aria-labelledby="consent-t" aria-describedby="consent-d" hidden>
-  <button class="consent__x" type="button" data-consent="rifiuta" aria-label="Chiudi: continua senza accettare">×</button>
+  <button class="consent__x" type="button" data-consent="rifiuta" aria-label="{{ _('Chiudi: continua senza accettare') }}">×</button>
   <p class="consent__t" id="consent-t">Cookie</p>
-  <p class="consent__d" id="consent-d">Questo sito non usa cookie di profilazione né statistiche. I servizi di terze parti (come il pagamento Payhip, quando sarà attivo) partono solo se accetti. Puoi cambiare idea quando vuoi da “Preferenze cookie”, in fondo alla pagina.</p>
+  <p class="consent__d" id="consent-d">{{ ui.consent_text }}</p>
   <div class="consent__actions">
-    <button class="btn" type="button" data-consent="rifiuta">Rifiuta</button>
-    <button class="btn" type="button" data-consent="accetta">Accetta</button>
-    <a href="{{ root }}cookie/">Leggi la cookie policy</a>
+    <button class="btn" type="button" data-consent="rifiuta">{{ _('Rifiuta') }}</button>
+    <button class="btn" type="button" data-consent="accetta">{{ _('Accetta') }}</button>
+    <a href="{{ root }}{{ u.cookies }}">{{ _('Leggi la cookie policy') }}</a>
   </div>
 </div>
 </body>

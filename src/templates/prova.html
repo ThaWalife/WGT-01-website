@@ -2,34 +2,34 @@
 {% from "_art.html" import docframe %}
 {% block main %}
 <section class="tone page-hero" data-c="black">
-  {{ docframe('prova.psd', [50]) }}
+  {{ docframe(_('prova.psd'), [50]) }}
   <div class="wrap">
-    <p class="lbl lbl--muted" style="margin-bottom:14px">[prova · 3 stili su 10]</p>
-    <h1>Prova {{ cfg.name }}</h1>
-    <p>Dither, Halftone e ASCII sulla tua foto. Il calcolo avviene nel browser: l’immagine non viene caricata da nessuna parte.</p>
+    <p class="lbl lbl--muted" style="margin-bottom:14px">{{ _('[prova · 3 stili su 10]') }}</p>
+    <h1>{{ _('Prova {name}', name=cfg.name) }}</h1>
+    <p>{{ _('Dither, Halftone e ASCII sulla tua foto. Il calcolo avviene nel browser: l’immagine non viene caricata da nessuna parte.') }}</p>
   </div>
 </section>
 <div class="band" data-from="#000000" data-to="#0d9e5a"></div>
-<section class="tone" data-c="green" style="padding:10px 0 0"><div class="wrap"><p class="lbl" style="padding:6px 0 14px">[l’anteprima ha una filigrana: la versione pulita, gli altri 7 stili e l’export SVG sono nel plugin]</p></div></section>
+<section class="tone" data-c="green" style="padding:10px 0 0"><div class="wrap"><p class="lbl" style="padding:6px 0 14px">{{ _('[l’anteprima ha una filigrana: la versione pulita, gli altri 7 stili e l’export SVG sono nel plugin]') }}</p></div></section>
 <div class="band" data-from="#0d9e5a" data-to="#000000"></div>
 <section class="tone" data-c="black" data-fx="demo" style="padding:24px 0 96px">
   <div class="wrap tool">
     <div class="panel">
-      <div class="panel__bar"><span>{{ cfg.name }} — Prova</span><span>v{{ cfg.version }}</span></div>
+      <div class="panel__bar"><span>{{ cfg.name }} — {{ _('Prova') }}</span><span>v{{ cfg.version }}</span></div>
       <div class="panel__body">
         <div class="drop">
-          <input type="file" accept="image/*" aria-label="Scegli una foto dal computer">
-          <div><strong>Trascina qui una foto</strong><br><span class="muted">oppure fai clic per sceglierla, o incollala con Ctrl+V.</span></div>
+          <input type="file" accept="image/*" aria-label="{{ _('Scegli una foto dal computer') }}">
+          <div><strong>{{ _('Trascina qui una foto') }}</strong><br><span class="muted">{{ _('oppure fai clic per sceglierla, o incollala con Ctrl+V.') }}</span></div>
         </div>
-        <p class="small" data-status aria-live="polite" style="margin:0">Carico la foto di esempio…</p>
+        <p class="small" data-status aria-live="polite" style="margin:0">{{ _('Carico la foto di esempio…') }}</p>
         <div class="panel__row">
-          <span>Foto di esempio</span>
+          <span>{{ _('Foto di esempio') }}</span>
           <div class="seg">
             {% for p in photos %}<button class="chip" type="button" data-sample="{{ p.id }}">{{ p.short }}</button>{% endfor %}
           </div>
         </div>
         <fieldset class="panel__row">
-          <legend>Stile</legend>
+          <legend>{{ _('Stile') }}</legend>
           <div class="seg" data-group="style">
             <button class="chip" type="button" data-v="dither" aria-pressed="true">Dither</button>
             <button class="chip" type="button" data-v="halftone" aria-pressed="false">Halftone</button>
@@ -37,39 +37,39 @@
           </div>
         </fieldset>
         <fieldset class="panel__row" data-method-field>
-          <legend>Metodo del dither</legend>
+          <legend>{{ _('Metodo del dither') }}</legend>
           <div class="seg" data-group="method">
             <button class="chip" type="button" data-v="atkinson" aria-pressed="true">Atkinson</button>
             <button class="chip" type="button" data-v="fs" aria-pressed="false">Floyd–Steinberg</button>
-            <button class="chip" type="button" data-v="bayer" aria-pressed="false">Ordinato</button>
+            <button class="chip" type="button" data-v="bayer" aria-pressed="false">{{ _('Ordinato') }}</button>
           </div>
         </fieldset>
         <div class="panel__row">
-          <label for="d-density">Dettaglio</label>
+          <label for="d-density">{{ _('Dettaglio') }}</label>
           <div class="range-row"><input id="d-density" type="range" min="1" max="10" step="1" value="6"><output data-value="density">6</output></div>
         </div>
         <div class="panel__row">
-          <label for="d-contrast">Contrasto</label>
+          <label for="d-contrast">{{ _('Contrasto') }}</label>
           <div class="range-row"><input id="d-contrast" type="range" min="-50" max="50" step="1" value="10"><output data-value="contrast">10</output></div>
         </div>
         <div class="panel__row">
-          <label for="d-brightness">Luminosità</label>
+          <label for="d-brightness">{{ _('Luminosità') }}</label>
           <div class="range-row"><input id="d-brightness" type="range" min="-50" max="50" step="1" value="0"><output data-value="brightness">0</output></div>
         </div>
         <fieldset class="panel__row">
-          <legend>Colori</legend>
+          <legend>{{ _('Colori') }}</legend>
           <div class="seg" data-group="colors">
-            <button class="chip" type="button" data-v="carta" aria-pressed="true">Nero su bianco</button>
-            <button class="chip" type="button" data-v="notte" aria-pressed="false">Bianco su nero</button>
-            <button class="chip" type="button" data-v="verde" aria-pressed="false">Verde su carta</button>
+            <button class="chip" type="button" data-v="carta" aria-pressed="true">{{ _('Nero su bianco') }}</button>
+            <button class="chip" type="button" data-v="notte" aria-pressed="false">{{ _('Bianco su nero') }}</button>
+            <button class="chip" type="button" data-v="verde" aria-pressed="false">{{ _('Verde su carta') }}</button>
           </div>
         </fieldset>
-        <div class="actions"><button class="btn btn--go" type="button" data-download disabled>Scarica l’anteprima PNG</button></div>
-        <p class="privacy small">La versione senza filigrana, gli altri sette stili e l’export SVG sono nel plugin. <a href="{{ root }}download/">Scarica {{ cfg.name }}</a></p>
+        <div class="actions"><button class="btn btn--go" type="button" data-download disabled>{{ _('Scarica l’anteprima PNG') }}</button></div>
+        <p class="privacy small">{{ _('La versione senza filigrana, gli altri sette stili e l’export SVG sono nel plugin.') }} <a href="{{ root }}{{ u.download }}">{{ _('Scarica {name}', name=cfg.name) }}</a></p>
       </div>
     </div>
     <div class="result">
-      <canvas data-out aria-label="Risultato dello stile applicato alla foto, con filigrana"></canvas>
+      <canvas data-out aria-label="{{ _('Risultato dello stile applicato alla foto, con filigrana') }}"></canvas>
     </div>
   </div>
 </section>

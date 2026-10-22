@@ -16,16 +16,16 @@ order: 0
 
 | Stile | In breve | SVG |
 |---|---|---|
-| [Dither](/documentazione/stili/dither/) | Pochi toni, distribuiti punto per punto | |
-| [Halftone](/documentazione/stili/halftone/) | Retino di punti, anche CMYK | Sì |
-| [ASCII](/documentazione/stili/ascii/) | Immagine fatta di caratteri | |
-| [Mosaico](/documentazione/stili/mosaico/) | Tessere con fuga e rilievo | |
-| [Incisione](/documentazione/stili/incisione/) | Linee che si ingrossano nelle ombre | Sì |
-| [Linee di flusso](/documentazione/stili/linee-di-flusso/) | Linee che seguono i bordi | Sì |
-| [Curve di livello](/documentazione/stili/curve-di-livello/) | Isoipse della luminosità | Sì |
-| [Mappa sfumatura](/documentazione/stili/mappa-sfumatura/) | Toni trasformati in colori | |
-| [Glitch](/documentazione/stili/glitch/) | Strappi, blocchi e RGB sfasato | |
-| [Pixel sorting](/documentazione/stili/pixel-sorting/) | Pixel riordinati tra due soglie | |
+| [Dither](/doc/stili/dither/) | Pochi toni, distribuiti punto per punto | |
+| [Halftone](/doc/stili/halftone/) | Retino di punti, anche CMYK | Sì |
+| [ASCII](/doc/stili/ascii/) | Immagine fatta di caratteri | |
+| [Mosaico](/doc/stili/mosaico/) | Tessere con fuga e rilievo | |
+| [Incisione](/doc/stili/incisione/) | Linee che si ingrossano nelle ombre | Sì |
+| [Linee di flusso](/doc/stili/linee-di-flusso/) | Linee che seguono i bordi | Sì |
+| [Curve di livello](/doc/stili/curve-di-livello/) | Isoipse della luminosità | Sì |
+| [Mappa sfumatura](/doc/stili/mappa-sfumatura/) | Toni trasformati in colori | |
+| [Glitch](/doc/stili/glitch/) | Strappi, blocchi e RGB sfasato | |
+| [Pixel sorting](/doc/stili/pixel-sorting/) | Pixel riordinati tra due soglie | |
 
 ## Regolazioni comuni
 

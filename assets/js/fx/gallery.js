@@ -1,6 +1,6 @@
 /* Galleria dei 10 stili: stessa foto, prima e dopo con un cursore. */
 import { STYLES, loadImage, renderStyle } from '../engines.js';
-import { fitCanvas, photo } from '../core.js';
+import { fitCanvas, photo, t } from '../core.js';
 
 /* Parametri per una resa leggibile alla dimensione della galleria (in pixel CSS).
    In home si usano ingranditi di HOME_SCALE: celle e tratti più grandi, l'algoritmo si legge meglio. */
@@ -67,8 +67,8 @@ export default async function gallery(el) {
       btn.tabIndex = on ? 0 : -1;
       if (on && focus) btn.focus();
     }
-    note.textContent = s.note + (s.svg ? ' Esportabile in SVG.' : '');
-    nameEl.textContent = s.name;
+    note.textContent = t(s.note, s.noteEn) + (s.svg ? t(' Esportabile in SVG.', ' Exports to SVG.') : '');
+    nameEl.textContent = t(s.name, s.nameEn || s.name);
     render();
   }
 

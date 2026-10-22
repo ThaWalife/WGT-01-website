@@ -11,7 +11,7 @@ order: 2
 | Photoshop | {{photoshop_min}} o successivo |
 | Sistema | Windows o macOS |
 | Documenti | RGB a 8 bit (CMYK e 16 bit sono previsti in futuro) |
-| Facoltativo | [LM Studio](/documentazione/dev-option/), solo per la Dev option di Type |
+| Facoltativo | [LM Studio](/doc/dev-option/), solo per la Dev option di Type |
 
 ## Installare il file .ccx
 

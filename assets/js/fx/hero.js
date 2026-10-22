@@ -1,9 +1,9 @@
-/* Hero: l'immagine del logo in rilievo (assets/img/hero-src.jpg) ridisegnata in tempo
+/* Hero: l'immagine del logo in rilievo (assets/img/hero-src.webp) ridisegnata in tempo
    reale da un algoritmo — Dither, Halftone o ASCII — come in una ripresa lenta.
    Intorno, artefatti grigi: polvere di caratteri, grana, glitch, mirino con timecode.
    Il pannello funziona come quello del plugin: stile, densità, pausa. */
 import { loadImage, BAYER8, MONO, rng } from '../engines.js';
-import { fitCanvas, loop, reduceMotion } from '../core.js';
+import { fitCanvas, loop, reduceMotion, t } from '../core.js';
 
 const GRAY = '#8a8a8a';
 const GRAY_D = '#454545';
@@ -14,7 +14,7 @@ const CH = ' .·:-=+*o#%@';
 export default async function hero(section) {
   const canvas = section.querySelector('canvas');
   const root = document.documentElement.dataset.root || './';
-  const src = await loadImage(root + 'assets/img/hero-src.jpg');
+  const src = await loadImage(root + 'assets/img/hero-src.webp');
   try { await document.fonts.load(`16px "Martian Mono"`); } catch {}
 
   const styleBtns = [...section.querySelectorAll('[data-hero-style]')];
@@ -270,7 +270,7 @@ export default async function hero(section) {
     draw();
   }));
   density?.addEventListener('input', () => { st.dens = density.value / 100; draw(); });
-  const label = () => (pauseBtn.querySelector('span').textContent = st.playing ? 'Pausa' : 'Riprendi');
+  const label = () => (pauseBtn.querySelector('span').textContent = st.playing ? t('Pausa', 'Pause') : t('Riprendi', 'Play'));
   pauseBtn?.addEventListener('click', () => {
     st.playing = !st.playing;
     pauseBtn.setAttribute('aria-pressed', String(!st.playing));

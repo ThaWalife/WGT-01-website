@@ -14,5 +14,11 @@
   "lang": "it",
   "home_url": "https://thawalife.com",
   "contact_email": "thawalife@gmail.com",
-  "google_site_verification": "BluWsr6YK4BqAydYFzkwItNd1OOM_ieA94GTDAEK7jY"
+  "google_site_verification": "BluWsr6YK4BqAydYFzkwItNd1OOM_ieA94GTDAEK7jY",
+  "cloudflare_analytics_token": "ca33aa62bed441678fccd46c6a43f453",
+  "newsletter": {
+    "provider": "MailerLite",
+    "action": "https://assets.mailerlite.com/jsonp/2734112/forms/202045807612921633/subscribe"
+  },
+  "custom_domain": null
 }

@@ -6,7 +6,7 @@ order: 6
 ---
 <figure class="doc-figure"><canvas data-fx="still" data-style="flusso" data-photo="example-3" data-opts='{"cell":3}'></canvas><figcaption>Linee di flusso, anteprima leggera calcolata nel browser.</figcaption></figure>
 
-> Esportabile in **SVG**. Vedi [Esporta SVG](/documentazione/esporta-svg/).
+> Esportabile in **SVG**. Vedi [Esporta SVG](/doc/esporta-svg/).
 
 ## Controlli
 

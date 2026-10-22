@@ -19,4 +19,4 @@ I tracciati vengono semplificati (algoritmo di Ramer–Douglas–Peucker, con to
 
 ## Prova subito
 
-Nella [pagina iniziale](/#svg) puoi girare un pianeta disegnato con curve di livello e scaricarlo in SVG.
+Nella [pagina iniziale](/home/#svg) puoi ingrandire un retino, confrontare PNG e SVG e scaricare l’esempio.

@@ -2,9 +2,9 @@
 {% from "_art.html" import docframe %}
 {% block main %}
 <section class="tone page-hero" data-c="black">
-  {{ docframe('documentazione.psd', [61.8]) }}
+  {{ docframe(_('documentazione.psd'), [61.8]) }}
   <div class="wrap">
-    <p class="lbl lbl--muted" style="margin-bottom:14px">[documentazione · {{ page.group|lower }}]</p>
+    <p class="lbl lbl--muted" style="margin-bottom:14px">[{{ _('documentazione') }} · {{ page.group_name|lower }}]</p>
     <h1>{{ page.title }}</h1>
     {% if page.description %}<p>{{ page.description }}</p>{% endif %}
   </div>
@@ -12,7 +12,7 @@
 <div class="band" data-from="#000000" data-to="#ffffff"></div>
 <div class="tone" data-c="white">
   <div class="wrap docs">
-    <nav class="doc-nav" aria-label="Documentazione">
+    <nav class="doc-nav" aria-label="{{ _('Documentazione') }}">
       {% for group in nav %}
       <p>{{ group.name }}</p>
       <ul>
@@ -23,9 +23,9 @@
     </nav>
     <article class="doc-body">
       {{ page.html | safe }}
-      <nav class="doc-pager" aria-label="Pagine vicine">
-        {% if prev %}<a href="{{ root }}{{ prev.url }}"><small>Precedente</small>{{ prev.nav }}</a>{% else %}<span></span>{% endif %}
-        {% if next %}<a href="{{ root }}{{ next.url }}" style="text-align:right"><small>Successiva</small>{{ next.nav }}</a>{% endif %}
+      <nav class="doc-pager" aria-label="{{ _('Pagine vicine') }}">
+        {% if prev %}<a href="{{ root }}{{ prev.url }}"><small>{{ _('Precedente') }}</small>{{ prev.nav }}</a>{% else %}<span></span>{% endif %}
+        {% if next %}<a href="{{ root }}{{ next.url }}" style="text-align:right"><small>{{ _('Successiva') }}</small>{{ next.nav }}</a>{% endif %}
       </nav>
     </article>
   </div>

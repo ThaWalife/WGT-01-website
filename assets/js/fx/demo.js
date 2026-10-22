@@ -1,6 +1,6 @@
 /* Prova: Dither, Halftone e ASCII sulla foto del visitatore. Tutto resta nel browser. */
 import { loadImage, renderStyle, forgetImage } from '../engines.js';
-import { photo } from '../core.js';
+import { photo, t } from '../core.js';
 
 const MAX = 1200;
 const COLORS = {
@@ -76,7 +76,7 @@ export default async function demo(el) {
     ctx.textBaseline = 'middle';
     ctx.translate(W / 2, H / 2);
     ctx.rotate(-Math.PI / 7);
-    const text = 'WGT-01 · ANTEPRIMA · ';
+    const text = t('WGT-01 · ANTEPRIMA · ', 'WGT-01 · PREVIEW · ');
     const tw = ctx.measureText(text).width;
     const R = Math.hypot(W, H);
     for (let y = -R / 2, k = 0; y < R / 2; y += 120 * u, k++)
@@ -86,7 +86,7 @@ export default async function demo(el) {
     const pad = 14 * u, fs = Math.round(17 * u);
     ctx.save();
     ctx.font = `600 ${fs}px "Martian Mono", monospace`;
-    const label = 'Anteprima di WGT-01 — la versione pulita è nel plugin';
+    const label = t('Anteprima di WGT-01 — la versione pulita è nel plugin', 'WGT-01 preview — the clean version is in the plugin');
     const lw = ctx.measureText(label).width;
     ctx.fillStyle = '#0d9e5a';
     ctx.fillRect(0, H - fs - pad * 2, lw + pad * 2, fs + pad * 2);
@@ -97,23 +97,23 @@ export default async function demo(el) {
   }
 
   async function use(src, name, isUpload) {
-    status.textContent = 'Carico l’immagine…';
+    status.textContent = t('Carico l’immagine…', 'Loading the image…');
     try {
       const next = await loadImage(src);
       if (img) forgetImage(img);
       img = next;
       st.name = name;
       st.sample = !isUpload; // le foto di esempio sono render scuri: livelli automatici
-      status.textContent = isUpload ? `Stai usando la tua foto: ${name}` : 'Stai usando una foto di esempio.';
+      status.textContent = isUpload ? t(`Stai usando la tua foto: ${name}`, `Using your photo: ${name}`) : t('Stai usando una foto di esempio.', 'Using a sample photo.');
       draw();
     } catch {
-      status.textContent = 'Questo file non si apre come immagine. Prova con un JPG, PNG o WebP.';
+      status.textContent = t('Questo file non si apre come immagine. Prova con un JPG, PNG o WebP.', 'This file doesn’t open as an image. Try a JPG, PNG or WebP.');
     }
   }
 
   function takeFile(file) {
     if (!file) return;
-    if (!file.type.startsWith('image/')) { status.textContent = 'Serve un’immagine: JPG, PNG o WebP.'; return; }
+    if (!file.type.startsWith('image/')) { status.textContent = t('Serve un’immagine: JPG, PNG o WebP.', 'Use an image: JPG, PNG or WebP.'); return; }
     if (objectUrl) URL.revokeObjectURL(objectUrl);
     objectUrl = URL.createObjectURL(file);
     use(objectUrl, file.name, true);
@@ -135,7 +135,7 @@ export default async function demo(el) {
   dl.addEventListener('click', () => {
     out.toBlob((blob) => {
       const url = URL.createObjectURL(blob);
-      const base = st.name.replace(/\.[a-z0-9]+$/i, '').replace(/[^\w-]+/g, '-').slice(0, 40) || 'immagine';
+      const base = st.name.replace(/\.[a-z0-9]+$/i, '').replace(/[^\w-]+/g, '-').slice(0, 40) || t('immagine', 'image');
       const a = Object.assign(document.createElement('a'), { href: url, download: `wgt-01-${st.style}-${base}.png` });
       document.body.append(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 2000);

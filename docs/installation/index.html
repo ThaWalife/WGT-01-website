@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en" data-root="../../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installation — WGT-01, Photoshop plugin</title>
+<meta name="description" content="How to install WGT-01 in Photoshop 27.9.1 or later: requirements, the .ccx file and first launch of the panel, step by step.">
+<meta name="author" content="Walife">
+<meta name="google-site-verification" content="BluWsr6YK4BqAydYFzkwItNd1OOM_ieA94GTDAEK7jY">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://thawalife.github.io/WGT-01-website/docs/installation/">
+<link rel="alternate" hreflang="en" href="https://thawalife.github.io/WGT-01-website/docs/installation/">
+<link rel="alternate" hreflang="it" href="https://thawalife.github.io/WGT-01-website/it/documentazione/installazione/">
+<link rel="alternate" hreflang="x-default" href="https://thawalife.github.io/WGT-01-website/docs/installation/">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../assets/img/icon-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+<meta property="og:site_name" content="WGT-01 · Walife Generative Tools">
+<meta property="og:locale" content="en_GB">
+<meta property="og:title" content="Installation — WGT-01, Photoshop plugin">
+<meta property="og:description" content="How to install WGT-01 in Photoshop 27.9.1 or later: requirements, the .ccx file and first launch of the panel, step by step.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://thawalife.github.io/WGT-01-website/docs/installation/">
+<meta property="og:image" content="https://thawalife.github.io/WGT-01-website/assets/img/og.png?v=202610221829">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="WGT-01 logo: green pixel symbol and the words WGT-01, Walife Generative Tools">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Installation — WGT-01, Photoshop plugin">
+<meta name="twitter:description" content="How to install WGT-01 in Photoshop 27.9.1 or later: requirements, the .ccx file and first launch of the panel, step by step.">
+<meta name="twitter:image" content="https://thawalife.github.io/WGT-01-website/assets/img/og.png?v=202610221829">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "about": {"@type": "SoftwareApplication", "name": "WGT-01"}, "author": {"@type": "Person", "name": "Walife", "url": "https://thawalife.com"}, "description": "How to install WGT-01 in Photoshop 27.9.1 or later: requirements, the .ccx file and first launch of the panel, step by step.", "headline": "Installation", "inLanguage": "en", "url": "https://thawalife.github.io/WGT-01-website/docs/installation/"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "item": "https://thawalife.github.io/WGT-01-website/", "name": "WGT-01", "position": 1}, {"@type": "ListItem", "item": "https://thawalife.github.io/WGT-01-website/docs/", "name": "Documentation", "position": 2}, {"@type": "ListItem", "item": "https://thawalife.github.io/WGT-01-website/docs/installation/", "name": "Installation", "position": 3}]}]}</script>
+<link rel="preload" href="../../assets/fonts/doto-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/martian-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/css/fonts.css?v=202610221829">
+<link rel="stylesheet" href="../../assets/css/site.css?v=202610221829">
+<script src="../../assets/js/consent.js?v=202610221829" defer></script>
+<script type="module" src="../../assets/js/main.js?v=202610221829"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ca33aa62bed441678fccd46c6a43f453"}'></script>
+</head>
+<body>
+<a class="skip" href="#contenuto">Skip to content</a>
+<header class="site-header">
+  <a class="wordmark" href="../../" aria-label="WGT-01, home page"><svg class="logo-sym wordmark__sym" viewBox="0 0 12 14" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 0h11v1h-11zM0 1h10v1h-10zM11 1h1v1h-1zM0 2h2v1h-2zM10 2h1v1h-1zM0 3h2v1h-2zM3 3h2v1h-2zM11 3h1v1h-1zM0 4h2v1h-2zM3 4h2v1h-2zM10 4h1v1h-1zM0 5h2v1h-2zM0 6h2v1h-2zM7 6h1v1h-1zM10 6h1v1h-1zM0 7h2v1h-2zM7 7h2v1h-2zM0 8h2v1h-2zM7 8h3v1h-3zM0 9h2v1h-2zM7 9h4v1h-4zM0 10h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM7 10h5v1h-5zM1 11h1v1h-1zM3 11h1v1h-1zM7 11h3v1h-3zM9 12h2v1h-2zM10 13h2v1h-2z"/></svg>WGT-01</a>
+  <nav class="site-nav" aria-label="Main">
+    <a class="nav-optional" href="../../#stili">Styles</a>
+    <a href="../../try/">Try it</a>
+    <a href="../../docs/" aria-current="page">Docs</a>
+    <a href="../../download/">Download</a>
+    <a class="lang-switch" href="../../it/documentazione/installazione/" hreflang="it" lang="it" data-lang-switch="it" aria-label="Leggi questa pagina in italiano"><span aria-hidden="true">EN</span><span aria-hidden="true" class="lang-switch__to">/IT</span></a>
+  </nav>
+</header>
+<main id="contenuto">
+<section class="tone page-hero" data-c="black">
+  <div class="docframe" aria-hidden="true">
+  <div class="docframe__x"><span style="left:0%">0</span><span style="left:10%">10</span><span style="left:20%">20</span><span style="left:30%">30</span><span style="left:40%">40</span><span style="left:50%">50</span><span style="left:60%">60</span><span style="left:70%">70</span><span style="left:80%">80</span><span style="left:90%">90</span><span style="left:100%">100</span></div>
+  <div class="docframe__y"></div>
+  <i class="docframe__corner"></i>
+<i class="docframe__guide" style="left:61.8%"></i>  <i class="docframe__crop docframe__crop--tl"></i><i class="docframe__crop docframe__crop--tr"></i><i class="docframe__crop docframe__crop--bl"></i><i class="docframe__crop docframe__crop--br"></i>
+  <p class="docframe__status">docs.psd @ 100% (RGB/8)</p>
+</div>
+
+  <div class="wrap">
+    <p class="lbl lbl--muted" style="margin-bottom:14px">[docs · get started]</p>
+    <h1>Installation</h1>
+<p>How to install WGT-01 in Photoshop 27.9.1 or later: requirements, the .ccx file and first launch of the panel, step by step.</p>  </div>
+</section>
+<div class="band" data-from="#000000" data-to="#ffffff"></div>
+<div class="tone" data-c="white">
+  <div class="wrap docs">
+    <nav class="doc-nav" aria-label="Documentation">
+      <p>Get started</p>
+      <ul>
+<li><a href="../../docs/">Overview</a></li>
+<li><a href="../../docs/installation/" aria-current="page">Installation</a></li>
+<li><a href="../../docs/the-panel/">The panel</a></li>
+      </ul>
+      <p>Tools</p>
+      <ul>
+<li><a href="../../docs/pattern/">Pattern</a></li>
+<li><a href="../../docs/type/">Type</a></li>
+      </ul>
+      <p>Styles</p>
+      <ul>
+<li><a href="../../docs/styles/">How they work</a></li>
+<li><a href="../../docs/styles/dither/">Dither</a></li>
+<li><a href="../../docs/styles/halftone/">Halftone</a></li>
+<li><a href="../../docs/styles/ascii/">ASCII</a></li>
+<li><a href="../../docs/styles/mosaic/">Mosaic</a></li>
+<li><a href="../../docs/styles/engraving/">Engraving</a></li>
+<li><a href="../../docs/styles/flow-lines/">Flow lines</a></li>
+<li><a href="../../docs/styles/contour-lines/">Contour lines</a></li>
+<li><a href="../../docs/styles/gradient-map/">Gradient map</a></li>
+<li><a href="../../docs/styles/glitch/">Glitch</a></li>
+<li><a href="../../docs/styles/pixel-sorting/">Pixel sorting</a></li>
+      </ul>
+      <p>Features</p>
+      <ul>
+<li><a href="../../docs/svg-export/">SVG export</a></li>
+<li><a href="../../docs/edit-and-layers/">Edit and several layers</a></li>
+<li><a href="../../docs/dev-option/">Dev option and LM Studio</a></li>
+      </ul>
+      <p>Help</p>
+      <ul>
+<li><a href="../../docs/license/">Donation and code</a></li>
+<li><a href="../../docs/faq/">FAQ</a></li>
+<li><a href="../../docs/changelog/">Changelog</a></li>
+<li><a href="../../docs/credits/">Credits</a></li>
+      </ul>
+    </nav>
+    <article class="doc-body">
+      <h2>Requirements</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Photoshop</td>
+<td>27.9.1 or later</td>
+</tr>
+<tr>
+<td>System</td>
+<td>Windows or macOS</td>
+</tr>
+<tr>
+<td>Documents</td>
+<td>8-bit RGB (CMYK and 16-bit are planned)</td>
+</tr>
+<tr>
+<td>Optional</td>
+<td><a href="../../docs/dev-option/">LM Studio</a>, only for Type’s Dev option</td>
+</tr>
+</tbody>
+</table>
+<h2>Installing the .ccx file</h2>
+<ol>
+<li>After donating on Payhip you get an email with the plugin file, ending in <strong>.ccx</strong>, and your serial code.</li>
+<li><strong>Double-click</strong> the .ccx file. Creative Cloud opens and asks you to confirm the installation.</li>
+<li>Restart Photoshop.</li>
+<li>Open the panel from the <strong>Plugins → WGT-01</strong> menu. You can dock it next to your other panels.</li>
+</ol>
+<h2>If double-clicking doesn’t work</h2>
+<p>You can install the plugin with <strong>UXP Developer Tool</strong>, Adobe’s free app for plugins:</p>
+<ol>
+<li>Install UXP Developer Tool from the Creative Cloud app (<em>All apps</em> section).</li>
+<li>Open it with Photoshop already running and choose <strong>Add Plugin</strong>.</li>
+<li>Select the <code>manifest.json</code> file in the plugin folder, then <strong>Load</strong>.</li>
+</ol>
+<h2>Updating</h2>
+<p>Install the new .ccx file over the old one: your settings and saved presets stay.</p>
+      <nav class="doc-pager" aria-label="Nearby pages">
+<a href="../../docs/"><small>Previous</small>Overview</a><a href="../../docs/the-panel/" style="text-align:right"><small>Next</small>The panel</a>      </nav>
+    </article>
+  </div>
+</div>
+<div class="band" data-from="#ffffff" data-to="#000000"></div>
+</main>
+<footer class="site-footer tone" data-c="black">
+  <div class="wrap">
+    <div>
+      <p class="lockup lockup--footer"><svg class="logo-sym lockup__sym" viewBox="0 0 12 14" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 0h11v1h-11zM0 1h10v1h-10zM11 1h1v1h-1zM0 2h2v1h-2zM10 2h1v1h-1zM0 3h2v1h-2zM3 3h2v1h-2zM11 3h1v1h-1zM0 4h2v1h-2zM3 4h2v1h-2zM10 4h1v1h-1zM0 5h2v1h-2zM0 6h2v1h-2zM7 6h1v1h-1zM10 6h1v1h-1zM0 7h2v1h-2zM7 7h2v1h-2zM0 8h2v1h-2zM7 8h3v1h-3zM0 9h2v1h-2zM7 9h4v1h-4zM0 10h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM7 10h5v1h-5zM1 11h1v1h-1zM3 11h1v1h-1zM7 11h3v1h-3zM9 12h2v1h-2zM10 13h2v1h-2z"/></svg><span class="lockup__word">WGT<span class="lockup__num">-01</span></span><span class="lockup__sub">Walife Generative Tools</span></p>
+      <p class="small">A project by Walife. Website and plugin in development.<br>Version 0.16.5, for Photoshop 27.9.1 or later.</p>
+    </div>
+    <ul class="small">
+      <li><a href="../../try/">Try it</a></li>
+      <li><a href="../../docs/">Docs</a></li>
+      <li><a href="../../download/">Download</a></li>
+      <li><a href="../../it/documentazione/installazione/" hreflang="it" lang="it" data-lang-switch="it">Versione italiana</a></li>
+    </ul>
+    <ul class="small">
+      <li><a href="../../docs/changelog/">Changelog</a></li>
+      <li><a href="../../docs/credits/">Image credits</a></li>
+      <li><a href="../../cookies/">Cookies and privacy</a></li>
+      <li><button class="linkish" type="button" data-consent="apri">Cookie preferences</button></li>
+    </ul>
+    <a class="site-footer__home" href="https://thawalife.com"><span class="lbl">[main website]</span><span class="site-footer__url">thawalife.com</span><span class="site-footer__arrow" aria-hidden="true">↗</span></a>
+  </div>
+</footer>
+<div class="consent" data-consent-banner role="dialog" aria-labelledby="consent-t" aria-describedby="consent-d" hidden>
+  <button class="consent__x" type="button" data-consent="rifiuta" aria-label="Close: continue without accepting">×</button>
+  <p class="consent__t" id="consent-t">Cookie</p>
+  <p class="consent__d" id="consent-d">This site uses no profiling or analytics cookies: visits are counted without cookies. The on-page Payhip checkout, a third-party service, only starts if you accept. You can change your mind at any time from “Cookie preferences” at the bottom of the page.</p>
+  <div class="consent__actions">
+    <button class="btn" type="button" data-consent="rifiuta">Reject</button>
+    <button class="btn" type="button" data-consent="accetta">Accept</button>
+    <a href="../../cookies/">Read the cookie policy</a>
+  </div>
+</div>
+</body>
+</html>

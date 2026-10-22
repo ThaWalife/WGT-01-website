@@ -129,7 +129,7 @@ export default async function vector(section) {
     const near = vis.sort((a, b) => Math.hypot(a[0] - st.fx, a[1] - st.fy) - Math.hypot(b[0] - st.fx, b[1] - st.fy)).slice(0, 7);
     code.textContent = [
       `<svg viewBox="0 0 ${B} ${B}">`,
-      `  <g fill="#000">  <!-- ${dots.length.toLocaleString('it-IT')} punti -->`,
+      `  <g fill="#000">  <!-- ${dots.length.toLocaleString(document.documentElement.lang)} ${document.documentElement.lang === 'en' ? 'dots' : 'punti'} -->`,
       ...near.map(([x, y, r]) => `    <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}"/>`),
       `    …`,
       `  </g>`,

@@ -79,7 +79,8 @@ button, input { font: inherit; color: inherit; }
 .site-nav a:first-child { border-left: 0; }
 .site-nav a:hover, .site-nav a[aria-current="page"] { background: var(--green); color: var(--ink); }
 @media (max-width: 640px) {
-  .site-nav a { padding: 8px 9px; font-size: var(--t-xs); }
+  .site-nav a { padding: 8px 7px; font-size: var(--t-xs); white-space: nowrap; }
+  .wordmark { padding-right: 9px; }
   .site-nav .nav-optional { display: none; }
 }
 
@@ -595,3 +596,32 @@ fieldset.panel__row legend { padding: 0; margin-bottom: 6px; font-size: var(--t-
 /* finestre su sfondo nero: bordo chiaro e ombra verde, altrimenti la cornice sparisce */
 [data-c="black"] .win { border-color: rgba(255,255,255,.7); box-shadow: 6px 6px 0 var(--green); }
 [data-c="black"] .win .win__bar { border-bottom: var(--line) solid rgba(255,255,255,.7); }
+
+/* ---------- lingua ---------- */
+.site-nav .lang-switch { font-weight: 700; letter-spacing: .04em; }
+.lang-switch__to { opacity: .45; font-weight: 400; }
+.site-nav .lang-switch:hover .lang-switch__to { opacity: .8; }
+
+/* ---------- newsletter "avvisami all'uscita" ---------- */
+.newsletter { max-width: 760px; }
+.tone[data-c="black"] .newsletter { box-shadow: 6px 6px 0 var(--green); border-color: var(--paper); }
+.section--nl { padding-top: 72px; padding-bottom: 96px; }
+.newsletter__body { padding: 22px 24px 20px; display: grid; gap: 12px; }
+.newsletter__body p { margin: 0; max-width: 58ch; }
+.newsletter__t { font-size: clamp(2.4rem, 5vw, 4rem); line-height: .95; margin: 0; }
+.newsletter__row { display: flex; gap: 0; margin-top: 4px; }
+.newsletter__row input[type="email"] {
+  flex: 1 1 auto; min-width: 0; font: inherit; font-size: var(--t-s); padding: 11px 12px;
+  border: var(--line) solid var(--ink); border-right: 0; background: #fff; color: var(--ink); border-radius: 0;
+}
+.newsletter__row input[type="email"]:focus-visible { outline: 3px solid var(--green); outline-offset: 0; }
+.newsletter__row .btn { flex: none; border-color: var(--ink); }
+.newsletter__msg:empty { display: none; }
+.newsletter__msg[data-state="ok"] { color: #06623a; font-weight: 700; }
+.newsletter__msg[data-state="err"] { color: #b3261e; font-weight: 700; }
+.newsletter__note a { font-weight: 700; }
+@media (max-width: 520px) {
+  .newsletter__row { flex-direction: column; gap: 8px; }
+  .newsletter__row input[type="email"] { border-right: var(--line) solid var(--ink); }
+}
+.section--nl .newsletter { margin-inline: auto; }

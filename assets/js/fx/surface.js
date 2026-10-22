@@ -2,7 +2,7 @@
    La dimensione di ogni elemento segue il tono della foto.
    L'elemento si sceglie dal pannello, oppure si carica un PNG/SVG proprio. */
 import { loadImage, getPixels, gray } from '../engines.js';
-import { fitCanvas, photo, loop, reduceMotion } from '../core.js';
+import { fitCanvas, photo, loop, reduceMotion, t } from '../core.js';
 
 const SHAPES = {
   punto(c, x, y, r) { c.moveTo(x + r, y); c.arc(x, y, r, 0, Math.PI * 2); },
@@ -92,7 +92,7 @@ export default async function surface(el) {
   fileIn?.addEventListener('change', async () => {
     const file = fileIn.files[0];
     if (!file) return;
-    if (!/^image\/(png|svg\+xml|jpeg|webp)$/.test(file.type)) { fileName.textContent = 'Serve un PNG o un SVG.'; return; }
+    if (!/^image\/(png|svg\+xml|jpeg|webp)$/.test(file.type)) { fileName.textContent = t('Serve un PNG o un SVG.', 'Use a PNG or an SVG.'); return; }
     try {
       const url = URL.createObjectURL(file);
       const im = await loadImage(url);
@@ -109,7 +109,7 @@ export default async function surface(el) {
       press(fileBtn);
       frame();
     } catch {
-      fileName.textContent = 'Questo file non si apre: prova con un altro PNG o SVG.';
+      fileName.textContent = t('Questo file non si apre: prova con un altro PNG o SVG.', 'This file won’t open: try another PNG or SVG.');
     }
   });
   if (reduceMotion) new ResizeObserver(() => frame()).observe(canvas);

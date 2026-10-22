@@ -1,26 +1,26 @@
 {% if cfg.payhip.product_url %}
 <div class="actions" style="margin-bottom:32px">
-  <a class="btn btn--go payhip-buy-button" href="{{ cfg.payhip.product_url }}" data-product="{{ cfg.payhip.product_id }}" data-theme="none">Dona da {{ cfg.payhip.min_price }} e scarica</a>
+  <a class="btn btn--go payhip-buy-button" href="{{ cfg.payhip.product_url }}" data-product="{{ cfg.payhip.product_id }}" data-theme="none">{{ _('Dona da {p} e scarica', p=cfg.payhip.min_price) }}</a>
 </div>
 {# il pulsante di Payhip nella pagina parte solo con il consenso ai servizi di terze parti; senza, il link apre Payhip #}
 <script type="text/plain" data-consent="terzi" data-src="https://payhip.com/payhip.js"></script>
 {% else %}
-<p class="status">In arrivo: il download apre con la prima versione pubblica.</p>
+<p class="status">{{ _('In arrivo: il download apre con la prima versione pubblica.') }}</p>
 {% endif %}
 <ol class="steps">
   <li>
     <span class="lbl">[01]</span>
-    <h3>Dona da {{ cfg.payhip.min_price }}</h3>
-    <p>Scegli tu quanto: il minimo è {{ cfg.payhip.min_price }}. Il pagamento passa da Payhip.</p>
+    <h3>{{ _('Dona da {p}', p=cfg.payhip.min_price) }}</h3>
+    <p>{{ _('Scegli tu quanto: il minimo è {p}. Il pagamento passa da Payhip.', p=cfg.payhip.min_price) }}</p>
   </li>
   <li>
     <span class="lbl">[02]</span>
-    <h3>Ricevi file e codice</h3>
-    <p>Un’email ti porta il file del plugin e il tuo codice seriale personale.</p>
+    <h3>{{ _('Ricevi file e codice') }}</h3>
+    <p>{{ _('Un’email ti porta il file del plugin e il tuo codice seriale personale.') }}</p>
   </li>
   <li>
     <span class="lbl">[03]</span>
-    <h3>Installa in Photoshop</h3>
-    <p>Doppio clic sul file .ccx: Creative Cloud installa {{ cfg.name }} e lo trovi nel menu Plugin.</p>
+    <h3>{{ _('Installa in Photoshop') }}</h3>
+    <p>{{ _('Doppio clic sul file .ccx: Creative Cloud installa {name} e lo trovi nel menu Plugin.', name=cfg.name) }}</p>
   </li>
 </ol>

@@ -6,5 +6,7 @@
   "skip": "Vai al contenuto",
   "footer_made": "Un progetto di Walife. Sito e plugin in sviluppo.",
   "footer_images": "Crediti delle immagini",
-  "footer_source": "Codice del sito su GitHub"
+  "lang_switch_label": "Read this page in English",
+  "lang_switch_text": "English version",
+  "consent_text": "Questo sito non usa cookie di profilazione né cookie statistici: le visite si contano senza cookie. Il pagamento Payhip nella pagina, servizio di terze parti, parte solo se accetti. Puoi cambiare idea quando vuoi da “Preferenze cookie”, in fondo alla pagina."
 }

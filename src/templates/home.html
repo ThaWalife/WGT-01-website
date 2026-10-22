@@ -7,19 +7,19 @@
   <canvas class="hero__canvas" aria-hidden="true"></canvas>
   <div class="hero__inner">
     <div>
-      <p class="lbl lbl--muted" style="margin-bottom:14px">[plugin per photoshop · v{{ cfg.version }}]</p>
+      <p class="lbl lbl--muted" style="margin-bottom:14px">{{ _('[plugin per photoshop · v{v}]', v=cfg.version) }}</p>
       <h1 id="titolo" class="lockup lockup--hero">{{ symbol("logo-sym lockup__sym") }}<span class="lockup__word">{{ cfg.name.split('-')[0] }}<span class="lockup__num">-{{ cfg.name.split('-')[1] }}</span></span><span class="lockup__sub">{{ cfg.brand }}</span></h1>
-      <p class="hero__lead"><span>Pattern, stili generativi e impaginazione. Tutto parte dalla scala di grigi della tua immagine.</span></p>
+      <p class="hero__lead"><span>{{ _('Pattern, stili generativi e impaginazione. Tutto parte dalla scala di grigi della tua immagine.') }}</span></p>
       <div class="actions">
-        <a class="btn btn--go" href="{{ root }}download/">Scarica {{ cfg.name }}</a>
-        <a class="btn" href="{{ root }}prova/" style="background:#000">Provalo nel browser</a>
+        <a class="btn btn--go" href="{{ root }}{{ u.download }}">{{ _('Scarica {name}', name=cfg.name) }}</a>
+        <a class="btn" href="{{ root }}{{ u.try }}" style="background:#000">{{ _('Provalo nel browser') }}</a>
       </div>
     </div>
-    <div class="panel hero__panel" role="group" aria-label="Controlli dello sfondo">
-      <div class="panel__bar"><span>{{ cfg.name }} — Sfondo</span></div>
+    <div class="panel hero__panel" role="group" aria-label="{{ _('Controlli dello sfondo') }}">
+      <div class="panel__bar"><span>{{ cfg.name }} — {{ _('Sfondo') }}</span></div>
       <div class="panel__body">
         <div class="panel__row">
-          <span>Stile</span>
+          <span>{{ _('Stile') }}</span>
           <div class="seg">
             <button class="chip" type="button" data-hero-style="dither" aria-pressed="true">Dither</button>
             <button class="chip" type="button" data-hero-style="halftone" aria-pressed="false">Halftone</button>
@@ -27,60 +27,60 @@
           </div>
         </div>
         <div class="panel__row">
-          <label for="hero-dens">Densità</label>
+          <label for="hero-dens">{{ _('Densità') }}</label>
           <input id="hero-dens" type="range" min="0" max="100" value="55" data-hero-density>
         </div>
-        <div class="actions"><button class="chip" type="button" data-hero-pause aria-pressed="false"><span>Pausa</span></button></div>
+        <div class="actions"><button class="chip" type="button" data-hero-pause aria-pressed="false"><span>{{ _('Pausa') }}</span></button></div>
       </div>
     </div>
-    <p class="hero__meta lbl lbl--muted"><span>[Photoshop {{ cfg.photoshop_min }}+]</span><span>[Windows / macOS]</span><span>[donazione da {{ cfg.payhip.min_price }}]</span></p>
+    <p class="hero__meta lbl lbl--muted"><span>[Photoshop {{ cfg.photoshop_min }}+]</span><span>[Windows / macOS]</span><span>{{ _('[donazione da {p}]', p=cfg.payhip.min_price) }}</span></p>
   </div>
 </section>
 
 <section class="tone section tools-sec" data-c="green" aria-labelledby="tre" data-fx="tools">
-  {{ docframe('strumenti.psd', [50]) }}
+  {{ docframe(_('strumenti.psd'), [50]) }}
   <div class="wrap">
     <div class="tools-head">
-      <h2 class="tools-title" id="tre"><span class="tools-title__a">Un pannello,</span><span class="tools-title__b">tre strumenti</span></h2>
-      <p class="tools-head__text">{{ cfg.name }} vive in un pannello di Photoshop, accanto ai livelli. Dentro ci sono tre strumenti: <b>uno ripete elementi</b>, <b>uno ridisegna l’immagine</b>, <b>uno impagina il testo</b>.</p>
+      <h2 class="tools-title" id="tre"><span class="tools-title__a">{{ _('Un pannello,') }}</span><span class="tools-title__b">{{ _('tre strumenti') }}</span></h2>
+      <p class="tools-head__text">{{ _('{name} vive in un pannello di Photoshop, accanto ai livelli. Dentro ci sono tre strumenti: <b>uno ripete elementi</b>, <b>uno ridisegna l’immagine</b>, <b>uno impagina il testo</b>.', name=cfg.name) }}</p>
     </div>
     <div class="tools">
       <article class="win tool-card" data-show="pattern">
-        <div class="win__bar"><span>01 — orologio.psd</span></div>
-        <canvas class="tool-card__img" aria-label="Ingranaggi di un orologio ricostruiti con piccole croci che crescono nelle zone scure"></canvas>
+        <div class="win__bar"><span>01 — {{ _('orologio.psd') }}</span></div>
+        <canvas class="tool-card__img" aria-label="{{ _('Ingranaggi di un orologio ricostruiti con piccole croci che crescono nelle zone scure') }}"></canvas>
         <div class="tool-card__text">
           <h3>Pattern</h3>
-          <p>Ripete un elemento, una forma o un tuo file, e ne decide dimensione e posizione in base al tono della foto.</p>
-          <a href="{{ root }}documentazione/pattern/">Come funziona Pattern</a>
+          <p>{{ _('Ripete un elemento, una forma o un tuo file, e ne decide dimensione e posizione in base al tono della foto.') }}</p>
+          <a href="{{ root }}{{ doc('pattern') }}">{{ _('Come funziona Pattern') }}</a>
         </div>
       </article>
       <article class="win tool-card" data-show="stili">
-        <div class="win__bar"><span>02 — figura.psd · <span data-now>Curve di livello</span></span></div>
-        <canvas class="tool-card__img" aria-label="La stessa foto ridisegnata, a turno, da stili diversi"></canvas>
+        <div class="win__bar"><span>02 — {{ _('figura.psd') }} · <span data-now>{{ _('Curve di livello') }}</span></span></div>
+        <canvas class="tool-card__img" aria-label="{{ _('La stessa foto ridisegnata, a turno, da stili diversi') }}"></canvas>
         <div class="tool-card__text">
-          <h3>Stili</h3>
-          <p>Dieci stili generativi, dal dither alle curve di livello, su tutti i livelli visibili. Quattro si esportano in SVG.</p>
-          <a href="{{ root }}documentazione/stili/">I dieci stili</a>
+          <h3>{{ _('Stili') }}</h3>
+          <p>{{ _('Dieci stili generativi, dal dither alle curve di livello, su tutti i livelli visibili. Quattro si esportano in SVG.') }}</p>
+          <a href="{{ root }}{{ doc('stili/index') }}">{{ _('I dieci stili') }}</a>
         </div>
       </article>
       <article class="win tool-card" data-show="type">
-        <div class="win__bar"><span>03 — manifesto.psd · <span data-now>Asse centrale</span></span></div>
+        <div class="win__bar"><span>03 — {{ _('manifesto.psd') }} · <span data-now>{{ _('Asse centrale') }}</span></span></div>
         <div class="tool-card__doc">
           <figure class="poster" data-a="asse">
-            <img src="{{ root }}assets/img/demo/example-2.jpg" alt="Stanza con piante e quadri luminosi" width="1200" height="900">
+            <img src="{{ root }}assets/img/demo/example-2.webp" alt="{{ _('Stanza con piante e quadri luminosi') }}" width="1000" height="750" loading="lazy" decoding="async">
             <div class="poster__veil"></div>
             <figcaption class="poster__text">
-              <p class="p-kicker">Studio aperto</p>
-              <p class="p-title">Stanza verde</p>
-              <p class="p-info">Venerdì 13 novembre, ore 19</p>
-              <p class="p-cta">Ingresso libero</p>
+              <p class="p-kicker">{{ _('Studio aperto') }}</p>
+              <p class="p-title">{{ _('Stanza verde') }}</p>
+              <p class="p-info">{{ _('Venerdì 13 novembre, ore 19') }}</p>
+              <p class="p-cta">{{ _('Ingresso libero') }}</p>
             </figcaption>
           </figure>
         </div>
         <div class="tool-card__text">
           <h3>Type</h3>
-          <p>Impagina manifesti, post e storie: sceglie la composizione, mette il testo su una griglia e lo tiene leggibile sulla foto.</p>
-          <a href="{{ root }}documentazione/type/">Come funziona Type</a>
+          <p>{{ _('Impagina manifesti, post e storie: sceglie la composizione, mette il testo su una griglia e lo tiene leggibile sulla foto.') }}</p>
+          <a href="{{ root }}{{ doc('type') }}">{{ _('Come funziona Type') }}</a>
         </div>
       </article>
     </div>
@@ -90,31 +90,31 @@
 <div class="band" data-from="#0d9e5a" data-to="#000000"></div>
 
 <section class="tone section" data-c="black" id="stili" aria-labelledby="dieci" data-fx="gallery">
-  {{ docframe('stili.psd', [20, 80], '66,7%') }}
+  {{ docframe(_('stili.psd'), [20, 80], _('66,7%')) }}
   <div class="wrap">
     <div class="g-head">
       <span class="num" aria-hidden="true">10</span>
-      <h2 class="h-dot" id="dieci"><span class="sr-only">10 </span>stili,<br>una foto</h2>
-      <p class="prose small muted">Scegli uno stile e trascina il cursore per confrontarlo con l’originale. È una versione leggera, calcolata nel browser: nel plugin ogni stile ha i suoi controlli e preset.</p>
+      <h2 class="h-dot" id="dieci"><span class="sr-only">10 </span>{{ _('stili,<br>una foto') }}</h2>
+      <p class="prose small muted">{{ _('Scegli uno stile e trascina il cursore per confrontarlo con l’originale. È una versione leggera, calcolata nel browser: nel plugin ogni stile ha i suoi controlli e preset.') }}</p>
     </div>
     <div class="panel gallery">
-      <div class="panel__bar"><span>{{ cfg.name }} — Anteprima: <span data-style-name>Dither</span></span></div>
+      <div class="panel__bar"><span>{{ cfg.name }} — {{ _('Anteprima:') }} <span data-style-name>Dither</span></span></div>
       <div class="gallery__body">
-        <ul class="style-list" role="tablist" aria-label="Stili" aria-orientation="vertical">
+        <ul class="style-list" role="tablist" aria-label="{{ _('Stili') }}" aria-orientation="vertical">
           {% for s in styles %}<li><button role="tab" type="button" data-style="{{ s.id }}" aria-selected="{{ 'true' if loop.first else 'false' }}" tabindex="{{ 0 if loop.first else -1 }}" aria-controls="palco"><span>{{ s.name }}</span>{% if s.svg %}<span class="svg-tag">SVG</span>{% endif %}</button></li>
           {% endfor %}
         </ul>
-        <div class="stage" id="palco" role="tabpanel" aria-label="Anteprima dello stile">
+        <div class="stage" id="palco" role="tabpanel" aria-label="{{ _('Anteprima dello stile') }}">
           <div class="stage__frame">
             <canvas class="stage__after" aria-hidden="true"></canvas>
             <canvas class="stage__before" aria-hidden="true"></canvas>
-            <button class="stage__handle" type="button" role="slider" aria-label="Confronto tra originale e stile" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></button>
-            <div class="stage__labels"><span>Originale</span><span data-style-name>Dither</span></div>
+            <button class="stage__handle" type="button" role="slider" aria-label="{{ _('Confronto tra originale e stile') }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></button>
+            <div class="stage__labels"><span>{{ _('Originale') }}</span><span data-style-name>Dither</span></div>
           </div>
           <div class="stage__foot">
             <p class="stage__note" data-note aria-live="polite"></p>
-            <div class="photos" role="group" aria-label="Foto di prova">
-              {% for p in photos %}<button type="button" data-photo="{{ p.id }}" aria-pressed="{{ 'true' if loop.first else 'false' }}" aria-label="{{ p.label }}"><img src="{{ root }}assets/img/demo/{{ p.id }}.jpg" alt="" loading="lazy" width="46" height="46"></button>{% endfor %}
+            <div class="photos" role="group" aria-label="{{ _('Foto di prova') }}">
+              {% for p in photos %}<button type="button" data-photo="{{ p.id }}" aria-pressed="{{ 'true' if loop.first else 'false' }}" aria-label="{{ p.label }}"><img src="{{ root }}assets/img/demo/{{ p.id }}-thumb.webp" alt="" loading="lazy" decoding="async" width="46" height="46"></button>{% endfor %}
             </div>
           </div>
         </div>
@@ -126,32 +126,32 @@
 <div class="band" data-from="#000000" data-to="#0d9e5a"></div>
 
 <section class="tone pattern-sec" data-c="green" aria-labelledby="pattern" data-fx="surface" data-photo="example-1">
-  <canvas class="surface" aria-label="Superficie di elementi che ondeggia su tutto lo sfondo: la dimensione di ogni elemento segue il tono di una foto"></canvas>
+  <canvas class="surface" aria-label="{{ _('Superficie di elementi che ondeggia su tutto lo sfondo: la dimensione di ogni elemento segue il tono di una foto') }}"></canvas>
   <div class="wrap pattern-sec__inner">
-    <h2 class="h-el pattern-title" id="pattern" data-elsh-target style="--elsh:3"><span>Un elemento,</span><span>migliaia</span><span>di posizioni</span></h2>
+    <h2 class="h-el pattern-title" id="pattern" data-elsh-target style="--elsh:3"><span>{{ _('Un elemento,') }}</span><span>{{ _('migliaia') }}</span><span>{{ _('di posizioni') }}</span></h2>
     <div class="win pattern-win">
       <div class="win__bar"><span>{{ cfg.name }} — Pattern</span></div>
       <div class="win__body">
-        <p>Pattern ripete un elemento e ne decide la dimensione in base al tono: cresce nelle ombre, sparisce nelle luci. Cambia elemento o carica il tuo.</p>
+        <p>{{ _('Pattern ripete un elemento e ne decide la dimensione in base al tono: cresce nelle ombre, sparisce nelle luci. Cambia elemento o carica il tuo.') }}</p>
         <div class="panel__row">
-          <span class="lbl">Elemento</span>
+          <span class="lbl">{{ _('Elemento') }}</span>
           <div class="seg">
-            <button class="chip" type="button" data-shape="punto" data-elsh="3" aria-pressed="true">Punto</button>
-            <button class="chip" type="button" data-shape="quadrato" data-elsh="2" aria-pressed="false">Quadrato</button>
-            <button class="chip" type="button" data-shape="croce" data-elsh="11" aria-pressed="false">Croce</button>
-            <button class="chip" type="button" data-shape="triangolo" data-elsh="7" aria-pressed="false">Triangolo</button>
-            <button class="chip" type="button" data-shape="anello" data-elsh="13" aria-pressed="false">Anello</button>
+            <button class="chip" type="button" data-shape="punto" data-elsh="3" aria-pressed="true">{{ _('Punto') }}</button>
+            <button class="chip" type="button" data-shape="quadrato" data-elsh="2" aria-pressed="false">{{ _('Quadrato') }}</button>
+            <button class="chip" type="button" data-shape="croce" data-elsh="11" aria-pressed="false">{{ _('Croce') }}</button>
+            <button class="chip" type="button" data-shape="triangolo" data-elsh="7" aria-pressed="false">{{ _('Triangolo') }}</button>
+            <button class="chip" type="button" data-shape="anello" data-elsh="13" aria-pressed="false">{{ _('Anello') }}</button>
           </div>
           <div class="seg">
-            <button class="chip" type="button" data-custom data-elsh="16" aria-pressed="false">PNG/SVG personalizzato</button>
+            <button class="chip" type="button" data-custom data-elsh="16" aria-pressed="false">{{ _('PNG/SVG personalizzato') }}</button>
             <input type="file" accept="image/png,image/svg+xml,image/jpeg,image/webp" data-custom-file hidden>
           </div>
-          <span class="small muted" data-custom-name aria-live="polite">Il file resta nel tuo browser.</span>
+          <span class="small muted" data-custom-name aria-live="polite">{{ _('Il file resta nel tuo browser.') }}</span>
         </div>
         <ul class="facts">
-          <li>Elementi da forme pronte o da un tuo file SVG, PNG o JPG.</li>
-          <li>Elementi diversi per le zone scure, medie e chiare.</li>
-          <li>Rotazione e scala casuali; “Variante” rimescola solo la parte casuale.</li>
+          <li>{{ _('Elementi da forme pronte o da un tuo file SVG, PNG o JPG.') }}</li>
+          <li>{{ _('Elementi diversi per le zone scure, medie e chiare.') }}</li>
+          <li>{{ _('Rotazione e scala casuali; “Variante” rimescola solo la parte casuale.') }}</li>
         </ul>
       </div>
     </div>
@@ -161,42 +161,42 @@
 <div class="band" data-from="#0d9e5a" data-to="#000000"></div>
 
 <section class="tone section" data-c="black" aria-labelledby="type" data-fx="poster">
-  {{ docframe('manifesto.psd', [61.8]) }}
+  {{ docframe(_('manifesto.psd'), [61.8]) }}
   <div class="wrap type-sec">
     <div class="type-head">
-      <h2 class="h-dot" id="type"><span>Il testo</span><span>trova il suo</span><span>posto</span></h2>
+      <h2 class="h-dot" id="type"><span>{{ _('Il testo') }}</span><span>{{ _('trova il suo') }}</span><span>{{ _('posto') }}</span></h2>
     </div>
     <div class="prose">
-      <p>Scrivi titolo, informazioni e invito all’azione. Type riconosce il formato, prende i colori dal brand o dalla foto con un contrasto sempre leggibile, sceglie i caratteri tra quelli installati e prova sei composizioni evitando il soggetto.</p>
+      <p>{{ _('Scrivi titolo, informazioni e invito all’azione. Type riconosce il formato, prende i colori dal brand o dalla foto con un contrasto sempre leggibile, sceglie i caratteri tra quelli installati e prova sei composizioni evitando il soggetto.') }}</p>
       <div class="panel" style="margin:22px 0 14px">
-        <div class="panel__bar"><span>{{ cfg.name }} — Type · manifesto 4:5</span></div>
+        <div class="panel__bar"><span>{{ cfg.name }} — Type · {{ _('manifesto 4:5') }}</span></div>
         <div class="panel__body">
           <div class="panel__row">
-            <span>Impaginazione</span>
+            <span>{{ _('Impaginazione') }}</span>
             <div class="archetypes">
-              <button class="chip" type="button" data-archetype="asse" aria-pressed="true" data-desc="Tutto sull’asse centrale, il testo in basso sotto il soggetto.">Asse centrale</button>
-              <button class="chip" type="button" data-archetype="bandiera" aria-pressed="false" data-desc="Testo allineato a sinistra, titolo in alto e informazioni in fondo.">Bandiera a sinistra</button>
-              <button class="chip" type="button" data-archetype="gigante" aria-pressed="false" data-desc="Il titolo occupa la pagina; la foto diventa sfondo.">Titolo gigante</button>
-              <button class="chip" type="button" data-archetype="colonna" aria-pressed="false" data-desc="Una colonna laterale piena per il testo, la foto libera accanto.">Colonna laterale</button>
-              <button class="chip" type="button" data-archetype="calma" aria-pressed="false" data-desc="Il testo va nella zona più tranquilla della foto.">Zona calma</button>
-              <button class="chip" type="button" data-archetype="striscia" aria-pressed="false" data-desc="Una fascia piena attraversa la foto e porta il testo.">Striscia</button>
+              <button class="chip" type="button" data-archetype="asse" aria-pressed="true" data-desc="{{ _('Tutto sull’asse centrale, il testo in basso sotto il soggetto.') }}">{{ _('Asse centrale') }}</button>
+              <button class="chip" type="button" data-archetype="bandiera" aria-pressed="false" data-desc="{{ _('Testo allineato a sinistra, titolo in alto e informazioni in fondo.') }}">{{ _('Bandiera a sinistra') }}</button>
+              <button class="chip" type="button" data-archetype="gigante" aria-pressed="false" data-desc="{{ _('Il titolo occupa la pagina; la foto diventa sfondo.') }}">{{ _('Titolo gigante') }}</button>
+              <button class="chip" type="button" data-archetype="colonna" aria-pressed="false" data-desc="{{ _('Una colonna laterale piena per il testo, la foto libera accanto.') }}">{{ _('Colonna laterale') }}</button>
+              <button class="chip" type="button" data-archetype="calma" aria-pressed="false" data-desc="{{ _('Il testo va nella zona più tranquilla della foto.') }}">{{ _('Zona calma') }}</button>
+              <button class="chip" type="button" data-archetype="striscia" aria-pressed="false" data-desc="{{ _('Una fascia piena attraversa la foto e porta il testo.') }}">{{ _('Striscia') }}</button>
             </div>
           </div>
-          <p class="small" data-archetype-desc aria-live="polite" style="margin:0">Tutto sull’asse centrale, il testo in basso sotto il soggetto.</p>
-          <div class="actions"><button class="chip" type="button" data-grid aria-pressed="false">Mostra la griglia</button></div>
+          <p class="small" data-archetype-desc aria-live="polite" style="margin:0">{{ _('Tutto sull’asse centrale, il testo in basso sotto il soggetto.') }}</p>
+          <div class="actions"><button class="chip" type="button" data-grid aria-pressed="false">{{ _('Mostra la griglia') }}</button></div>
         </div>
       </div>
-      <p class="small muted">Anteprima illustrativa. Nel plugin le misure si calcolano sul tuo documento e i testi restano livelli modificabili.</p>
+      <p class="small muted">{{ _('Anteprima illustrativa. Nel plugin le misure si calcolano sul tuo documento e i testi restano livelli modificabili.') }}</p>
     </div>
     <figure class="poster" data-a="asse">
-      <img src="{{ root }}assets/img/demo/type-bg.jpg" alt="Figura avvolta da un anello di luce blu, resa a retino" width="900" height="1192">
+      <img src="{{ root }}assets/img/demo/type-bg.webp" alt="{{ _('Figura avvolta da un anello di luce blu, resa a retino') }}" width="680" height="900" loading="lazy" decoding="async">
       <div class="poster__veil"></div>
       <div class="poster__grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
       <figcaption class="poster__text">
-        <p class="p-kicker">Live audio-video</p>
-        <p class="p-title">Segnale perso</p>
-        <p class="p-info">Sabato 14 novembre, ore 22<br>Sala grande</p>
-        <p class="p-cta">Ingresso libero</p>
+        <p class="p-kicker">{{ _('Live audio-video') }}</p>
+        <p class="p-title">{{ _('Segnale perso') }}</p>
+        <p class="p-info">{{ _('Sabato 14 novembre, ore 22<br>Sala grande') }}</p>
+        <p class="p-cta">{{ _('Ingresso libero') }}</p>
       </figcaption>
     </figure>
   </div>
@@ -205,14 +205,14 @@
 <div class="band" data-from="#000000" data-to="#0d9e5a"></div>
 
 <section class="tone section" data-c="green" aria-labelledby="svg" data-fx="vector">
-  {{ docframe('raster-vettoriale.psd', [25, 75], '800%') }}
+  {{ docframe(_('raster-vettoriale.psd'), [25, 75], '800%') }}
   <div class="wrap">
     <div class="desk-head">
-      <h2 class="svg-sec__title" id="svg"><span class="a">Raster</span><span class="arrow" aria-hidden="true">→</span><span class="b">vettoriale</span></h2>
-      <p class="prose">Halftone, Incisione, Linee di flusso e Curve di livello si esportano anche in SVG. Che differenza fa? Ingrandisci lo stesso retino e guarda.</p>
+      <h2 class="svg-sec__title" id="svg"><span class="a">Raster</span><span class="arrow" aria-hidden="true">→</span><span class="b">{{ _('vettoriale') }}</span></h2>
+      <p class="prose">{{ _('Halftone, Incisione, Linee di flusso e Curve di livello si esportano anche in SVG. Che differenza fa? Ingrandisci lo stesso retino e guarda.') }}</p>
     </div>
     <div class="vec-zoom">
-      <label class="lbl" for="vec-zoom">Ingrandimento</label>
+      <label class="lbl" for="vec-zoom">{{ _('Ingrandimento') }}</label>
       <input id="vec-zoom" type="range" min="0" max="50" value="30" data-zoom>
       <output class="vec-zoom__val" data-zoom-out>800%</output>
     </div>
@@ -220,65 +220,68 @@
       <figure class="vec-fig">
         <div class="win" data-view="png">
           <div class="win__bar"><span>halftone.png</span></div>
-          <canvas class="win__canvas win__canvas--sq" aria-label="Retino salvato come PNG e ingrandito: si vedono i pixel. Trascina per spostarti."></canvas>
+          <canvas class="win__canvas win__canvas--sq" aria-label="{{ _('Retino salvato come PNG e ingrandito: si vedono i pixel. Trascina per spostarti.') }}"></canvas>
         </div>
         <figcaption>
-          <h3>PNG: una griglia di pixel</h3>
-          <p>Ogni punto del retino è fatto di quadratini. Se ingrandisci o stampi grande, i bordi si sgranano.</p>
+          <h3>{{ _('PNG: una griglia di pixel') }}</h3>
+          <p>{{ _('Ogni punto del retino è fatto di quadratini. Se ingrandisci o stampi grande, i bordi si sgranano.') }}</p>
         </figcaption>
       </figure>
       <figure class="vec-fig">
         <div class="win" data-view="svg">
           <div class="win__bar"><span>halftone.svg</span></div>
-          <canvas class="win__canvas win__canvas--sq" aria-label="Lo stesso retino in SVG: i punti restano nitidi. Trascina per spostarti."></canvas>
+          <canvas class="win__canvas win__canvas--sq" aria-label="{{ _('Lo stesso retino in SVG: i punti restano nitidi. Trascina per spostarti.') }}"></canvas>
         </div>
         <figcaption>
-          <h3>SVG: forme, non pixel</h3>
-          <p>Ogni punto è descritto come un cerchio: centro e raggio. Resta nitido a qualsiasi misura e lo apri in Illustrator per cambiarlo.</p>
-          <button class="btn" type="button" data-dl="mono">Scarica l’esempio in SVG</button>
+          <h3>{{ _('SVG: forme, non pixel') }}</h3>
+          <p>{{ _('Ogni punto è descritto come un cerchio: centro e raggio. Resta nitido a qualsiasi misura e lo apri in Illustrator per cambiarlo.') }}</p>
+          <button class="btn" type="button" data-dl="mono">{{ _('Scarica l’esempio in SVG') }}</button>
         </figcaption>
       </figure>
     </div>
     <div class="vec-cmyk">
       <div class="prose">
-        <h3 class="h-el" style="font-size:clamp(1.6rem,2.6vw,2.3rem);margin-bottom:.35em">E per la stampa: quattro lastre</h3>
-        <p>In tipografia ogni inchiostro (ciano, magenta, giallo e nero) ha la sua lastra, con il retino ruotato a un angolo diverso. L’Halftone esporta in SVG le quattro lastre già separate, una per livello. Spegnine qualcuna per vedere come si sommano.</p>
-        <button class="btn" type="button" data-dl="cmyk">Scarica le 4 lastre in SVG</button>
+        <h3 class="h-el" style="font-size:clamp(1.6rem,2.6vw,2.3rem);margin-bottom:.35em">{{ _('E per la stampa: quattro lastre') }}</h3>
+        <p>{{ _('In tipografia ogni inchiostro (ciano, magenta, giallo e nero) ha la sua lastra, con il retino ruotato a un angolo diverso. L’Halftone esporta in SVG le quattro lastre già separate, una per livello. Spegnine qualcuna per vedere come si sommano.') }}</p>
+        <button class="btn" type="button" data-dl="cmyk">{{ _('Scarica le 4 lastre in SVG') }}</button>
       </div>
       <div class="win" data-cmyk>
         <div class="win__bar"><span>halftone-cmyk.svg</span></div>
         <div class="win__tools">
-          <div class="seg" role="group" aria-label="Lastre di stampa">
-            <button class="chip" type="button" data-plate="C" aria-pressed="true">Ciano 15°</button>
+          <div class="seg" role="group" aria-label="{{ _('Lastre di stampa') }}">
+            <button class="chip" type="button" data-plate="C" aria-pressed="true">{{ _('Ciano 15°') }}</button>
             <button class="chip" type="button" data-plate="M" aria-pressed="true">Magenta 75°</button>
-            <button class="chip" type="button" data-plate="Y" aria-pressed="true">Giallo 0°</button>
-            <button class="chip" type="button" data-plate="K" aria-pressed="true">Nero 45°</button>
+            <button class="chip" type="button" data-plate="Y" aria-pressed="true">{{ _('Giallo 0°') }}</button>
+            <button class="chip" type="button" data-plate="K" aria-pressed="true">{{ _('Nero 45°') }}</button>
           </div>
         </div>
-        <canvas class="win__canvas win__canvas--sq" aria-label="Retino a colori composto da quattro lastre CMYK"></canvas>
+        <canvas class="win__canvas win__canvas--sq" aria-label="{{ _('Retino a colori composto da quattro lastre CMYK') }}"></canvas>
       </div>
     </div>
   </div>
 </section>
 
 <section class="tone section" data-c="green" aria-labelledby="prova">
-  {{ docframe('provalo.psd') }}
+  {{ docframe(_('provalo.psd')) }}
   <div class="wrap try">
     <div class="win try__win">
-      <div class="win__bar"><span>{{ cfg.name }} — Prova nel browser</span></div>
+      <div class="win__bar"><span>{{ cfg.name }} — {{ _('Prova nel browser') }}</span></div>
       <div class="try__body">
         <div class="try__zone">
-          <p class="lbl">[3 stili su 10 · gratis]</p>
-          <h2 class="h-dot" id="prova">Provalo</h2>
-          <p class="prose">Porta una tua foto nella pagina di prova e guardala in Dither, Halftone o ASCII. Il calcolo avviene nel browser: la foto non lascia il tuo computer.</p>
-          <div class="actions"><a class="btn btn--go" href="{{ root }}prova/">Apri la prova</a></div>
-          <p class="lbl lbl--muted try__meta"><span>[nessun account]</span><span>[nessun caricamento]</span><span>[jpg · png · webp]</span></p>
+          <p class="lbl">{{ _('[3 stili su 10 · gratis]') }}</p>
+          <h2 class="h-dot" id="prova">{{ _('Provalo') }}</h2>
+          <p class="prose">{{ _('Porta una tua foto nella pagina di prova e guardala in Dither, Halftone o ASCII. Il calcolo avviene nel browser: la foto non lascia il tuo computer.') }}</p>
+          <div class="actions"><a class="btn btn--go" href="{{ root }}{{ u.try }}">{{ _('Apri la prova') }}</a></div>
+          <p class="lbl lbl--muted try__meta"><span>{{ _('[nessun account]') }}</span><span>{{ _('[nessun caricamento]') }}</span><span>[jpg · png · webp]</span></p>
         </div>
       </div>
-      <p class="win__status try__status"><span>provalo.psd @ 100% (RGB/8)</span><span>clicca, e l’immagine diventa pixel</span></p>
+      <p class="win__status try__status"><span>{{ _('provalo.psd') }} @ 100% (RGB/8)</span><span>{{ _('clicca, e l’immagine diventa pixel') }}</span></p>
     </div>
   </div>
 </section>
 
 <div class="band" data-from="#0d9e5a" data-to="#000000"></div>
+{% if cfg.newsletter and cfg.newsletter.action %}<section class="tone section section--nl" data-c="black" aria-label="{{ _('Avvisami all’uscita') }}">
+  <div class="wrap">{% set nl_id = 'home' %}{% include "_newsletter.html" %}</div>
+</section>{% endif %}
 {% endblock %}

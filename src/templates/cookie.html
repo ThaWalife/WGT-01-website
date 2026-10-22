@@ -2,11 +2,11 @@
 {% from "_art.html" import docframe %}
 {% block main %}
 <section class="tone page-hero" data-c="black">
-  {{ docframe('cookie.psd', [50]) }}
+  {{ docframe(_('cookie.psd'), [50]) }}
   <div class="wrap">
-    <p class="lbl lbl--muted" style="margin-bottom:14px">[cookie e privacy]</p>
-    <h1>Cookie e privacy</h1>
-    <p>Cosa salva questo sito, cosa no, e come cambiare la tua scelta.</p>
+    <p class="lbl lbl--muted" style="margin-bottom:14px">{{ _('[cookie e privacy]') }}</p>
+    <h1>{{ _('Cookie e privacy') }}</h1>
+    <p>{{ _('Cosa salva questo sito, cosa no, e come cambiare la tua scelta.') }}</p>
   </div>
 </section>
 <div class="band" data-from="#000000" data-to="#ffffff"></div>
@@ -14,15 +14,15 @@
   <div class="wrap cookie-page">
     <article class="doc-body">{{ body|safe }}</article>
     <aside class="win cookie-prefs" aria-labelledby="pref-t">
-      <div class="win__bar"><span id="pref-t">Preferenze cookie</span></div>
+      <div class="win__bar"><span id="pref-t">{{ _('Preferenze cookie') }}</span></div>
       <div class="cookie-prefs__body">
-        <label class="cookie-row cookie-row--locked"><input type="checkbox" checked disabled> <span><b>Tecnici</b><br><small>Sempre attivi: ricordano solo la tua scelta.</small></span></label>
-        <label class="cookie-row"><input type="checkbox" data-consent-toggle="terzi"> <span><b>Servizi di terze parti</b><br><small>Pagamento Payhip nella pagina, quando sarà attivo.</small></span></label>
-        <p class="small" data-consent-state aria-live="polite">Non hai ancora scelto.</p>
+        <label class="cookie-row cookie-row--locked"><input type="checkbox" checked disabled> <span><b>{{ _('Tecnici') }}</b><br><small>{{ _('Sempre attivi: ricordano solo la tua scelta.') }}</small></span></label>
+        <label class="cookie-row"><input type="checkbox" data-consent-toggle="terzi"> <span><b>{{ _('Servizi di terze parti') }}</b><br><small>{{ _('Pagamento Payhip nella pagina, quando sarà attivo.') }}</small></span></label>
+        <p class="small" data-consent-state aria-live="polite">{{ _('Non hai ancora scelto.') }}</p>
         <div class="actions">
-          <button class="btn" type="button" data-consent="salva">Salva le preferenze</button>
-          <button class="btn" type="button" data-consent="rifiuta">Rifiuta tutto</button>
-          <button class="btn" type="button" data-consent="accetta">Accetta tutto</button>
+          <button class="btn" type="button" data-consent="salva">{{ _('Salva le preferenze') }}</button>
+          <button class="btn" type="button" data-consent="rifiuta">{{ _('Rifiuta tutto') }}</button>
+          <button class="btn" type="button" data-consent="accetta">{{ _('Accetta tutto') }}</button>
         </div>
       </div>
     </aside>

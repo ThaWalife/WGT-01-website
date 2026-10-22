@@ -1,12 +1,12 @@
 /* "Un pannello, tre strumenti": tre schede che presentano gli strumenti.
    Non si provano qui: le immagini cambiano da sole per mostrare cosa fa ognuno. */
 import { loadImage, getPixels, gray, renderStyle } from '../engines.js';
-import { fitCanvas, photo, loop, reduceMotion } from '../core.js';
+import { fitCanvas, photo, loop, reduceMotion, t } from '../core.js';
 import { presetFor, HOME_SCALE } from './gallery.js';
 import { applyPalette } from './palette.js';
 
-const STILI = [['curve', 'Curve di livello'], ['flusso', 'Linee di flusso'], ['halftone', 'Halftone'], ['incisione', 'Incisione'], ['dither', 'Dither']];
-const ARCH = [['asse', 'Asse centrale'], ['bandiera', 'Bandiera a sinistra'], ['gigante', 'Titolo gigante'], ['colonna', 'Colonna laterale'], ['calma', 'Zona calma'], ['striscia', 'Striscia']];
+const STILI = [['curve', t('Curve di livello', 'Contour lines')], ['flusso', t('Linee di flusso', 'Flow lines')], ['halftone', 'Halftone'], ['incisione', t('Incisione', 'Engraving')], ['dither', 'Dither']];
+const ARCH = [['asse', t('Asse centrale', 'Centre axis')], ['bandiera', t('Bandiera a sinistra', 'Flush left')], ['gigante', t('Titolo gigante', 'Giant title')], ['colonna', t('Colonna laterale', 'Side column')], ['calma', t('Zona calma', 'Quiet zone')], ['striscia', t('Striscia', 'Band')]];
 
 export default async function tools(section) {
   const pat = section.querySelector('[data-show="pattern"]');

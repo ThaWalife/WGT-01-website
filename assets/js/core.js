@@ -1,5 +1,9 @@
 /* WGT-01 · funzioni condivise dagli effetti (nessun effetto collaterale: si può importare da ovunque) */
 const root = document.documentElement.dataset.root || './';
+/* Lingua della pagina: i testi degli script esistono in italiano e in inglese. */
+export const EN = document.documentElement.lang === 'en';
+export const t = (it, en) => (EN ? en : it);
+
 export const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* Canvas alla risoluzione dello schermo (massimo 2×, per restare leggeri). */
@@ -12,7 +16,7 @@ export function fitCanvas(canvas, maxDpr = 2) {
   return { ctx: canvas.getContext('2d'), W, H, dpr };
 }
 
-export const photo = (name) => `${root}assets/img/demo/${name}.jpg`;
+export const photo = (name) => `${root}assets/img/demo/${name}.webp`;
 
 /* Un ciclo di animazione che gira solo quando l'elemento è visibile e la scheda è attiva. */
 export function loop(el, frame) {

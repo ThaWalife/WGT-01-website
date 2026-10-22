@@ -33,12 +33,15 @@
     }
   }
 
+  const EN = document.documentElement.lang === 'en';
+  const loc = EN ? 'en-GB' : 'it-IT';
   function syncForms(choice) {
     for (const box of document.querySelectorAll('[data-consent-toggle="terzi"]')) box.checked = !!(choice && choice.terzi);
     for (const out of document.querySelectorAll('[data-consent-state]')) {
-      out.textContent = !choice ? 'Non hai ancora scelto.' : choice.terzi
-        ? `Hai accettato i servizi di terze parti il ${new Date(choice.t).toLocaleDateString('it-IT')}.`
-        : `Hai rifiutato i servizi di terze parti il ${new Date(choice.t).toLocaleDateString('it-IT')}.`;
+      const d = choice ? new Date(choice.t).toLocaleDateString(loc) : '';
+      out.textContent = !choice ? (EN ? 'You haven’t chosen yet.' : 'Non hai ancora scelto.') : choice.terzi
+        ? (EN ? `You accepted third-party services on ${d}.` : `Hai accettato i servizi di terze parti il ${d}.`)
+        : (EN ? `You declined third-party services on ${d}.` : `Hai rifiutato i servizi di terze parti il ${d}.`);
     }
   }
 

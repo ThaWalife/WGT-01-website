@@ -1,5 +1,6 @@
 /* WGT-01 · avvio: bande di dither tra i toni e caricamento pigro degli effetti */
 import { BAYER8, hexToRgb } from './engines.js';
+import { t } from './core.js';
 
 /* Bande: un gradino di grigio che passa al successivo con un dither ordinato 8×8. */
 function makeBands() {
@@ -49,5 +50,35 @@ function lazyInit() {
   els.forEach((el) => io.observe(el));
 }
 
+/* Newsletter: nessuno script di MailerLite; l'email parte solo all'invio del modulo. */
+function newsletter() {
+  for (const form of document.querySelectorAll('form[data-newsletter]')) {
+    const msg = form.querySelector('[data-nl-msg]');
+    const btn = form.querySelector('button[type="submit"]');
+    const say = (txt, ok) => { msg.textContent = txt; msg.dataset.state = ok ? 'ok' : 'err'; };
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = form.querySelector('input[type="email"]');
+      if (!email.checkValidity()) { say(t('Controlla l’indirizzo email.', 'Please check the email address.'), false); email.focus(); return; }
+      btn.disabled = true; say(t('Invio…', 'Sending…'), true);
+      const body = new FormData(form);
+      let ok = false;
+      try {
+        const r = await fetch(form.action, { method: 'POST', body, headers: { Accept: 'application/json' } });
+        const j = await r.json().catch(() => ({}));
+        ok = r.ok && j.success !== false;
+      } catch { ok = false; }
+      btn.disabled = false;
+      if (ok) {
+        form.reset();
+        say(t('Quasi fatto: controlla la posta e conferma l’iscrizione dal link che ti ho mandato.', 'Almost done: check your inbox and confirm with the link I just sent you.'), true);
+      } else {
+        say(t('Non è andata: riprova tra poco.', 'That didn’t work: please try again shortly.'), false);
+      }
+    });
+  }
+}
+
 makeBands();
 lazyInit();
+newsletter();

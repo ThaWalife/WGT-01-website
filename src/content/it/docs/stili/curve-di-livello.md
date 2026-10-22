@@ -6,7 +6,7 @@ order: 7
 ---
 <figure class="doc-figure"><canvas data-fx="still" data-style="curve" data-photo="example-3" data-opts='{"levels":16}'></canvas><figcaption>Curve di livello, anteprima leggera calcolata nel browser.</figcaption></figure>
 
-> Esportabile in **SVG**. Vedi [Esporta SVG](/documentazione/esporta-svg/).
+> Esportabile in **SVG**. Vedi [Esporta SVG](/doc/esporta-svg/).
 
 ## Controlli
 

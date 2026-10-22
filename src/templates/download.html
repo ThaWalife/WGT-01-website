@@ -2,11 +2,11 @@
 {% from "_art.html" import docframe %}
 {% block main %}
 <section class="tone page-hero" data-c="black">
-  {{ docframe('download.psd', [50]) }}
+  {{ docframe(_('download.psd'), [50]) }}
   <div class="wrap">
     <p class="lbl lbl--muted" style="margin-bottom:14px">[download]</p>
-    <h1>Scarica {{ cfg.name }}</h1>
-    <p>Per tutti, con una donazione da {{ cfg.payhip.min_price }} in su.</p>
+    <h1>{{ _('Scarica {name}', name=cfg.name) }}</h1>
+    <p>{{ _('Per tutti, con una donazione da {p} in su.', p=cfg.payhip.min_price) }}</p>
   </div>
 </section>
 <div class="band" data-from="#000000" data-to="#0d9e5a"></div>
@@ -14,29 +14,31 @@
   <div class="wrap">
     {% include "_download_steps.html" %}
 
+    {% if not cfg.payhip.product_url %}<div style="margin-top:72px">{% set nl_id = 'dl' %}{% include "_newsletter.html" %}</div>{% endif %}
+
     <div class="split" style="margin-top:96px;align-items:start">
       <div>
-        <h2 class="h-el" style="font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:.3em">Requisiti</h2>
+        <h2 class="h-el" style="font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:.3em">{{ _('Requisiti') }}</h2>
         <dl class="req">
-          <dt>Photoshop</dt><dd>{{ cfg.photoshop_min }} o successivo</dd>
-          <dt>Sistema</dt><dd>Windows o macOS</dd>
-          <dt>Colore</dt><dd>Documenti RGB a 8 bit</dd>
-          <dt>Versione</dt><dd>{{ cfg.version }}, in sviluppo</dd>
-          <dt>Facoltativo</dt><dd>LM Studio, per la Dev option di Type</dd>
+          <dt>Photoshop</dt><dd>{{ _('{v} o successivo', v=cfg.photoshop_min) }}</dd>
+          <dt>{{ _('Sistema') }}</dt><dd>{{ _('Windows o macOS') }}</dd>
+          <dt>{{ _('Colore') }}</dt><dd>{{ _('Documenti RGB a 8 bit') }}</dd>
+          <dt>{{ _('Versione') }}</dt><dd>{{ _('{v}, in sviluppo', v=cfg.version) }}</dd>
+          <dt>{{ _('Facoltativo') }}</dt><dd>{{ _('LM Studio, per la Dev option di Type') }}</dd>
         </dl>
       </div>
       <div class="prose">
-        <h2 class="h-el" style="font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:.3em">Il codice seriale</h2>
-        <p>Con la donazione ricevi un codice personale. Le prossime versioni di {{ cfg.name }} lo chiederanno al primo avvio per sbloccare tutte le funzioni.</p>
-        <p>Il codice vale per te: se chiedi il rimborso viene disattivato.</p>
-        <p><a href="{{ root }}documentazione/licenza/">Donazione e codice seriale</a></p>
+        <h2 class="h-el" style="font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:.3em">{{ _('Il codice seriale') }}</h2>
+        <p>{{ _('Con la donazione ricevi un codice personale. Le prossime versioni di {name} lo chiederanno al primo avvio per sbloccare tutte le funzioni.', name=cfg.name) }}</p>
+        <p>{{ _('Il codice vale per te: se chiedi il rimborso viene disattivato.') }}</p>
+        <p><a href="{{ root }}{{ doc('licenza') }}">{{ _('Donazione e codice seriale') }}</a></p>
       </div>
     </div>
 
     <div class="prose" style="margin-top:96px">
-      <h2 class="h-el" style="font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:.3em">Installazione</h2>
-      <p>Il file del plugin ha l’estensione <strong>.ccx</strong>. Fai doppio clic: si apre Creative Cloud, che lo installa in Photoshop. Riavvia Photoshop e apri il pannello da <strong>Plugin → {{ cfg.name }}</strong>.</p>
-      <p>Se il doppio clic non funziona, la guida spiega l’installazione con UXP Developer Tool. <a href="{{ root }}documentazione/installazione/">Guida all’installazione</a></p>
+      <h2 class="h-el" style="font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:.3em">{{ _('Installazione') }}</h2>
+      <p>{{ _('Il file del plugin ha l’estensione <strong>.ccx</strong>. Fai doppio clic: si apre Creative Cloud, che lo installa in Photoshop. Riavvia Photoshop e apri il pannello da <strong>Plugin → {name}</strong>.', name=cfg.name) }}</p>
+      <p>{{ _('Se il doppio clic non funziona, la guida spiega l’installazione con UXP Developer Tool.') }} <a href="{{ root }}{{ doc('installazione') }}">{{ _('Guida all’installazione') }}</a></p>
     </div>
   </div>
 </section>

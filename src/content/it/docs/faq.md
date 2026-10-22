@@ -27,4 +27,4 @@ Sì. Le immagini che crei con {{name}} sono tue.
 
 ### Le mie foto vengono caricate da qualche parte?
 
-No. Il plugin lavora in Photoshop sul tuo computer, e anche la [pagina di prova](/prova/) del sito calcola tutto nel browser.
+No. Il plugin lavora in Photoshop sul tuo computer, e anche la [pagina di prova](/try/) del sito calcola tutto nel browser.

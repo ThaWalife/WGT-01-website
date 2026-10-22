@@ -25,7 +25,7 @@ Ogni risultato diventa uno **Smart Object** sopra il livello di partenza. Con **
 - **Modifica** riapre un risultato {{name}} selezionato con le sue impostazioni, per cambiarle.
 - **Tutti i livelli** applica le impostazioni attuali a ogni livello immagine visibile, uno per uno.
 
-Trovi i dettagli in [Modifica e lavoro su più livelli](/documentazione/modifica-e-livelli/).
+Trovi i dettagli in [Modifica e lavoro su più livelli](/doc/modifica-e-livelli/).
 
 ## Tema
 

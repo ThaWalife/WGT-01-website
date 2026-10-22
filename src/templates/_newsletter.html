@@ -1,0 +1,20 @@
+{# Modulo "avvisami all'uscita": nessuno script di terze parti. I dati partono verso MailerLite solo quando premi Iscriviti. #}
+{% if cfg.newsletter and cfg.newsletter.action %}
+<form class="win newsletter" action="{{ cfg.newsletter.action }}" method="post" data-newsletter novalidate>
+  <div class="win__bar"><span>{{ cfg.name }} — {{ _('Avvisami all’uscita') }}</span></div>
+  <div class="newsletter__body">
+    <p class="lbl">{{ _('[newsletter · niente spam]') }}</p>
+    <h2 class="h-el newsletter__t">{{ _('Avvisami all’uscita') }}</h2>
+    <p>{{ _('Lascia la tua email: ti scrivo quando {name} è pronto da scaricare e quando esce una nuova versione. Nient’altro.', name=cfg.name) }}</p>
+    <div class="newsletter__row">
+      <label class="sr-only" for="nl-email-{{ nl_id|default('a') }}">{{ _('La tua email') }}</label>
+      <input id="nl-email-{{ nl_id|default('a') }}" type="email" name="fields[email]" autocomplete="email" required placeholder="{{ _('nome@esempio.it') }}">
+      <input type="hidden" name="ml-submit" value="1">
+      <input type="hidden" name="anticsrf" value="true">
+      <button class="btn btn--go" type="submit">{{ _('Iscriviti') }}</button>
+    </div>
+    <p class="small newsletter__msg" data-nl-msg aria-live="polite"></p>
+    <p class="small muted newsletter__note">{{ _('Ti arriva un’email per confermare. Le iscrizioni sono gestite da MailerLite (UE); puoi cancellarti con un clic da ogni email.') }} <a href="{{ root }}{{ u.cookies }}#newsletter">{{ _('Privacy') }}</a></p>
+  </div>
+</form>
+{% endif %}
