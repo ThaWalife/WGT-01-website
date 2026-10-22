@@ -18,7 +18,6 @@ export default async function surface(el) {
   const fileBtn = el.querySelector('[data-custom]');
   const fileIn = el.querySelector('[data-custom-file]');
   const fileName = el.querySelector('[data-custom-name]');
-  const title = el.querySelector('[data-elsh-target]');
   const img = await loadImage(photo(el.dataset.photo || 'example-1'));
   const NX = 58, NZ = 38; // griglia più rada: elementi più grandi e leggibili
   const g = gray(getPixels(img, NX, NZ), { contrast: 0.55, autoLevels: true });
@@ -26,7 +25,9 @@ export default async function surface(el) {
 
   /* Gli elementi vengono preparati una volta come piccole immagini (una per misura)
      e poi solo "timbrati": molto più leggero che ridisegnare ogni forma a ogni fotogramma. */
-  const BUCKETS = 28, RMAX = 38;
+  const BUCKETS = 48, RMAX = 38; // più misure preparate: la crescita degli elementi è più fluida
+  const EDGE = 0.16; // quota della sezione, in alto e in basso, in cui gli elementi sfumano
+  const smooth = (t) => (t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t));
   let sprites = [];
   const rOf = (b) => 0.6 + (RMAX - 0.6) * Math.pow(b / (BUCKETS - 1), 1.6);
   function buildSprites() {
@@ -60,7 +61,10 @@ export default async function surface(el) {
         const y = 0.08 * Math.sin(x * 1.5 + time * 0.8) * Math.cos(z * 1.1 - time * 0.55) + 0.035 * Math.sin((x + z) * 3 - time * 1.2);
         const sy = a + (cam - y) * p * k;
         const l = g[(NZ - 1 - j) * NX + i];
-        const r = Math.min(rMaxPx, ((1 - l) * 0.016 * p + 0.0012 * p) * 1.45);
+        // verso il bordo alto e basso gli elementi si rimpiccioliscono fino a sparire:
+        // la superficie si chiude pulita contro le bande di dither tra le sezioni
+        const ty = sy / H, e = smooth(ty / EDGE) * smooth((1 - ty) / EDGE);
+        const r = Math.min(rMaxPx, ((1 - l) * 0.016 * p + 0.0012 * p) * 1.45) * e;
         if (r < 0.6) continue;
         // misura più vicina tra quelle preparate
         let b = Math.round(Math.pow(Math.max(0, (r / dpr - 0.6) / (RMAX - 0.6)), 1 / 1.6) * (BUCKETS - 1));
@@ -73,14 +77,14 @@ export default async function surface(el) {
   buildSprites();
 
   let acc = 0;
-  const anim = loop(canvas, (dt) => { acc += dt; if (acc < 1 / 30) return; time += acc; acc = 0; frame(); });
+  const anim = loop(canvas, (dt) => { acc += dt; if (acc < 1 / 60) return; time += acc; acc = 0; frame(); });
   frame();
   anim.kick();
 
   const press = (b) => {
     chips.forEach((c) => c.setAttribute('aria-pressed', String(c === b)));
     fileBtn?.setAttribute('aria-pressed', String(fileBtn === b));
-    if (title && b?.dataset.elsh) title.style.setProperty('--elsh', b.dataset.elsh);
+    // il titolo della sezione resta com'è: le impostazioni cambiano solo il pattern
   };
   chips.forEach((b) => b.addEventListener('click', () => { shape = b.dataset.shape; custom = null; buildSprites(); press(b); frame(); }));
 

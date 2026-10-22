@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "_art.html" import docframe %}
+{% from "_logo.html" import symbol %}
 {% block main %}
 
 <section class="tone hero" data-c="black" data-fx="hero" aria-labelledby="titolo">
@@ -7,7 +8,7 @@
   <div class="hero__inner">
     <div>
       <p class="lbl lbl--muted" style="margin-bottom:14px">[plugin per photoshop · v{{ cfg.version }}]</p>
-      <h1 id="titolo">{{ cfg.name }}</h1>
+      <h1 id="titolo" class="lockup lockup--hero">{{ symbol("logo-sym lockup__sym") }}<span class="lockup__word">{{ cfg.name }}</span><span class="lockup__sub">{{ cfg.brand }}</span></h1>
       <p class="hero__lead"><span>Pattern, stili generativi e impaginazione. Tutto parte dalla scala di grigi della tua immagine.</span></p>
       <div class="actions">
         <a class="btn btn--go" href="{{ root }}download/">Scarica {{ cfg.name }}</a>
@@ -159,63 +160,6 @@
 
 <div class="band" data-from="#0d9e5a" data-to="#000000"></div>
 
-<section class="tone section" data-c="black" aria-labelledby="svg" data-fx="vector">
-  {{ docframe('raster-vettoriale.psd', [25, 75], '800%') }}
-  <div class="wrap">
-    <div class="desk-head">
-      <h2 class="svg-sec__title" id="svg"><span class="a">Raster</span><span class="arrow" aria-hidden="true">→</span><span class="b">vettoriale</span></h2>
-      <p class="prose">Halftone, Incisione, Linee di flusso e Curve di livello si esportano anche in SVG. Che differenza fa? Ingrandisci lo stesso retino e guarda.</p>
-    </div>
-    <div class="vec-zoom">
-      <label class="lbl" for="vec-zoom">Ingrandimento</label>
-      <input id="vec-zoom" type="range" min="0" max="50" value="30" data-zoom>
-      <output class="vec-zoom__val" data-zoom-out>800%</output>
-    </div>
-    <div class="vec-pair">
-      <figure class="vec-fig">
-        <div class="win" data-view="png">
-          <div class="win__bar"><span>halftone.png</span></div>
-          <canvas class="win__canvas win__canvas--sq" aria-label="Retino salvato come PNG e ingrandito: si vedono i pixel. Trascina per spostarti."></canvas>
-        </div>
-        <figcaption>
-          <h3>PNG: una griglia di pixel</h3>
-          <p>Ogni punto del retino è fatto di quadratini. Se ingrandisci o stampi grande, i bordi si sgranano.</p>
-        </figcaption>
-      </figure>
-      <figure class="vec-fig">
-        <div class="win" data-view="svg">
-          <div class="win__bar"><span>halftone.svg</span></div>
-          <canvas class="win__canvas win__canvas--sq" aria-label="Lo stesso retino in SVG: i punti restano nitidi. Trascina per spostarti."></canvas>
-        </div>
-        <figcaption>
-          <h3>SVG: forme, non pixel</h3>
-          <p>Ogni punto è descritto come un cerchio: centro e raggio. Resta nitido a qualsiasi misura e lo apri in Illustrator per cambiarlo.</p>
-          <button class="btn" type="button" data-dl="mono">Scarica l’esempio in SVG</button>
-        </figcaption>
-      </figure>
-    </div>
-    <div class="vec-cmyk">
-      <div class="prose">
-        <h3 class="h-el" style="font-size:clamp(2.25rem,4vw,3.5rem);margin-bottom:.3em">E per la stampa: quattro lastre</h3>
-        <p>In tipografia ogni inchiostro (ciano, magenta, giallo e nero) ha la sua lastra, con il retino ruotato a un angolo diverso. L’Halftone esporta in SVG le quattro lastre già separate, una per livello. Spegnine qualcuna per vedere come si sommano.</p>
-        <button class="btn" type="button" data-dl="cmyk">Scarica le 4 lastre in SVG</button>
-      </div>
-      <div class="win" data-cmyk>
-        <div class="win__bar"><span>halftone-cmyk.svg</span></div>
-        <div class="win__tools">
-          <div class="seg" role="group" aria-label="Lastre di stampa">
-            <button class="chip" type="button" data-plate="C" aria-pressed="true">Ciano 15°</button>
-            <button class="chip" type="button" data-plate="M" aria-pressed="true">Magenta 75°</button>
-            <button class="chip" type="button" data-plate="Y" aria-pressed="true">Giallo 0°</button>
-            <button class="chip" type="button" data-plate="K" aria-pressed="true">Nero 45°</button>
-          </div>
-        </div>
-        <canvas class="win__canvas win__canvas--sq" aria-label="Retino a colori composto da quattro lastre CMYK"></canvas>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="tone section" data-c="black" aria-labelledby="type" data-fx="poster">
   {{ docframe('manifesto.psd', [61.8]) }}
   <div class="wrap type-sec">
@@ -258,17 +202,80 @@
   </div>
 </section>
 
+<section class="tone section" data-c="black" aria-labelledby="svg" data-fx="vector">
+  {{ docframe('raster-vettoriale.psd', [25, 75], '800%') }}
+  <div class="wrap">
+    <div class="desk-head">
+      <h2 class="svg-sec__title" id="svg"><span class="a">Raster</span><span class="arrow" aria-hidden="true">→</span><span class="b">vettoriale</span></h2>
+      <p class="prose">Halftone, Incisione, Linee di flusso e Curve di livello si esportano anche in SVG. Che differenza fa? Ingrandisci lo stesso retino e guarda.</p>
+    </div>
+    <div class="vec-zoom">
+      <label class="lbl" for="vec-zoom">Ingrandimento</label>
+      <input id="vec-zoom" type="range" min="0" max="50" value="30" data-zoom>
+      <output class="vec-zoom__val" data-zoom-out>800%</output>
+    </div>
+    <div class="vec-pair">
+      <figure class="vec-fig">
+        <div class="win" data-view="png">
+          <div class="win__bar"><span>halftone.png</span></div>
+          <canvas class="win__canvas win__canvas--sq" aria-label="Retino salvato come PNG e ingrandito: si vedono i pixel. Trascina per spostarti."></canvas>
+        </div>
+        <figcaption>
+          <h3>PNG: una griglia di pixel</h3>
+          <p>Ogni punto del retino è fatto di quadratini. Se ingrandisci o stampi grande, i bordi si sgranano.</p>
+        </figcaption>
+      </figure>
+      <figure class="vec-fig">
+        <div class="win" data-view="svg">
+          <div class="win__bar"><span>halftone.svg</span></div>
+          <canvas class="win__canvas win__canvas--sq" aria-label="Lo stesso retino in SVG: i punti restano nitidi. Trascina per spostarti."></canvas>
+        </div>
+        <figcaption>
+          <h3>SVG: forme, non pixel</h3>
+          <p>Ogni punto è descritto come un cerchio: centro e raggio. Resta nitido a qualsiasi misura e lo apri in Illustrator per cambiarlo.</p>
+          <button class="btn" type="button" data-dl="mono">Scarica l’esempio in SVG</button>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="vec-cmyk">
+      <div class="prose">
+        <h3 class="h-el" style="font-size:clamp(1.6rem,2.6vw,2.3rem);margin-bottom:.35em">E per la stampa: quattro lastre</h3>
+        <p>In tipografia ogni inchiostro (ciano, magenta, giallo e nero) ha la sua lastra, con il retino ruotato a un angolo diverso. L’Halftone esporta in SVG le quattro lastre già separate, una per livello. Spegnine qualcuna per vedere come si sommano.</p>
+        <button class="btn" type="button" data-dl="cmyk">Scarica le 4 lastre in SVG</button>
+      </div>
+      <div class="win" data-cmyk>
+        <div class="win__bar"><span>halftone-cmyk.svg</span></div>
+        <div class="win__tools">
+          <div class="seg" role="group" aria-label="Lastre di stampa">
+            <button class="chip" type="button" data-plate="C" aria-pressed="true">Ciano 15°</button>
+            <button class="chip" type="button" data-plate="M" aria-pressed="true">Magenta 75°</button>
+            <button class="chip" type="button" data-plate="Y" aria-pressed="true">Giallo 0°</button>
+            <button class="chip" type="button" data-plate="K" aria-pressed="true">Nero 45°</button>
+          </div>
+        </div>
+        <canvas class="win__canvas win__canvas--sq" aria-label="Retino a colori composto da quattro lastre CMYK"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="band" data-from="#000000" data-to="#0d9e5a"></div>
 
 <section class="tone section" data-c="green" aria-labelledby="prova">
   {{ docframe('provalo.psd') }}
   <div class="wrap try">
-    <div class="try__zone">
-      <p class="lbl">[prova nel browser · 3 stili su 10]</p>
-      <h2 class="h-dot" id="prova">Provalo</h2>
-      <p class="prose">Porta una tua foto nella pagina di prova e guardala in Dither, Halftone o ASCII. Il calcolo avviene nel browser: la foto non lascia il tuo computer.</p>
-      <div class="actions"><a class="btn btn--go" href="{{ root }}prova/">Apri la prova</a></div>
-      <p class="lbl lbl--muted try__meta"><span>[nessun account]</span><span>[nessun caricamento]</span><span>[jpg · png · webp]</span></p>
+    <div class="win try__win">
+      <div class="win__bar"><span>{{ cfg.name }} — Prova nel browser</span></div>
+      <div class="try__body">
+        <div class="try__zone">
+          <p class="lbl">[3 stili su 10 · gratis]</p>
+          <h2 class="h-dot" id="prova">Provalo</h2>
+          <p class="prose">Porta una tua foto nella pagina di prova e guardala in Dither, Halftone o ASCII. Il calcolo avviene nel browser: la foto non lascia il tuo computer.</p>
+          <div class="actions"><a class="btn btn--go" href="{{ root }}prova/">Apri la prova</a></div>
+          <p class="lbl lbl--muted try__meta"><span>[nessun account]</span><span>[nessun caricamento]</span><span>[jpg · png · webp]</span></p>
+        </div>
+      </div>
+      <p class="win__status try__status"><span>provalo.psd @ 100% (RGB/8)</span><span>clicca, e l’immagine diventa pixel</span></p>
     </div>
   </div>
 </section>

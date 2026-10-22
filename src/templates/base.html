@@ -1,3 +1,4 @@
+{% from "_logo.html" import symbol %}
 <!doctype html>
 <html lang="{{ cfg.lang }}" data-root="{{ root }}">
 <head>
@@ -10,7 +11,8 @@
 <link rel="canonical" href="{{ cfg.site_url }}{{ path }}">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="{{ root }}assets/img/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="{{ root }}assets/img/og.png">
+<link rel="icon" href="{{ root }}assets/img/icon-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="{{ root }}assets/img/apple-touch-icon.png">
 <meta property="og:site_name" content="{{ cfg.name }} · {{ cfg.brand }}">
 <meta property="og:locale" content="it_IT">
 <meta property="og:title" content="{{ seo_title }}">
@@ -20,7 +22,7 @@
 <meta property="og:image" content="{{ cfg.site_url }}assets/img/og.png?v={{ build }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="{{ cfg.name }}: logo in rilievo ridisegnato in dither verde">
+<meta property="og:image:alt" content="Logo di {{ cfg.name }}: simbolo a pixel verde e scritta WGT-01, Walife Generative Tools">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ seo_title }}">
 <meta name="twitter:description" content="{{ description }}">
@@ -37,7 +39,7 @@
 <body>
 <a class="skip" href="#contenuto">{{ ui.skip }}</a>
 <header class="site-header">
-  <a class="wordmark" href="{{ root }}" aria-label="{{ cfg.name }}, pagina iniziale"><img src="{{ root }}assets/img/logo-white.png" alt="" width="18" height="28">{{ cfg.name }}</a>
+  <a class="wordmark" href="{{ root }}" aria-label="{{ cfg.name }}, pagina iniziale">{{ symbol("logo-sym wordmark__sym") }}{{ cfg.name }}</a>
   <nav class="site-nav" aria-label="Principale">
     <a class="nav-optional" href="{{ root }}#stili">{{ ui.nav_styles }}</a>
     <a href="{{ root }}prova/"{% if section == 'prova' %} aria-current="page"{% endif %}>{{ ui.nav_try }}</a>
@@ -51,8 +53,8 @@
 <footer class="site-footer tone" data-c="black">
   <div class="wrap">
     <div>
-      <p class="big">{{ cfg.name }}</p>
-      <p class="small">{{ cfg.brand }}. {{ ui.footer_made }}<br>Versione {{ cfg.version }}, per Photoshop {{ cfg.photoshop_min }} o successivo.</p>
+      <p class="lockup lockup--footer">{{ symbol("logo-sym lockup__sym") }}<span class="lockup__word">{{ cfg.name }}</span><span class="lockup__sub">{{ cfg.brand }}</span></p>
+      <p class="small">{{ ui.footer_made }}<br>Versione {{ cfg.version }}, per Photoshop {{ cfg.photoshop_min }} o successivo.</p>
     </div>
     <ul class="small">
       <li><a href="{{ root }}prova/">{{ ui.nav_try }}</a></li>

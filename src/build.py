@@ -135,10 +135,11 @@ def main():
            "applicationCategory": "DesignApplication", "applicationSubCategory": "Plugin per Adobe Photoshop",
            "operatingSystem": "Windows, macOS", "softwareVersion": cfg["version"], "inLanguage": "it",
            "softwareRequirements": f"Adobe Photoshop {cfg['photoshop_min']} o successivo",
-           "description": HOME_DESC, "url": SITE, "image": SITE + "assets/img/og.png", "author": AUTHOR,
+           "description": HOME_DESC, "url": SITE, "image": SITE + "assets/img/icon-512.png", "screenshot": SITE + "assets/img/og.png", "author": AUTHOR,
            "offers": {"@type": "Offer", "price": "1.00", "priceCurrency": "EUR",
                       "description": f"Donazione libera, minimo {cfg['payhip']['min_price']}"}}
-    site = {"@type": "WebSite", "name": cfg["name"], "url": SITE, "inLanguage": "it", "publisher": AUTHOR}
+    site = {"@type": "WebSite", "name": cfg["name"], "url": SITE, "inLanguage": "it", "publisher": AUTHOR,
+            "image": SITE + "assets/img/icon-512.png"}
     render("home.html", "index.html", title="", section="home", description=HOME_DESC,
            jsonld={"@context": "https://schema.org", "@graph": [site, app]})
     render("prova.html", "prova/index.html", title="Prova gli stili nel browser", section="prova",
