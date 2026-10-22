@@ -1,7 +1,7 @@
 /* Immagini ferme: uno stile applicato a una foto, disegnato quando entra nello schermo.
    <canvas data-fx="still" data-style="halftone" data-photo="caffe" data-ink="#fff" data-paper="#000"> */
 import { loadImage, renderStyle } from '../engines.js';
-import { fitCanvas, photo } from '../main.js';
+import { fitCanvas, photo } from '../core.js';
 import { presetFor } from './gallery.js';
 
 export default async function still(canvas) {

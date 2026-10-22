@@ -66,12 +66,31 @@ export function forgetImage(img) {
 
 /* Scala di grigi 0 (nero) … 1 (bianco) con luminosità/contrasto. */
 export function gray(px, o = {}) {
-  const { brightness = 0, contrast = 0, invert = false } = o;
+  const { brightness = 0, contrast = 0, invert = false, autoLevels = false } = o;
   const n = px.w * px.h;
   const g = new Float32Array(n);
   const k = 1 + contrast * 1.6;
-  for (let i = 0, j = 0; i < n; i++, j += 4) {
-    let v = (0.2126 * px.data[j] + 0.7152 * px.data[j + 1] + 0.0722 * px.data[j + 2]) / 255;
+  for (let i = 0, j = 0; i < n; i++, j += 4) g[i] = (0.2126 * px.data[j] + 0.7152 * px.data[j + 1] + 0.0722 * px.data[j + 2]) / 255;
+  // Livelli automatici: porta l'1% più scuro al nero e l'1% più chiaro al bianco
+  // (utile con foto molto scure, come i render notturni)
+  let lo = 0, hi = 1, gam = 1;
+  if (autoLevels) {
+    const hist = new Uint32Array(256);
+    for (let i = 0; i < n; i++) hist[(g[i] * 255) | 0]++;
+    let acc = 0, a = 0, b = 255;
+    while (a < 255 && (acc += hist[a]) < n * 0.01) a++;
+    acc = 0;
+    while (b > 0 && (acc += hist[b]) < n * 0.01) b--;
+    if (b - a > 8) { lo = a / 255; hi = b / 255; }
+    // e schiarisce i mezzitoni se l'immagine è quasi tutta in ombra
+    acc = 0; let m = 0;
+    while (m < 255 && (acc += hist[m]) < n * 0.5) m++;
+    const med = Math.min(0.95, Math.max(0.02, (m / 255 - lo) / (hi - lo)));
+    gam = Math.min(1, Math.max(0.62, Math.log(0.3) / Math.log(med)));
+  }
+  for (let i = 0; i < n; i++) {
+    let v = (g[i] - lo) / (hi - lo);
+    if (gam !== 1) v = Math.pow(v < 0 ? 0 : v, gam);
     v = (v - 0.5) * k + 0.5 + brightness;
     v = v < 0 ? 0 : v > 1 ? 1 : v;
     g[i] = invert ? 1 - v : v;

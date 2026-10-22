@@ -1,6 +1,6 @@
 /* Prova: Dither, Halftone e ASCII sulla foto del visitatore. Tutto resta nel browser. */
 import { loadImage, renderStyle, forgetImage } from '../engines.js';
-import { photo } from '../main.js';
+import { photo } from '../core.js';
 
 const MAX = 1200;
 const COLORS = {
@@ -60,7 +60,7 @@ export default async function demo(el) {
     const cell = st.style === 'dither' ? k(9, 1.5) : st.style === 'halftone' ? k(30, 6) : k(26, 7);
     renderStyle(st.style, ctx, img, W, H, {
       ...COLORS[st.colors], cell, method: st.method, angle: 45,
-      contrast: st.contrast / 100, brightness: st.brightness / 200,
+      contrast: st.contrast / 100, brightness: st.brightness / 200, autoLevels: !!st.sample,
     });
     watermark(ctx, W, H);
     dl.disabled = false;
@@ -103,6 +103,7 @@ export default async function demo(el) {
       if (img) forgetImage(img);
       img = next;
       st.name = name;
+      st.sample = !isUpload; // le foto di esempio sono render scuri: livelli automatici
       status.textContent = isUpload ? `Stai usando la tua foto: ${name}` : 'Stai usando una foto di esempio.';
       draw();
     } catch {
@@ -142,5 +143,5 @@ export default async function demo(el) {
   });
 
   try { await Promise.all([document.fonts.load('800 40px "Handjet"'), document.fonts.load('600 16px "Martian Mono"')]); } catch {}
-  use(photo('astronauta'), 'astronauta', false);
+  use(photo('example-1'), 'example-1', false);
 }

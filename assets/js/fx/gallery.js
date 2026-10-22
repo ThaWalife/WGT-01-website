@@ -1,6 +1,6 @@
 /* Galleria dei 10 stili: stessa foto, prima e dopo con un cursore. */
 import { STYLES, loadImage, renderStyle } from '../engines.js';
-import { fitCanvas, photo } from '../main.js';
+import { fitCanvas, photo } from '../core.js';
 
 /* Parametri per una resa leggibile alla dimensione della galleria (in pixel CSS). */
 export const PRESET = {
@@ -38,7 +38,7 @@ export default async function gallery(el) {
   const getImg = (n) => cache.get(n) || (cache.set(n, loadImage(photo(n))), cache.get(n));
 
   let style = 'dither';
-  let photoName = photoBtns.find((b) => b.getAttribute('aria-pressed') === 'true')?.dataset.photo || 'hopper';
+  let photoName = photoBtns.find((b) => b.getAttribute('aria-pressed') === 'true')?.dataset.photo || 'example-1';
   let token = 0;
 
   async function render() {
@@ -52,7 +52,7 @@ export default async function gallery(el) {
     await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
     if (my !== token) return;
     const a = fitCanvas(after, 1.5);
-    renderStyle(style, a.ctx, img, a.W, a.H, { ink: '#000000', paper: '#ffffff', ...presetFor(style, a.dpr) });
+    renderStyle(style, a.ctx, img, a.W, a.H, { ink: '#000000', paper: '#ffffff', autoLevels: true, ...presetFor(style, a.dpr) });
     frameEl.removeAttribute('aria-busy');
   }
 

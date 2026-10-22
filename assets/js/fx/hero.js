@@ -3,7 +3,7 @@
    Intorno, artefatti grigi: polvere di caratteri, grana, glitch, mirino con timecode.
    Il pannello funziona come quello del plugin: stile, densità, pausa. */
 import { loadImage, BAYER8, MONO, rng } from '../engines.js';
-import { fitCanvas, loop, reduceMotion } from '../main.js';
+import { fitCanvas, loop, reduceMotion } from '../core.js';
 
 const GRAY = '#8a8a8a';
 const GRAY_D = '#454545';
@@ -57,7 +57,26 @@ export default async function hero(section) {
       bot.addColorStop(0, 'rgba(0,0,0,0)'); bot.addColorStop(1, 'rgba(0,0,0,0.85)');
       ox.fillStyle = bot; ox.fillRect(0, 0, W, H);
     }
-    L = { ctx, W, H, dpr, narrow, over };
+    L = { ctx, W, H, dpr, narrow, over, fade: makeFade(W, H, dpr) };
+  }
+
+  /* Uscita verso la sezione verde: l'immagine si scioglie nel verde con lo stesso
+     dither ordinato 8×8 e la stessa misura di pixel delle bande tra le sezioni. */
+  const FADE_CELL = 4, FADE_ROWS = 30;
+  function makeFade(W, H, dpr) {
+    const cell = FADE_CELL * dpr, rows = FADE_ROWS, cols = Math.ceil(W / cell);
+    const c = document.createElement('canvas');
+    c.width = W; c.height = Math.round(rows * cell);
+    const x = c.getContext('2d');
+    x.fillStyle = '#0d9e5a';
+    for (let r = 0; r < rows; r++) {
+      const t = Math.pow((r + 1) / rows, 1.35);
+      for (let i = 0; i < cols; i++)
+        if ((BAYER8[(r & 7) * 8 + (i & 7)] + 0.5) / 64 < t) x.fillRect(Math.round(i * cell), Math.round(r * cell), Math.ceil(cell), Math.ceil(cell));
+    }
+    // ultima riga piena: si salda alla sezione sotto
+    x.fillRect(0, c.height - Math.ceil(cell), W, Math.ceil(cell));
+    return c;
   }
 
   /* Campiona l'immagine con una ripresa lenta (zoom e panoramica) a una griglia gw×gh. */
@@ -198,11 +217,11 @@ export default async function hero(section) {
   }
   function drawViewfinder(t) {
     const { ctx, W, H, dpr } = L;
-    const m = 26 * dpr, top = 76 * dpr, len = 22 * dpr;
+    const m = 26 * dpr, top = 76 * dpr, len = 22 * dpr, bot = H - FADE_ROWS * FADE_CELL * dpr - 12 * dpr;
     ctx.strokeStyle = GRAY;
     ctx.lineWidth = 1.5 * dpr;
     ctx.beginPath();
-    for (const [x, y, sx2, sy2] of [[m, top, 1, 1], [W - m, top, -1, 1], [m, H - m, 1, -1], [W - m, H - m, -1, -1]]) {
+    for (const [x, y, sx2, sy2] of [[m, top, 1, 1], [W - m, top, -1, 1], [m, bot, 1, -1], [W - m, bot, -1, -1]]) {
       ctx.moveTo(x, y + sy2 * len); ctx.lineTo(x, y); ctx.lineTo(x + sx2 * len, y);
     }
     ctx.stroke();
@@ -229,6 +248,7 @@ export default async function hero(section) {
     drawDust(st.t);
     if (st.playing) drawGlitch(st.t);
     drawViewfinder(st.t);
+    ctx.drawImage(L.fade, 0, H - L.fade.height);
   }
 
   layout();

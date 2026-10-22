@@ -1,7 +1,7 @@
 /* "Un pannello, tre strumenti": tre schede che presentano gli strumenti.
    Non si provano qui: le immagini cambiano da sole per mostrare cosa fa ognuno. */
 import { loadImage, getPixels, gray, renderStyle } from '../engines.js';
-import { fitCanvas, photo, loop, reduceMotion } from '../main.js';
+import { fitCanvas, photo, loop, reduceMotion } from '../core.js';
 import { presetFor } from './gallery.js';
 
 const STILI = [['curve', 'Curve di livello'], ['flusso', 'Linee di flusso'], ['halftone', 'Halftone'], ['incisione', 'Incisione'], ['dither', 'Dither']];

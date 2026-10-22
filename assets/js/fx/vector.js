@@ -3,7 +3,7 @@
    Una finestra mostra il codice SVG dei punti che stai guardando,
    un'altra le quattro lastre CMYK. Il download produce SVG veri. */
 import { loadImage, getPixels, gray } from '../engines.js';
-import { fitCanvas, photo } from '../main.js';
+import { fitCanvas, photo } from '../core.js';
 
 const B = 480;           // lato dell'immagine di base (unità SVG)
 const CELL = 6;          // passo del retino

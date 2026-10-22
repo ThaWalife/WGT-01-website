@@ -30,12 +30,10 @@ STYLES = [
     ("glitch", "Glitch", False), ("pixelsort", "Pixel sorting", False),
 ]
 PHOTOS = [
-    ("hopper", "Ritratto di Grace Hopper", "Ritratto"),
-    ("astronauta", "Ritratto di Eileen Collins, astronauta", "Astronauta"),
-    ("fotografo", "Fotografo con la macchina", "Fotografo"),
-    ("caffe", "Tazza di caffè", "Caffè"),
-    ("gatto", "Gatto", "Gatto"),
-    ("razzo", "Lancio di un razzo", "Razzo"),
+    ("example-1", "Logo Celestio in rilievo, scena notturna", "Logo"),
+    ("example-2", "Stanza con piante e quadri luminosi", "Stanza"),
+    ("example-3", "Figura in blu su un palco", "Figura"),
+    ("example-4", "Ingranaggi di un orologio in bianco e nero", "Orologio"),
 ]
 GROUPS = ["Inizia", "Sezioni", "Stili", "Funzioni", "Aiuto"]
 

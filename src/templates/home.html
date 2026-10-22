@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_art.html" import art %}
+{% from "_art.html" import docframe %}
 {% block main %}
 
 <section class="tone hero" data-c="black" data-fx="hero" aria-labelledby="titolo">
@@ -36,10 +36,8 @@
   </div>
 </section>
 
-<div class="band" data-from="#000000" data-to="#0d9e5a"></div>
-
 <section class="tone section" data-c="green" aria-labelledby="tre" data-fx="tools">
-  {{ art('g', [('lasso', 700, 10, 200, 8, 'h'), ('brush', -20, 360, 180, -12, 'd'), ('wand', 870, 400, 150, 0, 'q'), ('bucket', 440, 500, 150, -6, 'd'), ('dropper', 300, 0, 120, 10, 'h'), ('move', 620, 300, 110, 0, 'q'), ('crop', 30, 10, 110, 0, 'd')]) }}
+  {{ docframe('strumenti.psd', [50]) }}
   <div class="wrap">
     <div class="tools-head">
       <h2 class="h-dot" id="tre">Un pannello,<br>tre strumenti</h2>
@@ -55,6 +53,16 @@
           <a href="{{ root }}documentazione/pattern/">Come funziona Pattern</a>
         </div>
       </article>
+      <aside class="win layers" aria-label="Pannello Livelli di Photoshop">
+        <div class="win__bar"><span>Livelli</span></div>
+        <ul class="layers__list">
+          <li><span class="layers__eye" aria-hidden="true">◉</span><span class="layers__th layers__th--t" aria-hidden="true"></span><span>{{ cfg.name }} Type</span></li>
+          <li><span class="layers__eye" aria-hidden="true">◉</span><span class="layers__th layers__th--s" aria-hidden="true"></span><span>{{ cfg.name }} Stili</span></li>
+          <li class="is-on"><span class="layers__eye" aria-hidden="true">◉</span><span class="layers__th layers__th--p" aria-hidden="true"></span><span>{{ cfg.name }} Pattern</span></li>
+          <li><span class="layers__eye" aria-hidden="true">◉</span><span class="layers__th" aria-hidden="true"></span><span>Sfondo</span><span class="layers__lock" aria-hidden="true">▣</span></li>
+        </ul>
+        <p class="layers__note">Ogni risultato arriva come gruppo di livelli: lo sposti, lo nascondi o lo riapri con “Modifica”. L’originale resta intatto.</p>
+      </aside>
       <article class="win tool-card" data-show="stili">
         <div class="win__bar"><span>02 — fotografo.psd · <span data-now>Curve di livello</span></span></div>
         <canvas class="tool-card__img" aria-label="La stessa foto ridisegnata, a turno, da stili diversi"></canvas>
@@ -91,7 +99,7 @@
 <div class="band" data-from="#0d9e5a" data-to="#000000"></div>
 
 <section class="tone section" data-c="black" id="stili" aria-labelledby="dieci" data-fx="gallery">
-  {{ art('k', [('zoom', 790, 20, 190, -10, 'd'), ('eye', -10, 450, 180, 0, 'h'), ('layers', 840, 430, 150, 6, 'q'), ('cursor', 480, 500, 100, -14, 'd'), ('swatch', 400, 0, 120, 0, 'h')]) }}
+  {{ docframe('stili.psd', [20, 80], '66,7%') }}
   <div class="wrap">
     <div class="g-head">
       <span class="num" aria-hidden="true">10</span>
@@ -162,7 +170,7 @@
 <div class="band" data-from="#ffffff" data-to="#0d9e5a"></div>
 
 <section class="tone section" data-c="green" aria-labelledby="svg" data-fx="vector">
-  {{ art('g', [('bezier', 660, 10, 280, 0, 'd'), ('pen', -10, 340, 180, -20, 'h'), ('reg', 860, 450, 120, 0, 'q'), ('crop', 430, 480, 140, 0, 'd'), ('reg', 40, 10, 90, 0, 'd')]) }}
+  {{ docframe('raster-vettoriale.psd', [25, 75], '800%') }}
   <div class="wrap">
     <div class="desk-head">
       <h2 class="svg-sec__title" id="svg"><span class="a">Raster</span><span class="arrow" aria-hidden="true">→</span><span class="b">vettoriale</span></h2>
@@ -221,7 +229,7 @@
 <div class="band" data-from="#0d9e5a" data-to="#000000"></div>
 
 <section class="tone section" data-c="black" aria-labelledby="type" data-fx="poster">
-  {{ art('k', [('type', 760, 20, 220, 8, 'h'), ('ruler', -20, 480, 240, -8, 'd'), ('move', 430, 480, 120, 0, 'q'), ('layers', 560, 20, 110, 0, 'd')]) }}
+  {{ docframe('manifesto.psd', [61.8]) }}
   <div class="wrap type-sec">
     <div class="type-head">
       <h2 class="h-dot" id="type"><span>Il testo</span><span>trova il suo</span><span>posto</span></h2>
@@ -249,13 +257,13 @@
       <p class="small muted">Anteprima illustrativa. Nel plugin le misure si calcolano sul tuo documento e i testi restano livelli modificabili.</p>
     </div>
     <figure class="poster" data-a="asse">
-      <img src="{{ root }}assets/img/demo/razzo.jpg" alt="Lancio di un razzo nel cielo notturno" width="640" height="427">
+      <img src="{{ root }}assets/img/demo/type-bg.jpg" alt="Figura avvolta da un anello di luce blu, resa a retino" width="900" height="1192">
       <div class="poster__veil"></div>
       <div class="poster__grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
       <figcaption class="poster__text">
-        <p class="p-kicker">Il circolo astronomico presenta</p>
-        <p class="p-title">Notte dei razzi</p>
-        <p class="p-info">Sabato 14 novembre, ore 21<br>Piazza della Vittoria, Lodi</p>
+        <p class="p-kicker">Live audio-video</p>
+        <p class="p-title">Segnale perso</p>
+        <p class="p-info">Sabato 14 novembre, ore 22<br>Sala grande</p>
         <p class="p-cta">Ingresso libero</p>
       </figcaption>
     </figure>
@@ -265,17 +273,14 @@
 <div class="band" data-from="#000000" data-to="#ffffff"></div>
 
 <section class="tone section" data-c="white" aria-labelledby="prova">
-  {{ art('w', [('cursor', 800, 30, 170, -12, 'd'), ('wand', 20, 400, 160, 0, 'h'), ('dropper', 560, 450, 130, 20, 'q'), ('zoom', 380, 10, 110, 0, 'd')]) }}
+  {{ docframe('provalo.psd') }}
   <div class="wrap try">
-    <h2 class="h-dot" id="prova">Provalo</h2>
-    <div class="try__text">
-      <p class="prose">Trascina una tua foto nella pagina di prova e guardala in Dither, Halftone o ASCII. Il calcolo avviene nel browser: la foto non lascia il tuo computer.</p>
-      <div class="actions"><a class="btn" href="{{ root }}prova/">Apri la prova</a></div>
-    </div>
-    <div class="try-strip" aria-hidden="true">
-      <figure><canvas data-fx="still" data-style="dither" data-photo="gatto" data-opts='{"cell":2}'></canvas><figcaption class="lbl">[dither]</figcaption></figure>
-      <figure><canvas data-fx="still" data-style="halftone" data-photo="gatto" data-opts='{"cell":6}'></canvas><figcaption class="lbl">[halftone]</figcaption></figure>
-      <figure><canvas data-fx="still" data-style="ascii" data-photo="gatto" data-opts='{"cell":7}'></canvas><figcaption class="lbl">[ascii]</figcaption></figure>
+    <div class="try__zone">
+      <p class="lbl">[prova nel browser · 3 stili su 10]</p>
+      <h2 class="h-dot" id="prova">Provalo</h2>
+      <p class="prose">Porta una tua foto nella pagina di prova e guardala in Dither, Halftone o ASCII. Il calcolo avviene nel browser: la foto non lascia il tuo computer.</p>
+      <div class="actions"><a class="btn btn--go" href="{{ root }}prova/">Apri la prova</a></div>
+      <p class="lbl lbl--muted try__meta"><span>[nessun account]</span><span>[nessun caricamento]</span><span>[jpg · png · webp]</span></p>
     </div>
   </div>
 </section>

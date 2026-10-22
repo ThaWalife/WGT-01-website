@@ -2,7 +2,7 @@
    La dimensione di ogni elemento segue il tono della foto.
    L'elemento si sceglie dal pannello, oppure si carica un PNG/SVG proprio. */
 import { loadImage, getPixels, gray } from '../engines.js';
-import { fitCanvas, photo, loop, reduceMotion } from '../main.js';
+import { fitCanvas, photo, loop, reduceMotion } from '../core.js';
 
 const SHAPES = {
   punto(c, x, y, r) { c.moveTo(x + r, y); c.arc(x, y, r, 0, Math.PI * 2); },
