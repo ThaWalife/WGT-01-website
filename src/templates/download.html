@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% from "_art.html" import art %}
 {% block main %}
 <section class="tone page-hero" data-c="black">
+  {{ art('k', [('move', 800, 80, 200, 0, 'd'), ('bucket', 600, 380, 170, -8, 'h')]) }}
   <div class="wrap">
     <p class="lbl lbl--muted" style="margin-bottom:14px">[download]</p>
     <h1>Scarica {{ cfg.name }}</h1>

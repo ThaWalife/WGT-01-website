@@ -1,0 +1,11 @@
+{# art(theme, items): sagome di sfondo di una sezione.
+   theme: 'g' verde, 'k' nero, 'w' bianco.
+   items: (icona, x, y, lato, rotazione, trama) con x e lato in millesimi della larghezza,
+   y in seicentesimi dell'altezza della sezione; trama: d punti, h tratteggio, q scacchiera. #}
+{% macro art(theme, items) %}
+<div class="bgart" aria-hidden="true">
+  {% for ic, x, y, s, r, pat in items %}
+  <svg class="bgart__i{% if loop.index > 4 %} bgart__extra{% endif %}" viewBox="0 0 100 100" focusable="false" style="left:{{ x / 10 }}%;top:{{ (y / 6) | round(1) }}%;width:{{ s / 10 }}vw;transform:rotate({{ r }}deg)"><use href="#ic-{{ ic }}" fill="url(#p{{ pat }}-{{ theme }})" stroke="url(#p{{ pat }}-{{ theme }})"/></svg>
+  {% endfor %}
+</div>
+{% endmacro %}

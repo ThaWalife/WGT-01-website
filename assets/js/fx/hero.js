@@ -1,167 +1,160 @@
-/* Hero: il logo di WGT-01 come un oggetto in rilievo, ripreso da vicino e dal basso,
-   su un monitor a fosfori verdi. Superficie disegnata da un algoritmo (Dither,
-   Halftone o Incisione), fianchi estrusi, aberrazione cromatica, scanline, vignetta,
-   fili verticali. Intorno, artefatti grigi: polvere di caratteri, grana, glitch, mirino.
+/* Hero: l'immagine del logo in rilievo (assets/img/hero-src.jpg) ridisegnata in tempo
+   reale da un algoritmo — Dither, Halftone o ASCII — come in una ripresa lenta.
+   Intorno, artefatti grigi: polvere di caratteri, grana, glitch, mirino con timecode.
    Il pannello funziona come quello del plugin: stile, densità, pausa. */
-import { loadImage, boxBlur, BAYER8, MONO, rng } from '../engines.js';
+import { loadImage, BAYER8, MONO, rng } from '../engines.js';
 import { fitCanvas, loop, reduceMotion } from '../main.js';
 
 const GRAY = '#8a8a8a';
 const GRAY_D = '#454545';
-// palette fosfori: dall'ombra alla luce
-const PAL = [[2, 16, 7], [5, 50, 22], [12, 104, 46], [28, 168, 78], [86, 228, 128], [176, 255, 205]];
+// rampa di verdi (dall'ombra alla luce), come i fosfori dell'immagine
+const RAMP = [[0, 0, 0], [5, 38, 18], [10, 84, 40], [20, 140, 66], [53, 196, 110], [140, 245, 180], [215, 255, 232]];
+const CH = ' .·:-=+*o#%@';
 
 export default async function hero(section) {
   const canvas = section.querySelector('canvas');
   const root = document.documentElement.dataset.root || './';
-  const logo = await loadImage(root + 'assets/img/logo-white.png');
+  const src = await loadImage(root + 'assets/img/hero-src.jpg');
   try { await document.fonts.load(`16px "Martian Mono"`); } catch {}
 
   const styleBtns = [...section.querySelectorAll('[data-hero-style]')];
   const density = section.querySelector('[data-hero-density]');
   const pauseBtn = section.querySelector('[data-hero-pause]');
   const st = { style: 'dither', dens: 0.55, playing: !reduceMotion, t: 0 };
-  const ptr = { x: -1, y: -1, k: 0, on: false };
-  const rnd = rng(11);
-
-  /* ---- spazio del logo: forma, smusso e grana della superficie ---- */
-  const PAD = 40;
-  const LW = logo.naturalWidth + PAD * 2, LH = logo.naturalHeight + PAD * 2;
-  const lc = document.createElement('canvas');
-  lc.width = LW; lc.height = LH;
-  const lx = lc.getContext('2d', { willReadFrequently: true });
-  lx.drawImage(logo, PAD, PAD);
-  const ld = lx.getImageData(0, 0, LW, LH).data;
-  const A0 = new Float32Array(LW * LH);
-  for (let i = 0; i < A0.length; i++) A0[i] = ld[i * 4 + 3] / 255;
-  const IN = boxBlur(boxBlur(A0, LW, LH, 9), LW, LH, 9);       // "distanza" dal bordo, verso l'interno
-  const TEX = new Float32Array(LW * LH);                          // grana irregolare
-  {
-    const n0 = new Float32Array(LW * LH).map(() => rnd());
-    const n1 = boxBlur(n0, LW, LH, 1), n2 = boxBlur(n0, LW, LH, 4);
-    for (let i = 0; i < TEX.length; i++) TEX[i] = Math.min(1, Math.max(0, 0.5 + (n1[i] - 0.5) * 2.2 + (n2[i] - 0.5) * 3));
-  }
-
-  /* ---- polvere di caratteri grigi in profondità ---- */
-  const dust = Array.from({ length: 200 }, () => ({
+  const ptr = { x: 0.5, y: 0.5, k: 0, on: false };
+  const rnd = rng(5);
+  const dust = Array.from({ length: 180 }, () => ({
     x: (rnd() - 0.5) * 3.2, y: (rnd() - 0.5) * 2.2, z: 0.6 + rnd() * 2.6,
     c: '·.:+*#=░'[(rnd() * 8) | 0], s: 0.6 + rnd() * 0.8,
   }));
 
   let L = null;
+  const sample = document.createElement('canvas');
+  const sx = sample.getContext('2d', { willReadFrequently: true });
+  const buf = document.createElement('canvas');
+  const bx = buf.getContext('2d');
+
   function layout() {
     const { ctx, W, H, dpr } = fitCanvas(canvas, 1);
     const narrow = W / dpr < 860;
-    const IW = narrow ? 300 : 460, IH = Math.round((IW * H) / W);
-    const mk = () => { const c = document.createElement('canvas'); c.width = IW; c.height = IH; return c; };
-    const top = mk(), side = mk(), tintR = mk(), tintC = mk(), comp = mk();
     const scan = document.createElement('canvas');
-    scan.width = 1; scan.height = Math.max(3, Math.round(3 * dpr));
-    const sx = scan.getContext('2d');
-    sx.fillStyle = 'rgba(0,0,0,0.28)'; sx.fillRect(0, 0, 1, Math.max(1, Math.round(dpr)));
-    const vig = ctx.createRadialGradient(W * 0.6, H * 0.5, Math.min(W, H) * 0.25, W * 0.6, H * 0.5, Math.max(W, H) * 0.8);
-    vig.addColorStop(0, 'rgba(0,0,0,0)'); vig.addColorStop(1, 'rgba(0,0,0,0.85)');
-    const left = ctx.createLinearGradient(0, 0, W * 0.48, 0);
-    left.addColorStop(0, 'rgba(0,0,0,0.8)'); left.addColorStop(1, 'rgba(0,0,0,0)');
-    // scanline + vignetta + ombra per il testo: un solo strato, preparato una volta
+    scan.width = 1; scan.height = 3;
+    const s = scan.getContext('2d');
+    s.fillStyle = 'rgba(0,0,0,0.3)'; s.fillRect(0, 0, 1, 1);
     const over = document.createElement('canvas');
     over.width = W; over.height = H;
     const ox = over.getContext('2d');
     ox.fillStyle = ox.createPattern(scan, 'repeat'); ox.fillRect(0, 0, W, H);
+    const vig = ox.createRadialGradient(W * 0.6, H * 0.5, Math.min(W, H) * 0.3, W * 0.6, H * 0.5, Math.max(W, H) * 0.8);
+    vig.addColorStop(0, 'rgba(0,0,0,0)'); vig.addColorStop(1, 'rgba(0,0,0,0.8)');
     ox.fillStyle = vig; ox.fillRect(0, 0, W, H);
-    if (!narrow) { ox.fillStyle = left; ox.fillRect(0, 0, W, H); }
-    L = {
-      ctx, W, H, dpr, narrow, IW, IH, top, side, tintR, tintC, comp, over, compD: comp.getContext('2d'),
-      topD: top.getContext('2d'), sideD: side.getContext('2d'),
-      imTop: new ImageData(IW, IH), imSide: new ImageData(IW, IH),
-      mask: new Uint8Array(IW * IH),
-      scanPat: ctx.createPattern(scan, 'repeat'), vig, left,
-      f: IH * 1.15,
-      cx: IW * (narrow ? 0.55 : 0.63), cy: IH * (narrow ? 0.34 : 0.5),
-      scale: (narrow ? IW * 1.35 : IH * 1.3) / logo.naturalHeight,
-    };
-  }
-
-  /* Proiezione del piano del logo (raggio → piano) e colore della superficie. */
-  function render(t) {
-    const { IW, IH, f, imTop, imSide, mask } = L;
-    const yaw = -0.32 + 0.05 * Math.sin(t * 0.11);
-    const pitch = 0.62 + 0.04 * Math.sin(t * 0.08 + 1);
-    const roll = -0.95 + 0.03 * Math.sin(t * 0.07);
-    const cyw = Math.cos(yaw), syw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch), cr = Math.cos(roll), sr = Math.sin(roll);
-    const rot = (x, y, z) => {
-      const x1 = x * cr - y * sr, y1 = x * sr + y * cr, z1 = z;
-      const y2 = y1 * cp - z1 * sp, z2 = y1 * sp + z1 * cp;
-      return [x1 * cyw + z2 * syw, y2, -x1 * syw + z2 * cyw];
-    };
-    const ux = rot(1, 0, 0), uy = rot(0, 1, 0), n = rot(0, 0, 1);
-    const D = f;
-    const P0 = [((L.cx - IW / 2) / f) * D, ((L.cy - IH / 2) / f) * D, D];
-    const nd0 = n[0] * P0[0] + n[1] * P0[1] + n[2] * P0[2];
-    const inv = 1 / L.scale;
-    const cell = 3 + (1 - st.dens) * 7;
-    const lightU = Math.sin(t * 0.3) * 0.15;
-    const pk = ptr.k, px0 = ptr.x * IW, py0 = ptr.y * IH;
-    const dt = imTop.data, ds = imSide.data;
-    for (let j = 0; j < IH; j++) {
-      const dy = (j - IH / 2) / f;
-      for (let i = 0; i < IW; i++) {
-        const k = j * IW + i, o = k * 4;
-        const dx = (i - IW / 2) / f;
-        const den = n[0] * dx + n[1] * dy + n[2];
-        const tt = nd0 / den;
-        const qx = dx * tt - P0[0], qy = dy * tt - P0[1], qz = tt - P0[2];
-        const u = (qx * ux[0] + qy * ux[1] + qz * ux[2]) * inv + LW / 2;
-        const v = (qx * uy[0] + qy * uy[1] + qz * uy[2]) * inv + LH / 2;
-        if (tt <= 0 || u < 0 || v < 0 || u >= LW || v >= LH) { mask[k] = 0; dt[o + 3] = 0; ds[o + 3] = 0; continue; }
-        const li = (v | 0) * LW + (u | 0);
-        if (A0[li] < 0.5) { mask[k] = 0; dt[o + 3] = 0; ds[o + 3] = 0; continue; }
-        mask[k] = 1;
-        const inn = IN[li];
-        const rim = Math.exp(-Math.pow((inn - 0.62) / 0.09, 2));
-        const grad = 0.55 + 0.45 * Math.sin((u + v) * 0.012 + lightU * 6);
-        let lum = 0.36 + 0.34 * rim + 0.3 * grad * inn + 0.26 * (TEX[li] - 0.5);
-        lum *= Math.min(1.15, Math.max(0.45, 1.6 - (tt / D) * 0.6));
-        if (pk > 0) { const ex = i - px0, ey = j - py0; lum += 0.35 * pk * Math.exp(-(ex * ex + ey * ey) / 3200); }
-        let q;
-        if (st.style === 'halftone') {
-          const gu = u / cell, gv = v / cell, fu = gu - Math.round(gu), fv = gv - Math.round(gv);
-          q = Math.sqrt(fu * fu + fv * fv) < Math.sqrt(Math.max(0, lum)) * 0.62 ? lum + 0.25 : lum * 0.35;
-        } else if (st.style === 'incisione') {
-          const s = (((v + Math.sin(u * 0.05) * 3) / cell) % 1 + 1) % 1;
-          q = s < Math.max(0, lum) ? lum + 0.2 : lum * 0.3;
-        } else {
-          q = lum + ((BAYER8[(j & 7) * 8 + (i & 7)] + 0.5) / 64 - 0.5) * 0.45;
-        }
-        const c = PAL[Math.max(0, Math.min(PAL.length - 1, Math.floor(q * PAL.length)))];
-        dt[o] = c[0]; dt[o + 1] = c[1]; dt[o + 2] = c[2]; dt[o + 3] = 255;
-        const s2 = 0.6 + 0.4 * TEX[li];
-        ds[o] = 3 * s2; ds[o + 1] = 30 * s2; ds[o + 2] = 16 * s2; ds[o + 3] = 255;
-      }
+    if (!narrow) {
+      const left = ox.createLinearGradient(0, 0, W * 0.55, 0);
+      left.addColorStop(0, 'rgba(0,0,0,0.85)'); left.addColorStop(1, 'rgba(0,0,0,0)');
+      ox.fillStyle = left; ox.fillRect(0, 0, W, H);
+    } else {
+      const bot = ox.createLinearGradient(0, H * 0.35, 0, H);
+      bot.addColorStop(0, 'rgba(0,0,0,0)'); bot.addColorStop(1, 'rgba(0,0,0,0.85)');
+      ox.fillStyle = bot; ox.fillRect(0, 0, W, H);
     }
-    L.topD.putImageData(imTop, 0, 0);
-    L.sideD.putImageData(imSide, 0, 0);
-    const proj = (p) => [IW / 2 + (p[0] / p[2]) * f, IH / 2 + (p[1] / p[2]) * f];
-    const d = 26 * L.scale;
-    const c0 = proj(P0), c1 = proj([P0[0] + n[0] * d, P0[1] + n[1] * d, P0[2] + n[2] * d]);
-    return [c1[0] - c0[0], c1[1] - c0[1]];
+    L = { ctx, W, H, dpr, narrow, over };
   }
 
-  function tint(dst, color) {
-    const x = dst.getContext('2d');
-    x.globalCompositeOperation = 'copy';
-    x.drawImage(L.top, 0, 0);
-    x.globalCompositeOperation = 'source-in';
-    x.fillStyle = color;
-    x.fillRect(0, 0, L.IW, L.IH);
+  /* Campiona l'immagine con una ripresa lenta (zoom e panoramica) a una griglia gw×gh. */
+  function grab(gw, gh, t) {
+    if (sample.width !== gw || sample.height !== gh) { sample.width = gw; sample.height = gh; }
+    const iw = src.naturalWidth, ih = src.naturalHeight;
+    const aspect = L.W / L.H;
+    const z = 1.1 + 0.06 * Math.sin(t * 0.05);
+    let sw = iw / z, sh = sw / aspect;
+    if (sh > ih / z) { sh = ih / z; sw = sh * aspect; }
+    const cx = iw * (0.5 + 0.04 * Math.sin(t * 0.037)) - (L.narrow ? iw * 0.08 : iw * 0.06);
+    const cy = ih * (0.5 + 0.03 * Math.cos(t * 0.031));
+    const x0 = Math.max(0, Math.min(iw - sw, cx - sw / 2)), y0 = Math.max(0, Math.min(ih - sh, cy - sh / 2));
+    sx.drawImage(src, x0, y0, sw, sh, 0, 0, gw, gh);
+    const d = sx.getImageData(0, 0, gw, gh).data;
+    const g = new Float32Array(gw * gh);
+    const flick = 0.96 + 0.04 * Math.sin(t * 13);
+    const pk = ptr.k, px = ptr.x * gw, py = ptr.y * gh, pr = gw * 0.12;
+    for (let i = 0, j = 0; i < g.length; i++, j += 4) {
+      let v = (0.25 * d[j] + 0.65 * d[j + 1] + 0.1 * d[j + 2]) / 255;
+      v = Math.min(1, Math.pow(v, 0.85) * 1.15 * flick);
+      if (pk > 0) {
+        const x = i % gw, y = (i / gw) | 0, dx = x - px, dy = y - py;
+        v += 0.3 * pk * Math.exp(-(dx * dx + dy * dy) / (2 * pr * pr));
+      }
+      g[i] = v > 1 ? 1 : v;
+    }
+    return g;
   }
 
+  function drawDither(t) {
+    const { ctx, W, H, dpr } = L;
+    const p = Math.max(2, Math.round((5 - st.dens * 3) * dpr));
+    const gw = Math.ceil(W / p), gh = Math.ceil(H / p);
+    const g = grab(gw, gh, t);
+    if (buf.width !== gw || buf.height !== gh) { buf.width = gw; buf.height = gh; }
+    const im = bx.createImageData(gw, gh);
+    const n = RAMP.length - 1;
+    for (let y = 0; y < gh; y++)
+      for (let x = 0; x < gw; x++) {
+        const i = y * gw + x;
+        const q = Math.max(0, Math.min(n, Math.floor(g[i] * n + (BAYER8[(y & 7) * 8 + (x & 7)] + 0.5) / 64)));
+        const c = RAMP[q], o = i * 4;
+        im.data[o] = c[0]; im.data[o + 1] = c[1]; im.data[o + 2] = c[2]; im.data[o + 3] = 255;
+      }
+    bx.putImageData(im, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(buf, 0, 0, gw * p, gh * p);
+  }
+
+  function drawHalftone(t) {
+    const { ctx, W, H, dpr } = L;
+    const step = (16 - st.dens * 9) * dpr;
+    const gw = Math.ceil(W / step) + 1, gh = Math.ceil(H / (step * 0.866)) + 1;
+    const g = grab(gw, gh, t);
+    const paths = RAMP.map(() => new Path2D());
+    for (let j = 0; j < gh; j++)
+      for (let i = 0; i < gw; i++) {
+        const v = g[j * gw + i];
+        const r = step * 0.6 * Math.sqrt(v);
+        if (r < 0.6) continue;
+        const x = i * step + (j & 1 ? step / 2 : 0), y = j * step * 0.866;
+        const q = Math.max(1, Math.min(RAMP.length - 1, Math.round(v * (RAMP.length - 1))));
+        paths[q].moveTo(x + r, y); paths[q].arc(x, y, r, 0, Math.PI * 2);
+      }
+    paths.forEach((p, q) => { if (q) { ctx.fillStyle = `rgb(${RAMP[q]})`; ctx.fill(p); } });
+  }
+
+  function drawAscii(t) {
+    const { ctx, W, H, dpr } = L;
+    const size = Math.round((15 - st.dens * 8) * dpr);
+    ctx.font = `${size}px ${MONO}`;
+    ctx.textBaseline = 'top';
+    const cw = ctx.measureText('M').width;
+    const gw = Math.ceil(W / cw), gh = Math.ceil(H / size);
+    const g = grab(gw, gh, t);
+    const n = CH.length - 1;
+    const bands = [[0.35, RAMP[3]], [0.6, RAMP[4]], [1.01, RAMP[5]]];
+    for (let y = 0; y < gh; y++) {
+      const rows = bands.map(() => '');
+      for (let x = 0; x < gw; x++) {
+        const v = g[y * gw + x];
+        const ch = CH[Math.round(v * n)];
+        const b = bands.findIndex(([lim]) => v < lim);
+        for (let k = 0; k < bands.length; k++) rows[k] += k === b ? ch : ' ';
+      }
+      bands.forEach(([, c], k) => { ctx.fillStyle = `rgb(${c})`; ctx.fillText(rows[k], 0, y * size); });
+    }
+  }
+
+  /* ---- artefatti grigi ---- */
   const dustSprites = new Map();
-  function dustSprite(ch, sizeB, near) {
-    const key = ch + sizeB + near;
+  function dustSprite(ch, sb, near) {
+    const key = ch + sb + near;
     let c = dustSprites.get(key);
     if (c) return c;
-    const px = Math.round(11 * L.dpr * (0.8 + sizeB * 0.45));
+    const px = Math.round(11 * L.dpr * (0.8 + sb * 0.45));
     c = document.createElement('canvas');
     c.width = c.height = px * 2;
     const x = c.getContext('2d');
@@ -171,18 +164,17 @@ export default async function hero(section) {
     dustSprites.set(key, c);
     return c;
   }
-  function drawDust(t, front) {
+  function drawDust(t) {
     const { ctx, W, H } = L;
     for (const p of dust) {
-      if (front !== p.z < 1.2) continue;
       let z = p.z - ((t * 0.05 * p.s) % 3.2);
       if (z < 0.4) z += 3.2;
-      const sx = W / 2 + (p.x / z) * W * 0.45, sy = H / 2 + (p.y / z) * W * 0.45;
-      if (sx < -20 || sy < -20 || sx > W + 20 || sy > H + 20) continue;
+      const x = W / 2 + (p.x / z) * W * 0.45, y = H / 2 + (p.y / z) * W * 0.45;
+      if (x < -20 || y < -20 || x > W + 20 || y > H + 20) continue;
       ctx.globalAlpha = Math.min(0.9, 0.9 / z);
       const sb = Math.min(4, Math.max(0, Math.round((1.2 / z - 0.8) / 0.45)));
       const sp = dustSprite(p.c, sb, z < 1 ? 1 : 0);
-      ctx.drawImage(sp, sx - sp.width / 2, sy - sp.height / 2);
+      ctx.drawImage(sp, x - sp.width / 2, y - sp.height / 2);
     }
     ctx.globalAlpha = 1;
   }
@@ -210,8 +202,8 @@ export default async function hero(section) {
     ctx.strokeStyle = GRAY;
     ctx.lineWidth = 1.5 * dpr;
     ctx.beginPath();
-    for (const [x, y, sx, sy] of [[m, top, 1, 1], [W - m, top, -1, 1], [m, H - m, 1, -1], [W - m, H - m, -1, -1]]) {
-      ctx.moveTo(x, y + sy * len); ctx.lineTo(x, y); ctx.lineTo(x + sx * len, y);
+    for (const [x, y, sx2, sy2] of [[m, top, 1, 1], [W - m, top, -1, 1], [m, H - m, 1, -1], [W - m, H - m, -1, -1]]) {
+      ctx.moveTo(x, y + sy2 * len); ctx.lineTo(x, y); ctx.lineTo(x + sx2 * len, y);
     }
     ctx.stroke();
     const fr = Math.floor(t * 24);
@@ -225,54 +217,16 @@ export default async function hero(section) {
     ctx.textAlign = 'left';
   }
 
-  const strings = [0.44, 0.63, 0.81];
-  function drawStrings() {
-    const { ctx, W, H, dpr, IW, IH, mask } = L;
-    ctx.strokeStyle = 'rgba(120,235,170,0.75)';
-    ctx.lineWidth = 1.5 * dpr;
-    ctx.shadowColor = 'rgba(80,255,160,0.8)';
-    ctx.shadowBlur = 6 * dpr;
-    ctx.beginPath();
-    for (const fx of strings) {
-      const i = Math.round(fx * IW);
-      let j = 0;
-      while (j < IH && !mask[j * IW + i]) j++;
-      if (j >= IH || j < 4) continue;
-      const x = (i / IW) * W, y = (j / IH) * H;
-      ctx.moveTo(x, 0); ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-    ctx.shadowBlur = 0;
-  }
-
+  const DRAW = { dither: drawDither, halftone: drawHalftone, ascii: drawAscii };
   function draw() {
     if (!L) return;
-    const { ctx, W, H, dpr } = L;
-    const [ex, ey] = render(st.t);
-    ctx.globalCompositeOperation = 'source-over';
+    const { ctx, W, H } = L;
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, W, H);
-    drawGrain();
-    drawDust(st.t, false);
-    drawStrings();
-    // estrusione, faccia e aberrazione composte alla risoluzione interna, poi un solo ingrandimento
-    const cd = L.compD;
-    cd.globalCompositeOperation = 'source-over';
-    cd.clearRect(0, 0, L.IW, L.IH);
-    const steps = 12;
-    for (let s = steps; s >= 1; s--) cd.drawImage(L.side, (ex * s) / steps, (ey * s) / steps);
-    cd.drawImage(L.top, 0, 0);
-    tint(L.tintR, '#ff3b2f'); tint(L.tintC, '#2fd6ff');
-    cd.globalCompositeOperation = 'screen';
-    cd.globalAlpha = 0.13;
-    cd.drawImage(L.tintR, 1, 0);
-    cd.drawImage(L.tintC, -1, 0);
-    cd.globalAlpha = 1;
-    cd.globalCompositeOperation = 'source-over';
-    ctx.imageSmoothingEnabled = true;
-    ctx.drawImage(L.comp, 0, 0, W, H);
+    DRAW[st.style](st.t);
     ctx.drawImage(L.over, 0, 0);
-    drawDust(st.t, true);
+    drawGrain();
+    drawDust(st.t);
     if (st.playing) drawGlitch(st.t);
     drawViewfinder(st.t);
   }
@@ -282,7 +236,7 @@ export default async function hero(section) {
   let acc = 0;
   const anim = loop(canvas, (dt) => {
     acc += dt;
-    if (acc < 1 / 30) return;
+    if (acc < 1 / 24) return;
     if (st.playing) st.t += acc;
     if (ptr.k > 0 && !ptr.on) ptr.k = Math.max(0, ptr.k - acc * 1.5);
     acc = 0;

@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% from "_art.html" import art %}
 {% block main %}
 <section class="tone page-hero" data-c="black">
+  {{ art('k', [('type', 820, 40, 220, 8, 'd'), ('ruler', 560, 420, 240, -6, 'h')]) }}
   <div class="wrap">
     <p class="lbl lbl--muted" style="margin-bottom:14px">[documentazione · {{ page.group|lower }}]</p>
     <h1>{{ page.title }}</h1>

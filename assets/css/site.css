@@ -468,3 +468,31 @@ fieldset.panel__row legend { padding: 0; margin-bottom: 6px; font-size: var(--t-
 .vec-cmyk .prose p { margin: 0 0 18px; }
 .vec-cmyk .win { max-width: 520px; justify-self: end; width: 100%; }
 @media (max-width: 900px) { .vec-pair, .vec-cmyk { grid-template-columns: 1fr; } .vec-zoom { grid-template-columns: 1fr 6ch; } .vec-zoom .lbl { grid-column: 1 / -1; } }
+
+/* ---------- SAGOME DI SFONDO ---------- */
+.tone { isolation: isolate; }
+.bgart { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.bgart__i { position: absolute; height: auto; aspect-ratio: 1; overflow: visible; }
+.tone > .wrap, .tone > .hero__inner { position: relative; z-index: 1; }
+@media (max-width: 760px) { .bgart__extra { display: none; } }
+
+/* ---------- TRE STRUMENTI (presentazione) ---------- */
+.tools-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px var(--gutter); align-items: end; margin-bottom: clamp(36px, 5vw, 64px); }
+.tools-head .h-dot { font-size: clamp(2.5rem, 5.6vw, 5.75rem); }
+.tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 2.6vw, 36px); align-items: start; }
+.tools .tool-card:nth-child(2) { margin-top: clamp(0px, 5vw, 72px); }
+.tools .tool-card:nth-child(3) { margin-top: clamp(0px, 10vw, 144px); }
+.tool-card__img { display: block; width: 100%; aspect-ratio: 4 / 5; background: #fff; }
+.tool-card__doc { background: #1c1c1c; aspect-ratio: 4 / 5; display: grid; place-items: center; padding: 8%; }
+.tool-card__doc .poster { width: 100%; }
+.tool-card__text { padding: 14px 16px 18px; border-top: var(--line) solid var(--ink); }
+.tool-card__text h3 { margin: 0 0 8px; font-family: var(--f-el); font-weight: 700; font-size: clamp(2.5rem, 4vw, 3.75rem); line-height: .9; font-variation-settings: "ELSH" 2; }
+.tool-card__text p { margin: 0 0 12px; font-size: var(--t-s); }
+.tool-card__text a { font-weight: 700; font-size: var(--t-s); }
+.tool-card .win__bar span span { color: inherit; }
+@media (max-width: 900px) {
+  .tools-head { grid-template-columns: 1fr; }
+  .tools { grid-template-columns: 1fr; }
+  .tools .tool-card:nth-child(n) { margin-top: 0; }
+}
+.poster .p-title { overflow-wrap: anywhere; }
