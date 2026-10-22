@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thawalife.github.io/WGT-01-website/sitemap.xml

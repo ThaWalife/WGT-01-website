@@ -1,7 +1,7 @@
 ---
 title: Novità delle versioni
 nav: Novità
-description: Cosa è cambiato, versione per versione.
+description: Le novità di ogni versione di WGT-01, il plugin generativo per Photoshop: nuovi stili, funzioni e correzioni.
 group: Aiuto
 order: 3
 ---

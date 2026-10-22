@@ -16,7 +16,7 @@ export default async function demo(el) {
   const status = el.querySelector('[data-status]');
   const dl = el.querySelector('[data-download]');
   const methodField = el.querySelector('[data-method-field]');
-  const st = { style: 'dither', density: 6, contrast: 10, brightness: 0, colors: 'carta', method: 'atkinson', name: 'astronauta' };
+  const st = { style: 'dither', density: 6, contrast: 10, brightness: 0, colors: 'carta', method: 'atkinson', name: 'example-1' };
   let img = null, objectUrl = null, raf = 0;
 
   const bind = (sel, key, num) => {

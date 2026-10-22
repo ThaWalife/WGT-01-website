@@ -1,10 +1,10 @@
 ---
 title: Mosaico
-description: Tessere quadrate, ognuna con il colore medio della sua zona, separate da una fuga.
+description: Stile Mosaico di WGT-01 per Photoshop: tessere quadrate con il colore medio della loro zona, separate da una fuga regolabile.
 group: Stili
 order: 4
 ---
-<figure class="doc-figure"><canvas data-fx="still" data-style="mosaico" data-photo="gatto" data-opts='{"cell":12}'></canvas><figcaption>Mosaico, anteprima leggera calcolata nel browser.</figcaption></figure>
+<figure class="doc-figure"><canvas data-fx="still" data-style="mosaico" data-photo="example-3" data-opts='{"cell":12}'></canvas><figcaption>Mosaico, anteprima leggera calcolata nel browser.</figcaption></figure>
 
 ## Controlli
 

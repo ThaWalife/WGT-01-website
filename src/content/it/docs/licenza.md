@@ -1,7 +1,7 @@
 ---
 title: Donazione e codice seriale
 nav: Donazione e codice
-description: Come funzionano la donazione minima e il codice personale.
+description: Come funziona la licenza di WGT-01: donazione libera da {{min_price}}, codice seriale personale e attivazione del plugin per Photoshop.
 group: Aiuto
 order: 1
 ---

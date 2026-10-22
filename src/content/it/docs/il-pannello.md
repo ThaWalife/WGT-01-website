@@ -1,6 +1,6 @@
 ---
 title: Il pannello
-description: Le parti comuni a Pattern, Stili e Type.
+description: Il pannello di WGT-01 in Photoshop: preset, anteprima live, come arriva il risultato, Modifica, Tutti i livelli e tema dell’interfaccia.
 group: Inizia
 order: 3
 ---

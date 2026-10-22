@@ -1,10 +1,10 @@
 ---
 title: Halftone
-description: Il retino della stampa: punti su una griglia inclinata che crescono nelle ombre.
+description: Stile Halftone di WGT-01: il retino di stampa con punti che crescono nelle ombre, anche in quattro lastre CMYK. Esportabile in SVG.
 group: Stili
 order: 2
 ---
-<figure class="doc-figure"><canvas data-fx="still" data-style="halftone" data-photo="caffe" data-opts='{"cell":8}'></canvas><figcaption>Halftone, anteprima leggera calcolata nel browser.</figcaption></figure>
+<figure class="doc-figure"><canvas data-fx="still" data-style="halftone" data-photo="example-2" data-opts='{"cell":8}'></canvas><figcaption>Halftone, anteprima leggera calcolata nel browser.</figcaption></figure>
 
 > Esportabile in **SVG**. Vedi [Esporta SVG](/documentazione/esporta-svg/).
 

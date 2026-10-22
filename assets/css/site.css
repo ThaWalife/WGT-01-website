@@ -288,7 +288,7 @@ input[type="range"] { width: 100%; accent-color: var(--green-hi); height: 26px; 
 /* ---------- PROVA (invito) ---------- */
 .try { display: grid; place-items: center; }
 /* una selezione "a formiche in marcia", come in Photoshop, al centro della sezione */
-.try__zone { --ant: var(--ink); position: relative; width: min(100%, 860px); padding: clamp(36px, 6vw, 72px) clamp(20px, 5vw, 64px); text-align: center; display: grid; justify-items: center; gap: 18px;
+.try__zone { --ant: var(--ink); position: relative; width: min(100%, 1040px); padding: clamp(36px, 6vw, 72px) clamp(20px, 5vw, 64px); text-align: center; display: grid; justify-items: center; gap: 18px;
   background:
     linear-gradient(90deg, var(--ant) 50%, transparent 0) top / 16px 1px repeat-x,
     linear-gradient(90deg, var(--ant) 50%, transparent 0) bottom / 16px 1px repeat-x,
@@ -297,7 +297,8 @@ input[type="range"] { width: 100%; accent-color: var(--green-hi); height: 26px; 
   animation: ants 1s linear infinite; }
 @keyframes ants { to { background-position: 16px 0, -16px 100%, 0 -16px, 100% 16px; } }
 @media (prefers-reduced-motion: reduce) { .try__zone { animation: none; } }
-.try__zone .h-dot { font-size: clamp(3.5rem, 13vw, 12rem); line-height: .8; margin: 0; }
+.try__zone .h-dot { font-size: clamp(3rem, 9vw, 9rem); line-height: .8; margin: 0; max-width: 100%; text-align: center; }
+.try__zone > * { max-width: 100%; }
 .try__zone .prose { max-width: 46ch; margin: 0; }
 .try__zone .actions { justify-content: center; }
 .try__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 16px; margin: 0; }
@@ -320,7 +321,7 @@ input[type="range"] { width: 100%; accent-color: var(--green-hi); height: 26px; 
 /* ---------- PIÈ DI PAGINA ---------- */
 .site-footer { padding: 48px 0 36px; }
 .site-footer .wrap { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--gutter); }
-.site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: var(--t-s); }
+.site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; align-content: start; gap: 10px; font-size: var(--t-s); }
 .site-footer .big { font-family: var(--f-dot); font-weight: 900; font-size: clamp(3rem, 7vw, 6rem); line-height: .85; margin: 0 0 12px; color: var(--green-hi); }
 .site-footer__home { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto; align-items: end; gap: 6px 18px; margin-top: 28px; padding-top: 18px; border-top: var(--line) solid rgba(255,255,255,.28); text-decoration: none; color: var(--paper); }
 .site-footer__url { font-family: var(--f-dot); font-weight: 900; font-size: clamp(2.2rem, 7.5vw, 7rem); line-height: .85; overflow-wrap: anywhere; }
@@ -515,24 +516,18 @@ fieldset.panel__row legend { padding: 0; margin-bottom: 6px; font-size: var(--t-
 }
 
 /* ---------- TRE STRUMENTI (presentazione) ---------- */
-.tools-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px var(--gutter); align-items: end; margin-bottom: clamp(36px, 5vw, 64px); }
-.tools-head .h-dot { font-size: clamp(2.5rem, 5.6vw, 5.75rem); }
+.tools-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: 18px; align-items: end; margin-bottom: clamp(40px, 6vw, 88px); }
+.tools-title { grid-column: 1 / -1; margin: 0; display: grid; }
+/* due livelli: la riga piccola fa da etichetta, la riga grande porta il peso */
+.tools-title__a { justify-self: start; font-family: var(--f-mono); font-weight: 800; font-size: clamp(1rem, 1.9vw, 1.6rem); letter-spacing: .02em; text-transform: uppercase; padding: .35em .6em; background: var(--ink); color: var(--paper); margin-bottom: .55em; }
+.tools-title__b { font-family: var(--f-dot); font-weight: 900; font-size: clamp(3.2rem, 11vw, 11.5rem); line-height: .8; letter-spacing: -.02em; white-space: nowrap; margin-left: -.04em; }
+.tools-head__text { grid-column: 7 / -1; margin: 0; max-width: 52ch; font-size: var(--t-l); line-height: 1.5; padding-left: 16px; border-left: 4px solid var(--green); }
+.tools-head__text b { font-weight: 800; }
+@media (max-width: 760px) { .tools-title__b { white-space: normal; font-size: clamp(3rem, 15vw, 6rem); } }
 .tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 2.6vw, 36px); align-items: start; }
 .tools [data-show="pattern"] { grid-column: 1; grid-row: 1; }
-.tools .layers { grid-column: 1; grid-row: 2; }
-.tools [data-show="stili"] { grid-column: 2; grid-row: 1 / span 2; margin-top: clamp(0px, 5vw, 72px); }
-.tools [data-show="type"] { grid-column: 3; grid-row: 1 / span 2; margin-top: clamp(0px, 10vw, 144px); }
-.layers { font-size: var(--t-s); }
-.layers__list { list-style: none; margin: 0; padding: 0; }
-.layers__list li { display: grid; grid-template-columns: 22px 30px 1fr auto; align-items: center; gap: 10px; padding: 7px 12px; border-bottom: var(--line) solid rgba(0,0,0,.14); }
-.layers__list li.is-on { background: var(--green); }
-.layers__eye { font-size: 12px; text-align: center; }
-.layers__th { width: 30px; height: 24px; border: var(--line) solid var(--ink); background: #fff; }
-.layers__th--p { background: radial-gradient(circle, #000 1.6px, transparent 1.8px) 0 0 / 5px 5px, #fff; }
-.layers__th--s { background: repeating-linear-gradient(-30deg, #000 0 1px, #fff 1px 4px); }
-.layers__th--t { background: linear-gradient(#000 0 0) 4px 5px / 18px 4px no-repeat, linear-gradient(#000 0 0) 4px 13px / 12px 2px no-repeat, #1c1c1c; border-color: var(--ink); }
-.layers__lock { font-size: 11px; opacity: .6; }
-.layers__note { margin: 0; padding: 12px 14px 14px; font-size: var(--t-xs); line-height: 1.55; }
+.tools [data-show="stili"] { grid-column: 2; grid-row: 1; margin-top: clamp(0px, 5vw, 72px); }
+.tools [data-show="type"] { grid-column: 3; grid-row: 1; margin-top: clamp(0px, 10vw, 144px); }
 .tool-card__img { display: block; width: 100%; aspect-ratio: 4 / 5; background: #fff; }
 .tool-card__doc { background: #1c1c1c; aspect-ratio: 4 / 5; display: grid; place-items: center; padding: 8%; }
 .tool-card__doc .poster { width: 100%; }
@@ -543,8 +538,8 @@ fieldset.panel__row legend { padding: 0; margin-bottom: 6px; font-size: var(--t-
 .tool-card .win__bar span span { color: inherit; }
 @media (max-width: 900px) {
   .tools-head { grid-template-columns: 1fr; }
+  .tools-head__text { grid-column: 1 / -1; }
   .tools { grid-template-columns: 1fr; }
   .tools > * { grid-column: auto !important; grid-row: auto !important; margin-top: 0 !important; }
-  .tools .layers { order: 1; }
 }
 .poster .p-title { overflow-wrap: anywhere; }

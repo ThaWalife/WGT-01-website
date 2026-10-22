@@ -1,7 +1,7 @@
 ---
 title: Modifica e lavoro su più livelli
 nav: Modifica e più livelli
-description: Riaprire un risultato e applicare uno stile a tutto il documento.
+description: Riaprire un risultato di WGT-01 con Modifica e applicare uno stile a tutti i livelli visibili del documento Photoshop.
 group: Funzioni
 order: 2
 ---

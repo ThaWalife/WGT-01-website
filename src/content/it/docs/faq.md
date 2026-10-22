@@ -1,7 +1,7 @@
 ---
 title: Domande frequenti
 nav: Domande frequenti
-description: Risposte rapide ai dubbi più comuni.
+description: Domande frequenti su WGT-01: versioni di Photoshop supportate, documenti CMYK e a 16 bit, immagini grandi, uso commerciale e privacy.
 group: Aiuto
 order: 2
 ---

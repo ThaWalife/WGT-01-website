@@ -1,10 +1,10 @@
 ---
 title: Pattern
-description: Un elemento ripetuto, con dimensione e posizione decise dal tono.
+description: Pattern di WGT-01: ripete un elemento, una forma o un tuo file PNG/SVG e ne decide dimensione e posizione in base al tono della foto.
 group: Sezioni
 order: 1
 ---
-<figure class="doc-figure"><canvas data-fx="still" data-style="halftone" data-photo="hopper" data-opts='{"cell":7,"angle":0,"staggered":true}'></canvas><figcaption>Il principio di Pattern: l’elemento cresce dove l’immagine è scura.</figcaption></figure>
+<figure class="doc-figure"><canvas data-fx="still" data-style="halftone" data-photo="example-4" data-opts='{"cell":7,"angle":0,"staggered":true}'></canvas><figcaption>Il principio di Pattern: l’elemento cresce dove l’immagine è scura.</figcaption></figure>
 
 ## Come funziona
 

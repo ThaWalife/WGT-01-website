@@ -1,10 +1,10 @@
 ---
 title: Curve di livello
-description: La luminosità diventa altitudine: ogni curva unisce i punti con lo stesso tono, come le isoipse di una carta topografica.
+description: Stile Curve di livello di WGT-01: la luminosità diventa altitudine e ogni curva unisce i punti con lo stesso tono. Esportabile in SVG.
 group: Stili
 order: 7
 ---
-<figure class="doc-figure"><canvas data-fx="still" data-style="curve" data-photo="fotografo" data-opts='{"levels":16}'></canvas><figcaption>Curve di livello, anteprima leggera calcolata nel browser.</figcaption></figure>
+<figure class="doc-figure"><canvas data-fx="still" data-style="curve" data-photo="example-3" data-opts='{"levels":16}'></canvas><figcaption>Curve di livello, anteprima leggera calcolata nel browser.</figcaption></figure>
 
 > Esportabile in **SVG**. Vedi [Esporta SVG](/documentazione/esporta-svg/).
 

@@ -1,13 +1,13 @@
-# Immagini di esempio — crediti e licenze
+# Immagini di esempio — crediti
 
-Foto provvisorie, tutte libere da diritti, da sostituire con foto di Wally.
-Per sostituirle basta salvare un nuovo .jpg con lo stesso nome in questa cartella.
+Tutte le immagini di questa cartella sono lavori originali di Walife (render 3D e grafiche).
 
-| File | Soggetto | Autore / fonte | Licenza |
-|---|---|---|---|
-| astronauta.jpg | Eileen Collins, astronauta | NASA (via scikit-image) | Pubblico dominio |
-| caffe.jpg | Tazza di caffè | Rachel Michetti (via scikit-image) | CC0 |
-| gatto.jpg | Chelsea, gatto | Stefan van der Walt (via scikit-image) | CC0 |
-| razzo.jpg | Lancio di un razzo | SpaceX (via scikit-image) | Pubblico dominio |
-| fotografo.jpg | Fotografo con macchina | Lav Varshney (via scikit-image) | CC0 |
-| hopper.jpg | Grace Hopper | U.S. Navy (via Matplotlib) | Pubblico dominio |
+| File | Soggetto |
+|---|---|
+| example-1.jpg | Logo in rilievo in una scena notturna |
+| example-2.jpg | Stanza con piante e quadri luminosi |
+| example-3.jpg | Figura in blu su un palco |
+| example-4.jpg | Ingranaggi di un orologio in bianco e nero |
+| type-bg.jpg | Figura in un anello di luce blu (manifesto di Type) |
+
+Il logo della hero è in assets/img/hero-src.jpg.

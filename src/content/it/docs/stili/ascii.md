@@ -1,10 +1,10 @@
 ---
 title: ASCII
-description: L’immagine ricostruita con caratteri: i più leggeri nelle luci, i più pieni nelle ombre.
+description: Stile ASCII di WGT-01 per Photoshop: l'immagine ricostruita con caratteri, i più leggeri nelle luci e i più pieni nelle ombre.
 group: Stili
 order: 3
 ---
-<figure class="doc-figure"><canvas data-fx="still" data-style="ascii" data-photo="hopper" data-opts='{"cell":8}'></canvas><figcaption>ASCII, anteprima leggera calcolata nel browser.</figcaption></figure>
+<figure class="doc-figure"><canvas data-fx="still" data-style="ascii" data-photo="example-4" data-opts='{"cell":8}'></canvas><figcaption>ASCII, anteprima leggera calcolata nel browser.</figcaption></figure>
 
 ## Controlli
 

@@ -1,7 +1,7 @@
 ---
 title: Dev option e LM Studio
 nav: Dev option e LM Studio
-description: Un modello di intelligenza artificiale sul tuo computer, per aiutare Type.
+description: Le opzioni per sviluppatori di WGT-01 e il collegamento a LM Studio: un modello di intelligenza artificiale locale che aiuta Type a impaginare.
 group: Funzioni
 order: 3
 ---

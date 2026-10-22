@@ -1,10 +1,10 @@
 ---
 title: Pixel sorting
-description: I pixel con luminosità tra due soglie vengono riordinati, riga per riga, dal più scuro al più chiaro.
+description: Stile Pixel sorting di WGT-01 per Photoshop: i pixel tra due soglie di luminosità vengono riordinati riga per riga.
 group: Stili
 order: 10
 ---
-<figure class="doc-figure"><canvas data-fx="still" data-style="pixelsort" data-photo="razzo" data-opts='{}'></canvas><figcaption>Pixel sorting, anteprima leggera calcolata nel browser.</figcaption></figure>
+<figure class="doc-figure"><canvas data-fx="still" data-style="pixelsort" data-photo="type-bg" data-opts='{}'></canvas><figcaption>Pixel sorting, anteprima leggera calcolata nel browser.</figcaption></figure>
 
 ## Controlli
 

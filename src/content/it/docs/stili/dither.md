@@ -1,10 +1,10 @@
 ---
 title: Dither
-description: Riduce l’immagine a pochi toni e li distribuisce punto per punto, come le vecchie stampanti e i primi monitor.
+description: Stile Dither di WGT-01 per Photoshop: pochi toni distribuiti punto per punto, come le vecchie stampanti, con grana e livelli regolabili.
 group: Stili
 order: 1
 ---
-<figure class="doc-figure"><canvas data-fx="still" data-style="dither" data-photo="astronauta" data-opts='{"cell":2}'></canvas><figcaption>Dither, anteprima leggera calcolata nel browser.</figcaption></figure>
+<figure class="doc-figure"><canvas data-fx="still" data-style="dither" data-photo="example-1" data-opts='{"cell":2}'></canvas><figcaption>Dither, anteprima leggera calcolata nel browser.</figcaption></figure>
 
 ## Controlli
 

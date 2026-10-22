@@ -1,7 +1,7 @@
 ---
 title: Stili
 nav: Come funzionano
-description: Dieci stili generativi, tutti guidati dalla scala di grigi.
+description: I dieci stili generativi di WGT-01 per Photoshop, dal dither all'halftone alle curve di livello, tutti guidati dalla scala di grigi.
 group: Stili
 order: 0
 ---

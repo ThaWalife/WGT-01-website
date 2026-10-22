@@ -19,9 +19,9 @@ export default async function surface(el) {
   const fileIn = el.querySelector('[data-custom-file]');
   const fileName = el.querySelector('[data-custom-name]');
   const title = el.querySelector('[data-elsh-target]');
-  const img = await loadImage(photo(el.dataset.photo || 'astronauta'));
+  const img = await loadImage(photo(el.dataset.photo || 'example-1'));
   const NX = 84, NZ = 56;
-  const g = gray(getPixels(img, NX, NZ), { contrast: 0.55 });
+  const g = gray(getPixels(img, NX, NZ), { contrast: 0.55, autoLevels: true });
   let shape = 'punto', custom = null, time = 0;
 
   /* Gli elementi vengono preparati una volta come piccole immagini (una per misura)

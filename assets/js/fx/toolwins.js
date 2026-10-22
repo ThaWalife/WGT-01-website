@@ -11,14 +11,14 @@ export default async function tools(section) {
   const pat = section.querySelector('[data-show="pattern"]');
   const sti = section.querySelector('[data-show="stili"]');
   const typ = section.querySelector('[data-show="type"]');
-  const [hopper, fotografo] = await Promise.all([loadImage(photo('hopper')), loadImage(photo('fotografo'))]);
+  const [clock, figure] = await Promise.all([loadImage(photo('example-4')), loadImage(photo('example-3'))]);
 
   function drawPattern() {
     const canvas = pat.querySelector('canvas');
     const { ctx, W, H, dpr } = fitCanvas(canvas, 1.5);
     const step = 10 * dpr;
     const cols = Math.ceil(W / step), rows = Math.ceil(H / step);
-    const g = gray(getPixels(hopper, cols, rows, W / H), { contrast: 0.35 });
+    const g = gray(getPixels(clock, cols, rows, W / H), { contrast: 0.35, autoLevels: true });
     ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
     const p = new Path2D();
     for (let y = 0; y < rows; y++)
@@ -36,7 +36,7 @@ export default async function tools(section) {
     const canvas = sti.querySelector('canvas');
     const { ctx, W, H, dpr } = fitCanvas(canvas, 1.5);
     const [id, name] = STILI[si];
-    renderStyle(id, ctx, fotografo, W, H, { ink: '#000000', paper: '#ffffff', ...presetFor(id, dpr) });
+    renderStyle(id, ctx, figure, W, H, { ink: '#000000', paper: '#ffffff', autoLevels: true, ...presetFor(id, dpr) });
     sti.querySelector('[data-now]').textContent = name;
   }
   function setArch() {

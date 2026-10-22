@@ -1,10 +1,10 @@
 ---
 title: Mappa sfumatura
-description: Ogni tono di grigio diventa un colore della sfumatura scelta.
+description: Stile Mappa sfumatura di WGT-01 per Photoshop: ogni tono di grigio dell'immagine diventa un colore della sfumatura scelta.
 group: Stili
 order: 8
 ---
-<figure class="doc-figure"><canvas data-fx="still" data-style="sfumatura" data-photo="caffe" data-opts='{}'></canvas><figcaption>Mappa sfumatura, anteprima leggera calcolata nel browser.</figcaption></figure>
+<figure class="doc-figure"><canvas data-fx="still" data-style="sfumatura" data-photo="example-2" data-opts='{}'></canvas><figcaption>Mappa sfumatura, anteprima leggera calcolata nel browser.</figcaption></figure>
 
 ## Controlli
 

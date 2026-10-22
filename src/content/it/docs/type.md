@@ -1,6 +1,6 @@
 ---
 title: Type
-description: Impaginazione tipografica automatica per manifesti, social e banner.
+description: Type di WGT-01: impaginazione tipografica automatica per manifesti, post e storie, con testo su griglia e leggibile sulla foto.
 group: Sezioni
 order: 3
 ---

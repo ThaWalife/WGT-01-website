@@ -3,15 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% if title %}{{ title }} — {% endif %}{{ cfg.name }}</title>
+<title>{{ seo_title }}</title>
 <meta name="description" content="{{ description }}">
+<meta name="author" content="{{ cfg.author }}">
+<meta name="robots" content="{{ robots|default('index, follow') }}">
+<link rel="canonical" href="{{ cfg.site_url }}{{ path }}">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="{{ root }}assets/img/favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="{% if title %}{{ title }} — {% endif %}{{ cfg.name }}">
+<link rel="apple-touch-icon" href="{{ root }}assets/img/og.png">
+<meta property="og:site_name" content="{{ cfg.name }} · {{ cfg.brand }}">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="{{ seo_title }}">
 <meta property="og:description" content="{{ description }}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="{{ og_type|default('website') }}">
 <meta property="og:url" content="{{ cfg.site_url }}{{ path }}">
-<meta property="og:image" content="{{ cfg.site_url }}assets/img/og.png">
+<meta property="og:image" content="{{ cfg.site_url }}assets/img/og.png?v={{ build }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ cfg.name }}: logo in rilievo ridisegnato in dither verde">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seo_title }}">
+<meta name="twitter:description" content="{{ description }}">
+<meta name="twitter:image" content="{{ cfg.site_url }}assets/img/og.png?v={{ build }}">
+{% if jsonld %}<script type="application/ld+json">{{ jsonld|tojson }}</script>
+{% endif %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:ROND,wght@0..100,100..900&family=Handjet:ELGR,ELSH,wght@1..2,0..16,100..900&family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap">
@@ -46,7 +61,6 @@
     <ul class="small">
       <li><a href="{{ root }}documentazione/novita/">Novità delle versioni</a></li>
       <li><a href="{{ root }}documentazione/crediti/">{{ ui.footer_images }}</a></li>
-      <li><a href="{{ cfg.repo }}">{{ ui.footer_source }}</a></li>
     </ul>
     <a class="site-footer__home" href="{{ cfg.home_url }}"><span class="lbl">[sito principale]</span><span class="site-footer__url">thawalife.com</span><span class="site-footer__arrow" aria-hidden="true">↗</span></a>
   </div>

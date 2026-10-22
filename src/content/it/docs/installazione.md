@@ -1,6 +1,6 @@
 ---
 title: Installazione
-description: Requisiti e installazione del file .ccx.
+description: Come installare WGT-01 in Photoshop {{photoshop_min}} o successivo: requisiti, file .ccx e primo avvio del pannello, passo per passo.
 group: Inizia
 order: 2
 ---

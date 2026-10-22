@@ -1,10 +1,10 @@
 ---
 title: Linee di flusso
-description: Linee che seguono l’orientamento dei bordi e si distribuiscono a distanza regolare senza toccarsi; nelle zone scure diventano più fitte e spesse.
+description: Stile Linee di flusso di WGT-01: linee che seguono i bordi a distanza regolare e si infittiscono nelle ombre. Esportabile in SVG.
 group: Stili
 order: 6
 ---
-<figure class="doc-figure"><canvas data-fx="still" data-style="flusso" data-photo="fotografo" data-opts='{"cell":3}'></canvas><figcaption>Linee di flusso, anteprima leggera calcolata nel browser.</figcaption></figure>
+<figure class="doc-figure"><canvas data-fx="still" data-style="flusso" data-photo="example-3" data-opts='{"cell":3}'></canvas><figcaption>Linee di flusso, anteprima leggera calcolata nel browser.</figcaption></figure>
 
 > Esportabile in **SVG**. Vedi [Esporta SVG](/documentazione/esporta-svg/).
 

@@ -1,7 +1,7 @@
 ---
 title: Documentazione
 nav: Panoramica
-description: Come si installa e come si usa {{name}}, sezione per sezione.
+description: Documentazione di WGT-01, il plugin generativo per Photoshop: installazione, pannello, Pattern, i dieci Stili, Type ed esportazione SVG.
 group: Inizia
 order: 1
 ---

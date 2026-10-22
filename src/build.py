@@ -35,6 +35,8 @@ PHOTOS = [
     ("example-3", "Figura in blu su un palco", "Figura"),
     ("example-4", "Ingranaggi di un orologio in bianco e nero", "Orologio"),
 ]
+HOME_DESC = (f"{cfg['name']}, plugin generativo per Photoshop: pattern, dieci stili come dither, halftone e ASCII, "
+             "impaginazione automatica ed export SVG dalla scala di grigi.")
 GROUPS = ["Inizia", "Sezioni", "Stili", "Funzioni", "Aiuto"]
 
 
@@ -49,8 +51,27 @@ def write(path, html):
     f.write_text(html, encoding="utf-8")
 
 
+SITE = cfg["site_url"]
+AUTHOR = {"@type": "Person", "name": cfg["author"], "url": cfg["home_url"]}
+URLS = []  # per la sitemap
+
+
+def seo_title(title):
+    """Titolo per i motori di ricerca: la pagina, poi il nome del plugin e cosa è."""
+    return f"{title} — {cfg['name']}, plugin per Photoshop" if title else \
+        f"{cfg['name']} — Plugin generativo per Photoshop: pattern, dither, halftone e impaginazione"
+
+
+def breadcrumb(items):
+    return {"@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": i + 1, "name": n, "item": SITE + u} for i, (n, u) in enumerate(items)]}
+
+
 def render(template, path, **ctx):
     t = env.get_template(template)
+    if ctx.get("robots", "").startswith("noindex") is False and path != "404.html":
+        URLS.append(path.replace("index.html", ""))
+    ctx.setdefault("seo_title", seo_title(ctx.get("title", "")))
     base = dict(cfg=cfg, ui=ui, build=BUILD, path=path.replace("index.html", ""),
                 root=root_for(path), styles=[dict(id=i, name=n, svg=s) for i, n, s in STYLES],
                 photos=[dict(id=i, label=l, short=s) for i, l, s in PHOTOS])
@@ -94,8 +115,15 @@ def docs():
     nav = [dict(name=g, pages=[p for p in pages if p["group"] == g]) for g in GROUPS]
     nav = [g for g in nav if g["pages"]]
     for i, p in enumerate(pages):
+        crumbs = [(cfg["name"], ""), ("Documentazione", "documentazione/")]
+        if p["url"] != "documentazione/":
+            crumbs.append((p["title"], p["url"]))
+        ld = {"@context": "https://schema.org", "@graph": [
+            {"@type": "TechArticle", "headline": p["title"], "description": p["description"], "inLanguage": "it",
+             "url": SITE + p["url"], "author": AUTHOR, "about": {"@type": "SoftwareApplication", "name": cfg["name"]}},
+            breadcrumb(crumbs)]}
         render("doc.html", p["url"] + "index.html", title=p["title"], description=p["description"] or
-               f"Documentazione di {cfg['name']}.", page=p, nav=nav, section="docs",
+               f"Documentazione di {cfg['name']}.", page=p, nav=nav, section="docs", jsonld=ld, og_type="article",
                prev=pages[i - 1] if i else None, next=pages[i + 1] if i + 1 < len(pages) else None)
     return len(pages)
 
@@ -103,17 +131,34 @@ def docs():
 def main():
     for d in ["documentazione", "prova", "download"]:
         shutil.rmtree(OUT / d, ignore_errors=True)
-    render("home.html", "index.html", title="", section="home",
-           description=f"{cfg['name']}: pattern, stili generativi e impaginazione per Photoshop, dalla scala di grigi della tua immagine.")
-    render("prova.html", "prova/index.html", title="Prova", section="prova",
-           description=f"Prova gli stili di {cfg['name']} sulla tua foto, direttamente nel browser.")
-    render("download.html", "download/index.html", title="Scarica", section="download",
-           description=f"Scarica {cfg['name']} per Photoshop con una donazione da {cfg['payhip']['min_price']}.")
+    app = {"@type": "SoftwareApplication", "name": cfg["name"], "alternateName": cfg["brand"],
+           "applicationCategory": "DesignApplication", "applicationSubCategory": "Plugin per Adobe Photoshop",
+           "operatingSystem": "Windows, macOS", "softwareVersion": cfg["version"], "inLanguage": "it",
+           "softwareRequirements": f"Adobe Photoshop {cfg['photoshop_min']} o successivo",
+           "description": HOME_DESC, "url": SITE, "image": SITE + "assets/img/og.png", "author": AUTHOR,
+           "offers": {"@type": "Offer", "price": "1.00", "priceCurrency": "EUR",
+                      "description": f"Donazione libera, minimo {cfg['payhip']['min_price']}"}}
+    site = {"@type": "WebSite", "name": cfg["name"], "url": SITE, "inLanguage": "it", "publisher": AUTHOR}
+    render("home.html", "index.html", title="", section="home", description=HOME_DESC,
+           jsonld={"@context": "https://schema.org", "@graph": [site, app]})
+    render("prova.html", "prova/index.html", title="Prova gli stili nel browser", section="prova",
+           description=f"Prova gratis Dither, Halftone e ASCII di {cfg['name']} sulla tua foto, direttamente nel browser: "
+                       "nessun account e nessun caricamento, l’immagine resta sul tuo computer.",
+           jsonld={"@context": "https://schema.org", "@graph": [breadcrumb([(cfg["name"], ""), ("Prova", "prova/")])]})
+    render("download.html", "download/index.html", title="Scarica il plugin", section="download",
+           description=f"Scarica {cfg['name']} per Photoshop {cfg['photoshop_min']} o successivo, su Windows e macOS, "
+                       f"con una donazione libera da {cfg['payhip']['min_price']} e un codice seriale personale.",
+           jsonld={"@context": "https://schema.org", "@graph": [breadcrumb([(cfg["name"], ""), ("Scarica", "download/")]), app]})
     t = env.get_template("404.html")
     write("404.html", t.render(cfg=cfg, ui=ui, build=BUILD, path="404.html", root=cfg["site_url"],
-                               title="Pagina non trovata", description="Pagina non trovata.", styles=[], photos=[]))
+                               title="Pagina non trovata", seo_title=seo_title("Pagina non trovata"), robots="noindex, follow",
+                               description="Questa pagina di WGT-01 non esiste o è stata spostata.", styles=[], photos=[]))
     n = docs()
     (OUT / ".nojekyll").write_text("")
+    today = time.strftime("%Y-%m-%d")
+    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
+        f"  <url><loc>{SITE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in URLS) + "</urlset>\n", encoding="utf-8")
+    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}sitemap.xml\n", encoding="utf-8")
     print(f"Sito costruito: 3 pagine + 404 + {n} pagine di documentazione (build {BUILD}).")
 
 

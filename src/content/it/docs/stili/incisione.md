@@ -1,10 +1,10 @@
 ---
 title: Incisione
-description: Linee parallele che si ingrossano nelle ombre, come nelle incisioni delle banconote.
+description: Stile Incisione di WGT-01: linee parallele che si ingrossano nelle ombre, come nelle banconote. Esportabile in SVG per la stampa.
 group: Stili
 order: 5
 ---
-<figure class="doc-figure"><canvas data-fx="still" data-style="incisione" data-photo="hopper" data-opts='{"cell":5}'></canvas><figcaption>Incisione, anteprima leggera calcolata nel browser.</figcaption></figure>
+<figure class="doc-figure"><canvas data-fx="still" data-style="incisione" data-photo="example-4" data-opts='{"cell":5}'></canvas><figcaption>Incisione, anteprima leggera calcolata nel browser.</figcaption></figure>
 
 > Esportabile in **SVG**. Vedi [Esporta SVG](/documentazione/esporta-svg/).
 

@@ -1,10 +1,10 @@
 ---
 title: Glitch
-description: Strappi orizzontali, blocchi pixelati e canali RGB sfasati.
+description: Stile Glitch di WGT-01 per Photoshop: strappi orizzontali, blocchi pixelati e canali RGB sfasati, guidati dalla scala di grigi.
 group: Stili
 order: 9
 ---
-<figure class="doc-figure"><canvas data-fx="still" data-style="glitch" data-photo="astronauta" data-opts='{}'></canvas><figcaption>Glitch, anteprima leggera calcolata nel browser.</figcaption></figure>
+<figure class="doc-figure"><canvas data-fx="still" data-style="glitch" data-photo="example-1" data-opts='{}'></canvas><figcaption>Glitch, anteprima leggera calcolata nel browser.</figcaption></figure>
 
 ## Controlli
 

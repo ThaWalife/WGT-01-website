@@ -1,6 +1,6 @@
 ---
 title: Esporta SVG
-description: Quattro stili diventano tracciati vettoriali.
+description: Esporta in SVG vettoriale i risultati di Halftone, Incisione, Linee di flusso e Curve di livello, pronti per Illustrator e per la stampa.
 group: Funzioni
 order: 1
 ---

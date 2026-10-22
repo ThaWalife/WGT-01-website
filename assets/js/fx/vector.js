@@ -10,7 +10,7 @@ const CELL = 6;          // passo del retino
 
 function halftoneDots(img) {
   const n = B / CELL;
-  const g = gray(getPixels(img, n, n), { contrast: 0.25 });
+  const g = gray(getPixels(img, n, n), { contrast: 0.25, autoLevels: true });
   const a = Math.PI / 4, ca = Math.cos(a), sa = Math.sin(a), c = B / 2;
   const dots = [];
   const R = Math.ceil(n * 0.75);
@@ -65,9 +65,10 @@ function download(name, svg) {
 const circles = (dots) => dots.map(([x, y, r]) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}"/>`).join('');
 
 export default async function vector(section) {
-  const img = await loadImage(photo('hopper'));
+  // la figura in blu: toni morbidi per il retino e colori veri per le lastre CMYK
+  const img = await loadImage(photo('example-3')), color = img;
   const dots = halftoneDots(img);
-  const plates = cmykDots(img);
+  const plates = cmykDots(color);
 
   // il "PNG": gli stessi punti stampati su una griglia di pixel 480×480
   const raster = document.createElement('canvas');
@@ -86,7 +87,18 @@ export default async function vector(section) {
   const code = section.querySelector('[data-code]');
   const cmyk = section.querySelector('[data-cmyk] canvas');
   const plateBtns = [...section.querySelectorAll('[data-plate]')];
-  const st = { z: 8, fx: 300, fy: 170, on: { C: true, M: true, Y: true, K: true } };
+  const st = { z: 8, fx: 240, fy: 240, on: { C: true, M: true, Y: true, K: true } };
+  // punto di partenza dello zoom: la zona con più punti di misura intermedia (si vede il retino che sfuma)
+  {
+    const RM = CELL * 0.62;
+    let best = -1;
+    for (let cy = 40; cy <= B - 40; cy += 12)
+      for (let cx = 40; cx <= B - 40; cx += 12) {
+        let k = 0;
+        for (const [x, y, r] of dots) if (Math.abs(x - cx) < 32 && Math.abs(y - cy) < 32 && r > RM * 0.25 && r < RM * 0.8) k++;
+        if (k > best) { best = k; st.fx = cx; st.fy = cy; }
+      }
+  }
 
   function view(canvas, isVector) {
     const { ctx, W, H } = fitCanvas(canvas, 2);

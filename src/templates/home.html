@@ -36,35 +36,25 @@
   </div>
 </section>
 
-<section class="tone section" data-c="green" aria-labelledby="tre" data-fx="tools">
+<section class="tone section tools-sec" data-c="white" aria-labelledby="tre" data-fx="tools">
   {{ docframe('strumenti.psd', [50]) }}
   <div class="wrap">
     <div class="tools-head">
-      <h2 class="h-dot" id="tre">Un pannello,<br>tre strumenti</h2>
-      <p class="prose">{{ cfg.name }} vive in un pannello di Photoshop, accanto ai livelli. Dentro ci sono tre strumenti: uno ripete elementi, uno ridisegna l’immagine, uno impagina il testo.</p>
+      <h2 class="tools-title" id="tre"><span class="tools-title__a">Un pannello,</span><span class="tools-title__b">tre strumenti</span></h2>
+      <p class="tools-head__text">{{ cfg.name }} vive in un pannello di Photoshop, accanto ai livelli. Dentro ci sono tre strumenti: <b>uno ripete elementi</b>, <b>uno ridisegna l’immagine</b>, <b>uno impagina il testo</b>.</p>
     </div>
     <div class="tools">
       <article class="win tool-card" data-show="pattern">
-        <div class="win__bar"><span>01 — ritratto.psd</span></div>
-        <canvas class="tool-card__img" aria-label="Ritratto ricostruito con piccole croci che crescono nelle zone scure"></canvas>
+        <div class="win__bar"><span>01 — orologio.psd</span></div>
+        <canvas class="tool-card__img" aria-label="Ingranaggi di un orologio ricostruiti con piccole croci che crescono nelle zone scure"></canvas>
         <div class="tool-card__text">
           <h3>Pattern</h3>
           <p>Ripete un elemento, una forma o un tuo file, e ne decide dimensione e posizione in base al tono della foto.</p>
           <a href="{{ root }}documentazione/pattern/">Come funziona Pattern</a>
         </div>
       </article>
-      <aside class="win layers" aria-label="Pannello Livelli di Photoshop">
-        <div class="win__bar"><span>Livelli</span></div>
-        <ul class="layers__list">
-          <li><span class="layers__eye" aria-hidden="true">◉</span><span class="layers__th layers__th--t" aria-hidden="true"></span><span>{{ cfg.name }} Type</span></li>
-          <li><span class="layers__eye" aria-hidden="true">◉</span><span class="layers__th layers__th--s" aria-hidden="true"></span><span>{{ cfg.name }} Stili</span></li>
-          <li class="is-on"><span class="layers__eye" aria-hidden="true">◉</span><span class="layers__th layers__th--p" aria-hidden="true"></span><span>{{ cfg.name }} Pattern</span></li>
-          <li><span class="layers__eye" aria-hidden="true">◉</span><span class="layers__th" aria-hidden="true"></span><span>Sfondo</span><span class="layers__lock" aria-hidden="true">▣</span></li>
-        </ul>
-        <p class="layers__note">Ogni risultato arriva come gruppo di livelli: lo sposti, lo nascondi o lo riapri con “Modifica”. L’originale resta intatto.</p>
-      </aside>
       <article class="win tool-card" data-show="stili">
-        <div class="win__bar"><span>02 — fotografo.psd · <span data-now>Curve di livello</span></span></div>
+        <div class="win__bar"><span>02 — figura.psd · <span data-now>Curve di livello</span></span></div>
         <canvas class="tool-card__img" aria-label="La stessa foto ridisegnata, a turno, da stili diversi"></canvas>
         <div class="tool-card__text">
           <h3>Stili</h3>
@@ -76,12 +66,12 @@
         <div class="win__bar"><span>03 — manifesto.psd · <span data-now>Asse centrale</span></span></div>
         <div class="tool-card__doc">
           <figure class="poster" data-a="asse">
-            <img src="{{ root }}assets/img/demo/caffe.jpg" alt="Tazza di caffè vista dall’alto" width="600" height="400">
+            <img src="{{ root }}assets/img/demo/example-2.jpg" alt="Stanza con piante e quadri luminosi" width="1200" height="900">
             <div class="poster__veil"></div>
             <figcaption class="poster__text">
-              <p class="p-kicker">La libreria presenta</p>
-              <p class="p-title">Caffè e libri</p>
-              <p class="p-info">Giovedì 12 novembre, ore 18</p>
+              <p class="p-kicker">Studio aperto</p>
+              <p class="p-title">Stanza verde</p>
+              <p class="p-info">Venerdì 13 novembre, ore 19</p>
               <p class="p-cta">Ingresso libero</p>
             </figcaption>
           </figure>
@@ -96,7 +86,7 @@
   </div>
 </section>
 
-<div class="band" data-from="#0d9e5a" data-to="#000000"></div>
+<div class="band" data-from="#ffffff" data-to="#000000"></div>
 
 <section class="tone section" data-c="black" id="stili" aria-labelledby="dieci" data-fx="gallery">
   {{ docframe('stili.psd', [20, 80], '66,7%') }}
@@ -134,7 +124,7 @@
 
 <div class="band" data-from="#000000" data-to="#ffffff"></div>
 
-<section class="tone pattern-sec" data-c="white" aria-labelledby="pattern" data-fx="surface" data-photo="astronauta">
+<section class="tone pattern-sec" data-c="white" aria-labelledby="pattern" data-fx="surface" data-photo="example-1">
   <canvas class="surface" aria-label="Superficie di elementi che ondeggia su tutto lo sfondo: la dimensione di ogni elemento segue il tono di una foto"></canvas>
   <div class="wrap pattern-sec__inner">
     <h2 class="h-el pattern-title" id="pattern" data-elsh-target style="--elsh:3"><span>Un elemento,</span><span>migliaia</span><span>di posizioni</span></h2>
