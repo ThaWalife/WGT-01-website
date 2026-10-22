@@ -112,6 +112,7 @@ export default async function vector(section) {
   }
 
   function writeCode(v) {
+    if (!code) return;
     const vis = dots.filter(([x, y]) => x >= v.sx && x <= v.sx + v.sw && y >= v.sy && y <= v.sy + v.sh);
     const near = vis.sort((a, b) => Math.hypot(a[0] - st.fx, a[1] - st.fy) - Math.hypot(b[0] - st.fx, b[1] - st.fy)).slice(0, 7);
     code.textContent = [
@@ -129,6 +130,8 @@ export default async function vector(section) {
     const v = view(cSvg, true);
     writeCode(v);
     zoomOut.forEach((e) => (e.textContent = Math.round(st.z * 100) + '%'));
+    cPng.closest('.win').querySelector('.win__bar span').textContent = `halftone.png — ${Math.round(st.z * 100)}%`;
+    cSvg.closest('.win').querySelector('.win__bar span').textContent = `halftone.svg — ${Math.round(st.z * 100)}%`;
   }
 
   function drawCmyk() {

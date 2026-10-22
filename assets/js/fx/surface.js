@@ -20,18 +20,36 @@ export default async function surface(el) {
   const fileName = el.querySelector('[data-custom-name]');
   const title = el.querySelector('[data-elsh-target]');
   const img = await loadImage(photo(el.dataset.photo || 'astronauta'));
-  const NX = 96, NZ = 64;
+  const NX = 84, NZ = 56;
   const g = gray(getPixels(img, NX, NZ), { contrast: 0.55 });
   let shape = 'punto', custom = null, time = 0;
 
+  /* Gli elementi vengono preparati una volta come piccole immagini (una per misura)
+     e poi solo "timbrati": molto più leggero che ridisegnare ogni forma a ogni fotogramma. */
+  const BUCKETS = 28, RMAX = 26;
+  let sprites = [];
+  const rOf = (b) => 0.6 + (RMAX - 0.6) * Math.pow(b / (BUCKETS - 1), 1.6);
+  function buildSprites() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+    sprites = Array.from({ length: BUCKETS }, (_, b) => {
+      const r = rOf(b) * dpr, size = Math.ceil(r * 2.6) + 2;
+      const c = document.createElement('canvas');
+      c.width = c.height = size;
+      const x = c.getContext('2d');
+      const m = size / 2;
+      if (custom) x.drawImage(custom, m - r, m - r, r * 2, r * 2);
+      else { const p = new Path2D(); SHAPES[shape](p, m, m, r); x.fillStyle = '#000'; x.fill(p, 'evenodd'); }
+      return { c, m, r };
+    });
+  }
+
   function frame() {
-    const { ctx, W, H } = fitCanvas(canvas, 1.5);
+    const { ctx, W, H, dpr } = fitCanvas(canvas, 1.25);
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#000';
     const f = W, zc = 2.2, Z = 4.2, cam = 1;
     const pn = f / zc, pf = f / (zc + Z);
     const k = (1.06 * H) / ((pn - pf) * cam), a = 1.03 * H - k * cam * pn;
-    const path = new Path2D();
+    const rMaxPx = RMAX * dpr;
     for (let j = NZ - 1; j >= 0; j--) {
       const z = (j / (NZ - 1)) * Z;
       const p = f / (z + zc);
@@ -42,16 +60,20 @@ export default async function surface(el) {
         const y = 0.08 * Math.sin(x * 1.5 + time * 0.8) * Math.cos(z * 1.1 - time * 0.55) + 0.035 * Math.sin((x + z) * 3 - time * 1.2);
         const sy = a + (cam - y) * p * k;
         const l = g[(NZ - 1 - j) * NX + i];
-        const r = (1 - l) * 0.016 * p + 0.0012 * p;
+        const r = Math.min(rMaxPx, (1 - l) * 0.016 * p + 0.0012 * p);
         if (r < 0.6) continue;
-        if (custom) ctx.drawImage(custom, sx - r, sy - r, r * 2, r * 2);
-        else SHAPES[shape](path, sx, sy, r);
+        // misura più vicina tra quelle preparate
+        let b = Math.round(Math.pow(Math.max(0, (r / dpr - 0.6) / (RMAX - 0.6)), 1 / 1.6) * (BUCKETS - 1));
+        b = Math.max(0, Math.min(BUCKETS - 1, b));
+        const sp = sprites[b];
+        ctx.drawImage(sp.c, sx - sp.m, sy - sp.m);
       }
     }
-    if (!custom) ctx.fill(path, 'evenodd');
   }
+  buildSprites();
 
-  const anim = loop(canvas, (dt) => { time += dt; frame(); });
+  let acc = 0;
+  const anim = loop(canvas, (dt) => { acc += dt; if (acc < 1 / 30) return; time += acc; acc = 0; frame(); });
   frame();
   anim.kick();
 
@@ -60,7 +82,7 @@ export default async function surface(el) {
     fileBtn?.setAttribute('aria-pressed', String(fileBtn === b));
     if (title && b?.dataset.elsh) title.style.setProperty('--elsh', b.dataset.elsh);
   };
-  chips.forEach((b) => b.addEventListener('click', () => { shape = b.dataset.shape; custom = null; press(b); frame(); }));
+  chips.forEach((b) => b.addEventListener('click', () => { shape = b.dataset.shape; custom = null; buildSprites(); press(b); frame(); }));
 
   fileBtn?.addEventListener('click', () => fileIn.click());
   fileIn?.addEventListener('change', async () => {
@@ -78,6 +100,7 @@ export default async function surface(el) {
       x.drawImage(im, (128 - iw * s) / 2, (128 - ih * s) / 2, iw * s, ih * s);
       URL.revokeObjectURL(url);
       custom = c;
+      buildSprites();
       fileName.textContent = file.name;
       press(fileBtn);
       frame();

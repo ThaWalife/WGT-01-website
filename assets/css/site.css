@@ -243,12 +243,6 @@ input[type="range"] { width: 100%; accent-color: var(--green-hi); height: 26px; 
 .type-head { grid-column: 1 / -1; display: flex; flex-direction: column; min-height: 2.6em; font-size: var(--t-h); }
 .type-head .h-dot { font-size: inherit; transition: font-size .45s cubic-bezier(.2,.7,.2,1); }
 .type-head .h-dot span { display: block; }
-.type-head[data-a="asse"] { align-items: center; text-align: center; }
-.type-head[data-a="bandiera"] { align-items: flex-start; }
-.type-head[data-a="gigante"] { font-size: clamp(3.5rem, 13vw, 13rem); }
-.type-head[data-a="colonna"] { align-items: flex-end; text-align: right; }
-.type-head[data-a="calma"] { font-size: clamp(2rem, 4.2vw, 4rem); justify-content: flex-start; }
-.type-head[data-a="striscia"] .h-dot { background: var(--paper); color: var(--ink); padding: .08em .2em; box-decoration-break: clone; }
 .archetypes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
 .archetypes .chip { text-align: left; }
 .poster { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #0b1016; color: #fff; container-type: inline-size; margin: 0; }
@@ -441,3 +435,36 @@ fieldset.panel__row legend { padding: 0; margin-bottom: 6px; font-size: var(--t-
 .docs > * { min-width: 0; }
 .doc-body { overflow-wrap: break-word; }
 @media (max-width: 860px) { .doc-body table { display: block; overflow-x: auto; } }
+
+
+/* ---------- PANNELLO + DOCUMENTO (tre strumenti) ---------- */
+.ps { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 28px; align-items: start; }
+.ps-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: var(--line) solid var(--ink); }
+.ps-tabs button {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 12px; border: 0; cursor: pointer;
+  background: #f1f1f1; border-right: var(--line) solid var(--ink); font-family: var(--f-el); font-weight: 700; font-size: 1.75rem; line-height: 1;
+  font-variation-settings: "ELSH" 2;
+}
+.ps-tabs button:last-child { border-right: 0; }
+.ps-tabs button[aria-selected="true"] { background: var(--paper); box-shadow: inset 0 -4px 0 var(--green); }
+.ps-tabs .lbl { font-family: var(--f-mono); font-weight: 400; }
+.ps-pane { padding: 14px; display: grid; gap: 14px; font-size: var(--t-s); }
+.ps-pane p { margin: 0; }
+.ps-pane a { font-weight: 700; }
+.ps-doc__area { background: #1c1c1c; padding: clamp(14px, 3vw, 36px); display: grid; place-items: center; min-height: 420px; }
+.ps-doc__area canvas { width: 100%; aspect-ratio: 3 / 2; background: #fff; box-shadow: 0 0 0 1px #000; }
+.ps-doc__area .poster { width: min(100%, 360px); }
+@media (max-width: 900px) { .ps { grid-template-columns: 1fr; } .ps-doc__area { min-height: 0; } }
+
+/* ---------- RASTER → VETTORIALE ---------- */
+.vec-zoom { display: grid; grid-template-columns: auto minmax(0, 1fr) 6ch; gap: 16px; align-items: center; max-width: 720px; margin: 0 0 28px; }
+.vec-zoom input { accent-color: var(--ink); }
+.vec-zoom__val { font-family: var(--f-dot); font-weight: 900; font-size: 1.75rem; }
+.vec-pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 40px); }
+.vec-fig { margin: 0; display: grid; gap: 16px; align-content: start; }
+.vec-fig figcaption h3 { margin: 0 0 6px; font-family: var(--f-el); font-weight: 700; font-size: clamp(1.75rem, 2.6vw, 2.4rem); line-height: 1; }
+.vec-fig figcaption p { margin: 0 0 14px; max-width: 46ch; font-size: var(--t-s); }
+.vec-cmyk { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: center; margin-top: clamp(56px, 7vw, 96px); }
+.vec-cmyk .prose p { margin: 0 0 18px; }
+.vec-cmyk .win { max-width: 520px; justify-self: end; width: 100%; }
+@media (max-width: 900px) { .vec-pair, .vec-cmyk { grid-template-columns: 1fr; } .vec-zoom { grid-template-columns: 1fr 6ch; } .vec-zoom .lbl { grid-column: 1 / -1; } }

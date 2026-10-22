@@ -1,6 +1,5 @@
 /* WGT-01 · avvio: bande di dither tra i toni e caricamento pigro degli effetti */
 import { BAYER8, hexToRgb } from './engines.js';
-import { enhanceAll } from './fx/windows.js';
 
 const root = document.documentElement.dataset.root || './';
 export const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -83,5 +82,4 @@ function lazyInit() {
 }
 
 makeBands();
-enhanceAll();
 lazyInit();
