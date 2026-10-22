@@ -231,6 +231,7 @@ input[type="range"] { width: 100%; accent-color: var(--green-hi); height: 26px; 
 /* ---------- SVG ---------- */
 .svg-sec__title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .25em; margin: 0; }
 .svg-sec__title .a { font-family: var(--f-dot); font-weight: 900; font-size: clamp(3.5rem, 12vw, 12rem); line-height: .85; color: var(--green); }
+[data-c="green"] .svg-sec__title .a { color: var(--ink); }
 .svg-sec__title .arrow { font-size: clamp(2rem, 6vw, 6rem); line-height: 1; }
 .svg-sec__title .b {
   font-family: var(--f-mono); font-weight: 200; font-size: clamp(3rem, 10vw, 10rem); line-height: .9;
@@ -479,6 +480,7 @@ fieldset.panel__row legend { padding: 0; margin-bottom: 6px; font-size: var(--t-
 /* ---------- RASTER → VETTORIALE ---------- */
 .vec-zoom { display: grid; grid-template-columns: auto minmax(0, 1fr) 6ch; gap: 16px; align-items: center; max-width: 720px; margin: 0 0 28px; }
 .vec-zoom input { accent-color: var(--green-hi); }
+[data-c="green"] .vec-zoom input { accent-color: var(--ink); }
 .vec-zoom__val { font-family: var(--f-dot); font-weight: 900; font-size: 1.75rem; }
 .vec-pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 40px); }
 .vec-fig { margin: 0; display: grid; gap: 16px; align-content: start; }

@@ -7,6 +7,8 @@
 <title>{{ seo_title }}</title>
 <meta name="description" content="{{ description }}">
 <meta name="author" content="{{ cfg.author }}">
+{% if cfg.google_site_verification %}<meta name="google-site-verification" content="{{ cfg.google_site_verification }}">
+{% endif %}
 <meta name="robots" content="{{ robots|default('index, follow') }}">
 <link rel="canonical" href="{{ cfg.site_url }}{{ path }}">
 <meta name="theme-color" content="#000000">

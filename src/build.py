@@ -150,7 +150,7 @@ def main():
            description=f"Scarica {cfg['name']} per Photoshop {cfg['photoshop_min']} o successivo, su Windows e macOS, "
                        f"con una donazione libera da {cfg['payhip']['min_price']} e un codice seriale personale.",
            jsonld={"@context": "https://schema.org", "@graph": [breadcrumb([(cfg["name"], ""), ("Scarica", "download/")]), app]})
-    raw = (SRC / "content" / LANG / "cookie.md").read_text(encoding="utf-8").replace("{{name}}", cfg["name"])
+    raw = (SRC / "content" / LANG / "cookie.md").read_text(encoding="utf-8").replace("{{name}}", cfg["name"]).replace("{{email}}", cfg["contact_email"])
     render("cookie.html", "cookie/index.html", title="Cookie e privacy", section="cookie",
            body=markdown.markdown(raw, extensions=["tables", "attr_list", "sane_lists"]),
            description=f"Cookie e privacy del sito di {cfg['name']}: nessun cookie di profilazione o statistico, font ospitati sul sito, "

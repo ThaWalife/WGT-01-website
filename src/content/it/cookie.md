@@ -8,7 +8,7 @@
 
 ## Chi è il titolare
 
-Il sito è un progetto personale di **Walife**. Per qualsiasi domanda sulla privacy puoi scrivere tramite i contatti di [thawalife.com](https://thawalife.com).
+Il sito è un progetto personale di **Walife** ([thawalife.com](https://thawalife.com)). Per qualsiasi domanda sulla privacy, o per esercitare i tuoi diritti, scrivi a **[{{email}}](mailto:{{email}})**.
 
 ## Cosa viene salvato sul tuo dispositivo
 
