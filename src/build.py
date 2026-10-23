@@ -38,6 +38,8 @@ PATHS = {                                 # sezioni del sito, per lingua
     "docs": {"en": "docs/", "it": "documentazione/"},
     "download": {"en": "download/", "it": "download/"},
     "cookies": {"en": "cookies/", "it": "cookie/"},
+    "bot_terms": {"en": "discord-bot/terms/", "it": "discord-bot/termini/"},
+    "bot_privacy": {"en": "discord-bot/privacy/", "it": "discord-bot/privacy/"},
 }
 # nomi delle pagine di documentazione in inglese (chiave = percorso del file, uguale nelle due lingue)
 DOC_SLUG_EN = {
@@ -175,6 +177,8 @@ def link_docs(html, lang, root):
                   lambda m: f'href="{root}{doc_url(m.group(1) or "index", lang)}{m.group(2) or ""}"', html)
     for key in ("try", "download", "cookies", "docs"):
         html = html.replace(f'href="/{key}/', f'href="{root}{url(key, lang)}')
+    for key in ("bot_terms", "bot_privacy"):
+        html = html.replace(f'href="/{key.replace("_", "-")}/', f'href="{root}{url(key, lang)}')
     html = html.replace('href="/home/', f'href="{root}{PREFIX[lang]}')
     return html
 
@@ -260,6 +264,41 @@ def pages(lang):
             "servizi di terze parti solo con il tuo consenso."))
 
 
+def bot_pages(lang):
+    """Termini e privacy del bot Discord WGT-01 (richiesti dal Discord Developer Portal)."""
+    en = lang == "en"
+    alts = lambda key: {l: url(key, l) + "index.html" for l in LANGS}
+    meta = {
+        "bot_terms": dict(
+            md="discord-bot-terms.md", file="discord-bot-terms.psd" if en else "bot-discord-termini.psd",
+            title="Discord bot Terms of Service" if en else "Termini di servizio del bot Discord",
+            kicker="[discord bot · terms]" if en else "[bot discord · termini]",
+            lead=("The rules for using WGT-01, the bot of the plugin’s Discord server." if en else
+                  "Le regole per usare WGT-01, il bot del server Discord del plugin."),
+            description=(f"Terms of Service of WGT-01, the Discord bot of the {cfg['name']} support and news server: "
+                         "free and as is, automatic replies, fair use, Discord’s rules and Italian law.") if en else
+            (f"Termini di servizio di WGT-01, il bot Discord del server di supporto e notizie di {cfg['name']}: "
+             "gratis e così com’è, risposte automatiche, uso corretto, regole di Discord e legge italiana.")),
+        "bot_privacy": dict(
+            md="discord-bot-privacy.md", file="discord-bot-privacy.psd" if en else "bot-discord-privacy.psd",
+            title="Discord bot Privacy Policy" if en else "Privacy Policy del bot Discord",
+            kicker="[discord bot · privacy]" if en else "[bot discord · privacy]",
+            lead=("What the bot reads, what it stores and what it never does with your data." if en else
+                  "Cosa legge il bot, cosa salva e cosa non fa mai con i tuoi dati."),
+            description=(f"Privacy Policy of WGT-01, the Discord bot of the {cfg['name']} server: it reads messages only "
+                         "to pick a reply, stores no personal data, no tracking and no cookies.") if en else
+            (f"Privacy Policy di WGT-01, il bot Discord del server di {cfg['name']}: legge i messaggi solo per "
+             "scegliere una risposta, non salva dati personali, nessun tracciamento né cookie.")),
+    }
+    for key, m in meta.items():
+        path = url(key, lang) + "index.html"
+        raw = fill((SRC / "content" / lang / m["md"]).read_text(encoding="utf-8"))
+        body = link_docs(markdown.markdown(raw, extensions=["tables", "attr_list", "sane_lists"]), lang, root_for(path))
+        render("legal.html", lang, path, alts(key), title=m["title"], section="legal", body=body,
+               kicker=m["kicker"], lead=m["lead"], file_name=m["file"], description=m["description"],
+               jsonld={"@context": "https://schema.org", "@graph": [breadcrumb([(cfg["name"], PREFIX[lang]), (m["title"], url(key, lang))])]})
+
+
 def redirects():
     """Vecchi indirizzi italiani alla radice (prima della versione inglese) → nuovi sotto /it/."""
     old = {"prova/": url("try", "it"), "cookie/": url("cookies", "it")}
@@ -279,11 +318,12 @@ def redirects():
 
 
 def main():
-    for d in ["documentazione", "prova", "download", "cookie", "it", "try", "docs", "cookies"]:
+    for d in ["documentazione", "prova", "download", "cookie", "it", "try", "docs", "cookies", "discord-bot"]:
         shutil.rmtree(OUT / d, ignore_errors=True)
     n = 0
     for lang in LANGS:
         pages(lang)
+        bot_pages(lang)
         n += docs(lang)
     r = redirects()
     t = env.get_template("404.html")

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% from "_art.html" import docframe %}
+{% block main %}
+<section class="tone page-hero" data-c="black">
+  {{ docframe(file_name, [50]) }}
+  <div class="wrap">
+    <p class="lbl lbl--muted" style="margin-bottom:14px">{{ kicker }}</p>
+    <h1>{{ title }}</h1>
+    <p>{{ lead }}</p>
+  </div>
+</section>
+<div class="band" data-from="#000000" data-to="#ffffff"></div>
+<section class="tone section" data-c="white" style="padding-top:56px">
+  <div class="wrap">
+    <article class="doc-body">{{ body|safe }}</article>
+  </div>
+</section>
+<div class="band" data-from="#ffffff" data-to="#000000"></div>
+{% endblock %}
