@@ -50,7 +50,7 @@
     <a class="nav-optional" href="{{ root }}{{ u.home }}#stili">{{ ui.nav_styles }}</a>
     <a href="{{ root }}{{ u.try }}"{% if section == 'try' %} aria-current="page"{% endif %}>{{ ui.nav_try }}</a>
     <a href="{{ root }}{{ u.docs }}"{% if section == 'docs' %} aria-current="page"{% endif %}>{{ ui.nav_docs }}</a>
-    <a href="{{ root }}{{ u.download }}"{% if section == 'download' %} aria-current="page"{% endif %}>{{ ui.nav_download }}</a>
+    <a class="nav-dl" href="{{ root }}{{ u.download }}"{% if section == 'download' %} aria-current="page"{% endif %}>{{ ui.nav_download }}</a>
     <a class="lang-switch" href="{{ root }}{{ other_path }}" hreflang="{{ other }}" lang="{{ other }}" data-lang-switch="{{ other }}" aria-label="{{ ui.lang_switch_label }}"><span aria-hidden="true">{{ 'EN' if lang == 'en' else 'IT' }}</span><span aria-hidden="true" class="lang-switch__to">/{{ other|upper }}</span></a>
   </nav>
 </header>
